@@ -89,7 +89,7 @@ object Tools {
             listOf("web", "internet", "inspect", "devtools", "html"),
         ),
         Tool(
-            "convert", "Conversion", "Hundreds of units in 45+ categories, from metres to smoots, plus your own",
+            "convert", "Conversion", "Nearly 800 units in 49 categories, from metres to smoots, plus your own",
             ToolIcon.Vector(Icons.Rounded.SwapHoriz), ToolCategory.UTILITIES, Accents.Convert, Connectivity.OFFLINE,
             listOf("units", "length", "weight", "temperature", "calculator", "metric", "imperial"),
         ),

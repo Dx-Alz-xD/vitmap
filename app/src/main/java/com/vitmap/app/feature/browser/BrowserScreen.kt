@@ -88,6 +88,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextRange
@@ -165,9 +166,13 @@ fun BrowserScreen(onBack: () -> Unit, initialUrl: String? = null) {
                 AddressBar(tab, onSubmit = { session.load(tab, it) })
                 Box(Modifier.fillMaxWidth().height(3.dp)) {
                     val progress by animateFloatAsState(tab.progress / 100f, spring(stiffness = 120f), label = "progress")
-                    AnimatedVisibility(tab.loading && !tab.isStartPage, enter = fadeIn(), exit = fadeOut(tween(400))) {
-                        LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxSize(), color = Accents.Browser.start, trackColor = Color.Transparent)
-                    }
+                    val visible by animateFloatAsState(if (tab.loading && !tab.isStartPage) 1f else 0f, tween(400), label = "progressAlpha")
+                    LinearProgressIndicator(
+                        progress = { progress },
+                        modifier = Modifier.fillMaxSize().graphicsLayer { alpha = visible },
+                        color = Accents.Browser.start,
+                        trackColor = Color.Transparent,
+                    )
                 }
             }
             Box(Modifier.weight(1f).fillMaxWidth()) {
