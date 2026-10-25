@@ -244,15 +244,27 @@ private fun TextTab(vm: TranslatorViewModel, s: TranslatorState, onDefine: () ->
     val context = LocalContext.current
     @Suppress("DEPRECATION")
     val clipboard = LocalClipboardManager.current
-    // Local text state keeps the cursor stable; the view model follows it.
+    // Local text state keeps the cursor stable; the view model follows it. Only changes that
+    // didn't come from typing here (history, swap, voice) are copied back into the field.
     var text by remember { mutableStateOf(s.input) }
-    LaunchedEffect(s.input) { if (s.input != text) text = s.input }
+    val typed = remember { ArrayDeque<String>() }
+    LaunchedEffect(s.input) {
+        if (s.input !in typed) {
+            text = s.input
+            typed.clear()
+        }
+    }
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Surface(shape = RoundedCornerShape(26.dp), color = MaterialTheme.colorScheme.surfaceContainerLow, modifier = Modifier.fillMaxWidth()) {
             Column(Modifier.padding(6.dp)) {
                 TextField(
                     value = text,
-                    onValueChange = { text = it; vm.setInput(it) },
+                    onValueChange = {
+                        text = it
+                        typed.addLast(it)
+                        if (typed.size > 30) typed.removeFirst()
+                        vm.setInput(it)
+                    },
                     placeholder = { Text("Type or paste text") },
                     textStyle = MaterialTheme.typography.titleLarge,
                     minLines = 3,
@@ -266,7 +278,7 @@ private fun TextTab(vm: TranslatorViewModel, s: TranslatorState, onDefine: () ->
                     IconButton(onClick = { vm.speak(s.input, s.effectiveSource, "input") }, enabled = s.input.isNotBlank()) {
                         SpeakIcon(s.speaking == "input")
                     }
-                    IconButton(onClick = { clipboard.getText()?.text?.let(vm::setInput) }) { Icon(Icons.Rounded.ContentPaste, "Paste") }
+                    IconButton(onClick = { clipboard.getText()?.text?.let { text = it; vm.setInput(it) } }) { Icon(Icons.Rounded.ContentPaste, "Paste") }
                     val singleWord = s.input.trim().let { it.isNotEmpty() && !it.contains(' ') && it.length < 40 }
                     AnimatedVisibility(singleWord) {
                         TextButton(onClick = onDefine) {
@@ -277,7 +289,7 @@ private fun TextTab(vm: TranslatorViewModel, s: TranslatorState, onDefine: () ->
                     }
                     Spacer(Modifier.weight(1f))
                     Text("${s.input.length}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    if (s.input.isNotEmpty()) IconButton(onClick = { vm.setInput("") }) { Icon(Icons.Rounded.Close, "Clear") }
+                    if (text.isNotEmpty()) IconButton(onClick = { text = ""; vm.setInput("") }) { Icon(Icons.Rounded.Close, "Clear") }
                 }
             }
         }
