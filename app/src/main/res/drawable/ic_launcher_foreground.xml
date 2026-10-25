@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Four tiles, one per kind of tool: the "all in one" mark. Kept inside the 66dp safe zone. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- 2x2 grid of rounded tiles: the "all in one" mark -->
     <path
         android:fillColor="#FFFFFFFF"
-        android:pathData="M36,34h12a4,4 0,0 1,4 4v12a4,4 0,0 1,-4 4h-12a4,4 0,0 1,-4 -4v-12a4,4 0,0 1,4 -4z" />
+        android:pathData="M37,31h8a6,6 0,0 1,6 6v8a6,6 0,0 1,-6 6h-8a6,6 0,0 1,-6 -6v-8a6,6 0,0 1,6 -6z" />
     <path
-        android:fillColor="#CCFFFFFF"
-        android:pathData="M68,44m-10,0a10,10 0,1 1,20 0a10,10 0,1 1,-20 0" />
+        android:fillColor="#E6FFFFFF"
+        android:pathData="M57,41a10,10 0,1 1,20 0a10,10 0,1 1,-20 0z" />
     <path
-        android:fillColor="#CCFFFFFF"
-        android:pathData="M42,58l10,18h-20z" />
+        android:fillColor="#E6FFFFFF"
+        android:pathData="M41,58.5L51,76.5L31,76.5Z" />
     <path
-        android:fillColor="#FFFFFFFF"
-        android:pathData="M60,58h16a0,0 0,0 1,0 0v16a0,0 0,0 1,0 0h-16a0,0 0,0 1,0 0z" />
+        android:fillColor="#B3FFFFFF"
+        android:pathData="M63,57h8a6,6 0,0 1,6 6v8a6,6 0,0 1,-6 6h-8a6,6 0,0 1,-6 -6v-8a6,6 0,0 1,6 -6z" />
 </vector>

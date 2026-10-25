@@ -372,6 +372,8 @@ private fun CategoryDetail(s: ConvertState, cat: UnitCategory, vm: ConvertViewMo
     val catIndex = s.categories.indexOf(cat)
     val accent = accentFor(catIndex)
     var menu by remember { mutableStateOf(false) }
+    var inputText by remember { mutableStateOf(s.input) }
+    LaunchedEffect(s.input) { if (s.input != inputText) inputText = s.input }
 
     ToolScaffold(
         title = cat.name,
@@ -404,8 +406,8 @@ private fun CategoryDetail(s: ConvertState, cat: UnitCategory, vm: ConvertViewMo
                     Column(Modifier.background(accent.brush).padding(16.dp)) {
                         UnitButton(from, onClick = { picking = true })
                         TextField(
-                            value = s.input,
-                            onValueChange = vm::setInput,
+                            value = inputText,
+                            onValueChange = { inputText = it; vm.setInput(it) },
                             textStyle = MaterialTheme.typography.displaySmall.copy(color = Color.White),
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),

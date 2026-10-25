@@ -29,9 +29,19 @@ jobs:
       - name: Build debug APKs
         run: ./gradlew :app:assembleDebug --stacktrace
 
-      - name: Upload APKs
+      - name: Upload debug APKs
         uses: actions/upload-artifact@v5
         with:
           name: vitmap-debug-apks
           path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
+      - name: Build release APKs (minified, much faster on device)
+        run: ./gradlew :app:assembleRelease --stacktrace
+
+      - name: Upload release APKs
+        uses: actions/upload-artifact@v5
+        with:
+          name: vitmap-release-apks
+          path: app/build/outputs/apk/release/*.apk
           if-no-files-found: error

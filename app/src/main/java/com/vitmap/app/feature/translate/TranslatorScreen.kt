@@ -244,12 +244,15 @@ private fun TextTab(vm: TranslatorViewModel, s: TranslatorState, onDefine: () ->
     val context = LocalContext.current
     @Suppress("DEPRECATION")
     val clipboard = LocalClipboardManager.current
+    // Local text state keeps the cursor stable; the view model follows it.
+    var text by remember { mutableStateOf(s.input) }
+    LaunchedEffect(s.input) { if (s.input != text) text = s.input }
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Surface(shape = RoundedCornerShape(26.dp), color = MaterialTheme.colorScheme.surfaceContainerLow, modifier = Modifier.fillMaxWidth()) {
             Column(Modifier.padding(6.dp)) {
                 TextField(
-                    value = s.input,
-                    onValueChange = vm::setInput,
+                    value = text,
+                    onValueChange = { text = it; vm.setInput(it) },
                     placeholder = { Text("Type or paste text") },
                     textStyle = MaterialTheme.typography.titleLarge,
                     minLines = 3,

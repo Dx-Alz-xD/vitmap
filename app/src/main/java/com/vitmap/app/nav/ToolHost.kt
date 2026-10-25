@@ -1,6 +1,7 @@
 package com.vitmap.app.nav
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import com.vitmap.app.feature.browser.BrowserScreen
 import com.vitmap.app.feature.chess.ChessScreen
 import com.vitmap.app.feature.color.ColorPickerScreen
@@ -19,6 +20,6 @@ fun ToolHost(route: ToolRoute, onBack: () -> Unit, onOpenTool: (String, String?)
         "translate" -> TranslatorScreen(onBack, initialText = route.arg)
         "browser" -> BrowserScreen(onBack, initialUrl = route.arg)
         "convert" -> ConvertScreen(onBack)
-        else -> onBack()
+        else -> LaunchedEffect(route.id) { onBack() }
     }
 }

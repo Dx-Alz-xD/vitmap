@@ -226,14 +226,14 @@ fun ChessBoard(
                         onDragEnd = {
                             val d = drag ?: return@detectDragGestures
                             val to = squareAt(d.pointer) ?: d.from
-                            dropOffsets[d.spriteId] = d.pointer - Offset(sqPx / 2, sqPx / 2)
+                            dropOffsets[d.spriteId] = d.pointer - Offset(sqPx / 2, sqPx * 0.8f)
                             drag = null
                             dropToken++
                             dropState.value(d.from, to)
                         },
                         onDragCancel = {
                             val d = drag ?: return@detectDragGestures
-                            dropOffsets[d.spriteId] = d.pointer - Offset(sqPx / 2, sqPx / 2)
+                            dropOffsets[d.spriteId] = d.pointer - Offset(sqPx / 2, sqPx * 0.8f)
                             drag = null
                             dropToken++
                             dropState.value(d.from, d.from)
