@@ -97,7 +97,7 @@ Requirements: JDK 17 or newer, and the Android SDK with platform 37.
 ./gradlew :app:assembleDebug    # APKs in app/build/outputs/apk/debug/
 ```
 
-Every push runs GitHub Actions (`.github/workflows/android.yml`), which runs the tests and uploads the debug APKs as the **vitmap-debug-apks** artifact. Splits are produced per ABI (`arm64-v8a` for most phones) along with a universal APK. Debug and release builds are signed with the checked-in `app/debug.keystore`, so newer builds install over older ones. Replace that key before publishing to a store.
+Every push runs GitHub Actions (`.github/workflows/android.yml`), which runs the tests and uploads two artifacts: **vitmap-release-apks** (minified with R8; install this one, since animations and the chess engine run much faster) and **vitmap-debug-apks**. Splits are produced per ABI (`arm64-v8a` for most phones) along with a universal APK. Debug and release builds are signed with the checked-in `app/debug.keystore`, so newer builds install over older ones. Replace that key before publishing to a store.
 
 Toolchain: AGP 9.3.1, Gradle 9.5, Kotlin 2.4.20, Compose BOM 2026.09.00, CameraX 1.4.2, ML Kit (translate 17.0.3, text recognition 16.0.1, language ID 17.0.6). minSdk 26, targetSdk 36.
 
