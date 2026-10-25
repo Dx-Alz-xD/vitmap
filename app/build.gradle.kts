@@ -78,6 +78,9 @@ kotlin {
             "androidx.compose.foundation.layout.ExperimentalLayoutApi",
             "androidx.compose.animation.ExperimentalSharedTransitionApi",
             "androidx.compose.animation.ExperimentalAnimationApi",
+            "androidx.compose.ui.text.ExperimentalTextApi",
+            "androidx.compose.ui.ExperimentalComposeUiApi",
+            "kotlinx.coroutines.ExperimentalCoroutinesApi",
         )
     }
 }
