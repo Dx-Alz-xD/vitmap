@@ -1,45 +1,46 @@
 #!/usr/bin/env bash
 set -u
-echo "=== WANDBOX LIST"
 curl -sS --max-time 60 https://wandbox.org/api/list.json -o wb.json
+echo "=== WANDBOX TEMPLATES"
 python3 - <<'EOF'
-import json, collections
+import json, urllib.request
 d = json.load(open("wb.json"))
-print("compilers", len(d))
-print("keys", sorted(d[0].keys()))
-by = collections.OrderedDict()
+seen = {}
 for c in d:
-    by.setdefault(c["language"], []).append(c["name"])
-for lang, names in by.items():
-    print(f"{lang}\t{len(names)}\t{' '.join(names[:4])}")
-print("SAMPLE", json.dumps(d[0])[:1500])
+    for t in c.get("templates", []):
+        seen.setdefault(t, (c["language"], c["name"]))
+for t, (lang, comp) in seen.items():
+    try:
+        r = json.load(urllib.request.urlopen(f"https://wandbox.org/api/template/{t}", timeout=30))
+        code = r.get("code", "")
+    except Exception as e:
+        code = f"ERR {e}"
+    print(f"--- {lang} | {t} | {comp}")
+    print(code[:900])
 EOF
-echo "=== WANDBOX RUN"
-curl -sS --max-time 60 -H "Content-Type: application/json" -d '{"code":"#include <iostream>\nint main(){std::string s;std::cin>>s;std::cout<<\"hi \"<<s<<std::endl;return 3;}","compiler":"gcc-head","stdin":"bob","save":false}' https://wandbox.org/api/compile.json; echo
-curl -sS --max-time 60 -H "Content-Type: application/json" -d '{"code":"print(1/0)","compiler":"cpython-head","save":false}' https://wandbox.org/api/compile.json; echo
 echo "=== GODBOLT LANGUAGES"
 curl -sS --max-time 60 -H "Accept: application/json" "https://godbolt.org/api/languages?fields=id,name,extensions,defaultCompiler" -o gl.json
-python3 -c 'import json; d=json.load(open("gl.json")); print(len(d)); print("\n".join(f"{x[\"id\"]}\t{x[\"name\"]}\t{\",\".join(x.get(\"extensions\",[]))}\t{x.get(\"defaultCompiler\")}" for x in d))'
-echo "=== GODBOLT COMPILERS"
-curl -sS --max-time 90 -H "Accept: application/json" "https://godbolt.org/api/compilers?fields=id,name,lang,supportsExecute,instructionSet" -o gc.json
 python3 - <<'EOF'
-import json, collections
-d = json.load(open("gc.json"))
-print("compilers", len(d), "keys", sorted(d[0].keys()))
-by = collections.OrderedDict()
-for c in d:
-    if c.get("supportsExecute"):
-        by.setdefault(c["lang"], []).append(c["id"] + "=" + c["name"])
-print("languages with execution", len(by))
-for lang, names in by.items():
-    print(f"{lang}\t{len(names)}\t{' | '.join(names[:3])}")
+import json
+for x in json.load(open("gl.json")):
+    print(x["id"], "|", x["name"], "|", ",".join(x.get("extensions", [])), "|", x.get("defaultCompiler"))
 EOF
-echo "=== GODBOLT RUN"
-cat > req.json <<'EOF'
-{"source":"#include <stdio.h>\nint main(){char b[32];scanf(\"%31s\",b);printf(\"hi %s\\n\",b);fprintf(stderr,\"warn\\n\");return 3;}","compiler":"cg142","options":{"userArguments":"-O1","executeParameters":{"args":["a1"],"stdin":"bob"},"compilerOptions":{"executorRequest":true},"filters":{"execute":true},"tools":[],"libraries":[]},"lang":"c","allowStoreCodeDebug":true}
+echo "=== GODBOLT EXAMPLES"
+curl -sS --max-time 60 -H "Accept: application/json" https://godbolt.org/source/builtin/list -o ex.json
+python3 - <<'EOF'
+import json, urllib.request
+ex = json.load(open("ex.json"))
+langs = {}
+for e in ex:
+    langs.setdefault(e["lang"], []).append(e["file"])
+want = ["java", "kotlin", "csharp", "fsharp", "vb", "dart", "fortran", "cobol", "ada", "pascal", "modula2", "odin", "mojo", "vala", "carbon", "hylo", "clean", "crystal", "raku", "ocaml", "haskell", "zig", "d", "go", "swift", "objc", "clojure", "julia", "cmakescript", "wasm", "llvm", "assembly", "spice", "scala", "ruby", "perl", "python", "lua", "typescript", "android-java"]
+for l in want:
+    files = langs.get(l, [])
+    print(f"--- {l}: {files[:8]}")
+    if files:
+        try:
+            r = json.load(urllib.request.urlopen(urllib.request.Request(f"https://godbolt.org/source/builtin/load/{l}/{files[0]}", headers={"Accept": "application/json"}), timeout=30))
+            print(r.get("file", "")[:700])
+        except Exception as e:
+            print("ERR", e)
 EOF
-curl -sS --max-time 60 -H "Content-Type: application/json" -H "Accept: application/json" -d @req.json https://godbolt.org/api/compiler/cg142/compile | head -c 3000; echo
-cat > req2.json <<'EOF'
-{"source":"int main(){ return undefined_thing; }","compiler":"cg142","options":{"userArguments":"","executeParameters":{"args":[],"stdin":""},"compilerOptions":{"executorRequest":true},"filters":{"execute":true},"tools":[],"libraries":[]},"lang":"c","allowStoreCodeDebug":true}
-EOF
-curl -sS --max-time 60 -H "Content-Type: application/json" -H "Accept: application/json" -d @req2.json https://godbolt.org/api/compiler/cg142/compile | head -c 3000; echo
