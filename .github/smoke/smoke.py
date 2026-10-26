@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Emulator smoke test, run by CI inside android-emulator-runner.
 
-Installs the APK, opens the home screen and every tool, then edits and exports a photo in the
-Photo Editor. Fails if the app crashes or a step doesn't reach its expected screen. Screenshots of
+Installs the APK, opens the home screen and every tool, runs code in Code Writer (JavaScript, Lua
+and SQL offline; Python and TypeScript after downloading their runtimes on the spot), then edits and
+exports a photo in the Photo Editor. Fails if the app
+crashes or a step doesn't reach its expected screen. Screenshots of
 every step are written to smoke-shots/ and uploaded as a CI artifact.
 
 Usage: smoke.py <directory with APKs>
@@ -87,6 +89,16 @@ def find(label, timeout=10.0):
         time.sleep(1)
 
 
+def find_containing(part, timeout=10.0):
+    end = time.time() + timeout
+    while True:
+        if any(part in text for text, _, _ in nodes()):
+            return True
+        if time.time() > end:
+            return False
+        time.sleep(1)
+
+
 def tap_bounds(b):
     shell(f"input tap {(b[0] + b[2]) // 2} {(b[1] + b[3]) // 2}")
 
@@ -135,6 +147,55 @@ def media_id(name):
     out = shell(f"content query --uri content://media/external/images/media --projection _id --where \"_display_name='{name}'\"", check=False)
     m = re.search(r"_id=(\d+)", out)
     return m.group(1) if m else None
+
+
+def code_writer():
+    """Creates a file from each language's template and runs it with the recommended runner."""
+    languages = [
+        ("JavaScript", "javascript", "Hello, World!"),
+        ("Lua", "lua", "Hello, World!"),
+        ("SQL (SQLite)", "sqlite", "Jupiter"),
+        # These two need a runtime pack first, which the Run button offers to download.
+        ("Python", "python", "Hello, World!"),
+        ("TypeScript", "typescript", "Jupiter"),
+    ]
+    for lang, query, expect in languages:
+        step = f"code {lang}"
+        launch_tool("code")
+        if not tap("New file", timeout=15):
+            failures.append(f"{step}: 'New file' not found")
+            shot(f"code-{query}-no-new-file")
+            return
+        field = find("Search languages or extensions", timeout=10) or next((b for _, cls, b in nodes() if cls.endswith("EditText")), None)
+        if field is None:
+            failures.append(f"{step}: language search not found")
+            return
+        tap_bounds(field)
+        shell(f"input text {query}")
+        time.sleep(2)
+        if not tap(lang, timeout=10):
+            failures.append(f"{step}: language not listed")
+            shot(f"code-{query}-not-listed")
+            continue
+        if not tap("Run", timeout=20):
+            failures.append(f"{step}: Run button not found")
+            shot(f"code-{query}-no-run")
+            continue
+        download = None
+        for _ in range(4):
+            download = next((b for text, _, b in nodes() if text.startswith("Download ·")), None)
+            if download is not None or find_containing(expect, timeout=0):
+                break
+            time.sleep(1.5)
+        if download is not None:
+            shot(f"code-{query}-download")
+            tap_bounds(download)
+        ok = find_containing(expect, timeout=240 if download else 40)
+        shot(f"code-{query}")
+        if not ok:
+            failures.append(f"{step}: output didn't contain {expect!r}")
+        if check_alive(step) and ok:
+            print(f"ok   {step}")
 
 
 def photo_editor():
@@ -233,13 +294,14 @@ def main():
         shot(f"{i:02d}-{tool}")
         print(("ok   " if check_alive(tool) else "FAIL ") + tool)
 
+    code_writer()
     photo_editor()
 
     if failures:
         print("\nSmoke test failures:\n  " + "\n  ".join(failures))
         print(adb("logcat", "-d", "-t", "400", "*:E", check=False)[-8000:])
         sys.exit(1)
-    print(f"\nSmoke test passed: home, {len(tools)} tools and the photo editor flow.")
+    print(f"\nSmoke test passed: home, {len(tools)} tools, Code Writer runs and the photo editor flow.")
 
 
 if __name__ == "__main__":
