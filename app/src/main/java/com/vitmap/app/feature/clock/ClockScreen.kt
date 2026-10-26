@@ -214,7 +214,7 @@ private fun CountryPanel(vm: ClockViewModel, s: ClockState, world: World, code: 
                     vm.entryForZone(world, z.id, city)?.let(vm::add)
                 }.padding(vertical = 6.dp, horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        Text(z.id.substringAfter('/').replace('_', ' ').replace('/', ' · '), style = MaterialTheme.typography.bodyMedium)
+                        Text(z.id.substringAfter('/').replace('_', ' ').replace("/", " · "), style = MaterialTheme.typography.bodyMedium)
                         Text(listOf("UTC${t.offset.id.replace("Z", "+00:00")}", z.comment).filter { it.isNotEmpty() }.joinToString(" · "), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                     Text(t.format(fmt), style = MaterialTheme.typography.titleMedium)

@@ -3,6 +3,7 @@ package com.vitmap.app.nav
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material.icons.rounded.Colorize
+import androidx.compose.material.icons.rounded.CurrencyExchange
 import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.DocumentScanner
 import androidx.compose.material.icons.rounded.PictureAsPdf
@@ -113,6 +114,11 @@ object Tools {
             "clock", "World Clock", "Live clocks on a world map with day and night, sunrise times and a meeting planner",
             ToolIcon.Vector(Icons.Rounded.Schedule), ToolCategory.UTILITIES, Accents.Clock, Connectivity.OFFLINE,
             listOf("time", "timezone", "zone", "city", "map", "utc", "meeting", "sunrise"),
+        ),
+        Tool(
+            "forex", "ForEx", "348 currencies: every fiat currency, local and historic ones, metals and crypto",
+            ToolIcon.Vector(Icons.Rounded.CurrencyExchange), ToolCategory.UTILITIES, Accents.ForEx, Connectivity.OFFLINE_AFTER_SETUP,
+            listOf("currency", "exchange", "money", "rate", "dollar", "euro", "rupee", "bitcoin", "gold"),
         ),
         Tool(
             "convert", "Conversion", "Nearly 800 units in 49 categories, from metres to smoots, plus your own",

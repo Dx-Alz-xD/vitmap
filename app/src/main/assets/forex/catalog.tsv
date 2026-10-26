@@ -1,0 +1,348 @@
+1inch	1inch	CRYPTO		
+aave	Aave	CRYPTO		
+ada	Cardano	CRYPTO		
+adp	Andorran Peseta	LEGACY	₧	AD
+aed	Emirati Dirham	FIAT	د.إ	AE
+afn	Afghan Afghani	FIAT	؋	AF
+akt	Akash Network	CRYPTO		
+algo	Algorand	CRYPTO		
+all	Albanian Lek	FIAT	L	AL
+amd	Armenian Dram	FIAT	֏	AM
+amp	Amp	CRYPTO		
+ang	Netherlands Antillean Guilder	LEGACY	ƒ	CW
+aoa	Angolan Kwanza	FIAT	Kz	AO
+ape	ApeCoin	CRYPTO		
+apt	Aptos	CRYPTO		
+ar	Arweave	CRYPTO		
+arb	Arbitrum	CRYPTO		
+ars	Argentine Peso	FIAT	$	AR
+atom	Cosmos	CRYPTO		
+ats	Austrian Schilling	LEGACY		AT
+aud	Australian Dollar	FIAT	$	AU,CC,CX,KI,NF,NR,TV
+avax	Avalanche	CRYPTO		
+awg	Aruban Florin	FIAT	ƒ	AW
+axs	Axie Infinity	CRYPTO		
+azm	Azerbaijani Manat (old)	LEGACY		AZ
+azn	Azerbaijani Manat	FIAT	₼	AZ
+bake	BakeryToken	CRYPTO		
+bam	Bosnian Convertible Mark	FIAT	KM	BA
+bat	Basic Attention Token	CRYPTO		
+bbd	Barbadian Dollar	FIAT	$	BB
+bch	Bitcoin Cash	CRYPTO		
+bdt	Bangladeshi Taka	FIAT	৳	BD
+bef	Belgian Franc	LEGACY		BE
+bgn	Bulgarian Lev	LEGACY	лв	BG
+bhd	Bahraini Dinar	FIAT	.د.ب	BH
+bif	Burundian Franc	FIAT	Fr	BI
+bmd	Bermudian Dollar	FIAT	$	BM
+bnb	Binance Coin	CRYPTO		
+bnd	Bruneian Dollar	FIAT	$	BN
+bob	Bolivian Boliviano	FIAT	Bs.	BO
+brl	Brazilian Real	FIAT	R$	BR
+bsd	Bahamian Dollar	FIAT	$	BS
+bsv	Bitcoin SV	CRYPTO		
+bsw	Biswap	CRYPTO		
+btc	Bitcoin	CRYPTO		
+btcb	Bitcoin BEP2	CRYPTO		
+btg	Bitcoin Gold	CRYPTO		
+btn	Bhutanese Ngultrum	FIAT	Nu.	BT
+btt	BitTorrent	CRYPTO		
+busd	Binance USD	CRYPTO		
+bwp	Botswana Pula	FIAT	P	BW,ZW
+byn	Belarusian Ruble	FIAT	Br	BY
+byr	Belarusian Ruble (old)	LEGACY		BY
+bzd	Belizean Dollar	FIAT	$	BZ
+cad	Canadian Dollar	FIAT	$	CA
+cake	PancakeSwap	CRYPTO		
+cdf	Congolese Franc	FIAT	FC	CD
+celo	Celo	CRYPTO		
+cfx	Conflux	CRYPTO		
+chf	Swiss Franc	FIAT	Fr.	CH,LI
+chz	Chiliz	CRYPTO		
+ckd	Cook Islands Dollar	LOCAL	$	CK
+clf	Chilean Unidad de Fomento	LOCAL	UF	CL
+clp	Chilean Peso	FIAT	$	CL
+cnh	Chinese Yuan (offshore)	LOCAL		CN
+cny	Chinese Yuan Renminbi	FIAT	¥	CN,ZW
+comp	Compound	CRYPTO		
+cop	Colombian Peso	FIAT	$	CO
+crc	Costa Rican Colon	FIAT	₡	CR
+cro	Crypto.com Chain	CRYPTO		
+crv	Curve DAO Token	CRYPTO		
+cspr	Casper	CRYPTO		
+cuc	Cuban Convertible Peso	LEGACY	$	CU
+cup	Cuban Peso	FIAT	$	CU
+cve	Cape Verdean Escudo	FIAT	Esc	CV
+cvx	Convex Finance	CRYPTO		
+cyp	Cypriot Pound	LEGACY		CY
+czk	Czech Koruna	FIAT	Kč	CZ
+dai	DAI	CRYPTO		
+dash	Digital Cash	CRYPTO		
+dcr	Decred	CRYPTO		
+dem	German Deutsche Mark	LEGACY		DE
+dfi	DfiStarter	CRYPTO		
+djf	Djiboutian Franc	FIAT	Fr	DJ
+dkk	Danish Krone	FIAT	kr	DK,FO,GL
+doge	Dogecoin	CRYPTO		
+dop	Dominican Peso	FIAT	$	DO
+dot	Polkadot	CRYPTO		
+dydx	dYdX	CRYPTO		
+dzd	Algerian Dinar	FIAT	د.ج	DZ,EH
+eek	Estonian Kroon	LEGACY		EE
+egld	Elrond	CRYPTO		
+egp	Egyptian Pound	FIAT	£	EG,PS
+enj	Enjin Coin	CRYPTO		
+eos	EOS	CRYPTO		
+ern	Eritrean Nakfa	FIAT	Nfk	ER
+esp	Spanish Peseta	LEGACY		ES
+etb	Ethiopian Birr	FIAT	Br	ET
+etc	Ethereum Classic	CRYPTO		
+eth	Ethereum	CRYPTO		
+eur	Euro	FIAT	€	AD,AT,AX,BE,BL,CY,DE,EE,ES,FI,FR,GF,GP,GR,HR,IE,IT,LT,LU,LV,MC,ME,MF,MQ,MT,NL,PM,PT,RE,SI,SK,SM,TF,VA,XK,YT,ZW
+eurc	Euro Coin	CRYPTO		
+fei	Fei USD	CRYPTO		
+fil	Filecoin	CRYPTO		
+fim	Finnish Markka	LEGACY		FI
+fjd	Fijian Dollar	FIAT	$	FJ
+fkp	Falkland Island Pound	FIAT	£	FK
+flow	Flow	CRYPTO		
+flr	FLARE	CRYPTO		
+fok	Faroese Króna	LOCAL	kr	FO
+frax	Frax	CRYPTO		
+frf	French Franc	LEGACY		FR
+ftt	FarmaTrust	CRYPTO		
+gala	Gala	CRYPTO		
+gbp	British Pound	FIAT	£	GB,GG,IM,JE,SH,ZW
+gel	Georgian Lari	FIAT	₾	GE
+ggp	Guernsey Pound	LOCAL	£	GG
+ghc	Ghanaian Cedi (old)	LEGACY		GH
+ghs	Ghanaian Cedi	FIAT	₵	GH
+gip	Gibraltar Pound	FIAT	£	GI
+gmd	Gambian Dalasi	FIAT	D	GM
+gmx	Goldmaxcoin	CRYPTO		
+gnf	Guinean Franc	FIAT	Fr	GN
+gno	Gnosis	CRYPTO		
+grd	Greek Drachma	LEGACY		GR
+grt	The Graph	CRYPTO		
+gt	GateToken	CRYPTO		
+gtq	Guatemalan Quetzal	FIAT	Q	GT
+gusd	Gemini US Dollar	CRYPTO		
+gyd	Guyanese Dollar	FIAT	$	GY
+hbar	Hedera	CRYPTO		
+hkd	Hong Kong Dollar	FIAT	$	HK
+hnl	Honduran Lempira	FIAT	L	HN
+hnt	Helium	CRYPTO		
+hot	Hydro Protocol	CRYPTO		
+hrk	Croatian Kuna	LEGACY		HR
+ht	Huobi Token	CRYPTO		
+htg	Haitian Gourde	FIAT	G	HT
+huf	Hungarian Forint	FIAT	Ft	HU
+icp	Internet Computer	CRYPTO		
+idr	Indonesian Rupiah	FIAT	Rp	ID
+iep	Irish Pound	LEGACY		IE
+ils	Israeli Shekel	FIAT	₪	IL,PS
+imp	Manx Pound	LOCAL	£	IM
+imx	Immutable X	CRYPTO		
+inj	Injective	CRYPTO		
+inr	Indian Rupee	FIAT	₹	BT,IN,ZW
+iqd	Iraqi Dinar	FIAT	ع.د	IQ
+irr	Iranian Rial	FIAT	﷼	IR
+isk	Icelandic Krona	FIAT	kr	IS
+itl	Italian Lira	LEGACY		IT
+jep	Jersey Pound	LOCAL	£	JE
+jmd	Jamaican Dollar	FIAT	$	JM
+jod	Jordanian Dinar	FIAT	د.ا	JO,PS
+jpy	Japanese Yen	FIAT	¥	JP,ZW
+kas	Kaspa	CRYPTO		
+kava	Kava	CRYPTO		
+kcs	Kucoin	CRYPTO		
+kda	Kadena	CRYPTO		
+kes	Kenyan Shilling	FIAT	Sh	KE
+kgs	Kyrgyzstani Som	FIAT	с	KG
+khr	Cambodian Riel	FIAT	៛	KH
+kid	Kiribati Dollar	LOCAL	$	KI
+klay	Klaytn	CRYPTO		
+kmf	Comorian Franc	FIAT	Fr	KM
+knc	Kyber Network Crystals	CRYPTO		
+kpw	North Korean Won	FIAT	₩	KP
+krw	South Korean Won	FIAT	₩	KR
+ksm	Kusama	CRYPTO		
+kwd	Kuwaiti Dinar	FIAT	د.ك	KW
+kyd	Caymanian Dollar	FIAT	$	KY
+kzt	Kazakhstani Tenge	FIAT	₸	KZ
+lak	Lao Kip	FIAT	₭	LA
+lbp	Lebanese Pound	FIAT	ل.ل	LB
+ldo	Lido DAO Token	CRYPTO		
+leo	LEOcoin	CRYPTO		
+link	Chainlink	CRYPTO		
+lkr	Sri Lankan Rupee	FIAT	Rs  රු	LK
+lrc	Loopring	CRYPTO		
+lrd	Liberian Dollar	FIAT	$	LR
+lsl	Basotho Loti	FIAT	L	LS
+ltc	Litecoin	CRYPTO		
+ltl	Lithuanian Litas	LEGACY		LT
+luf	Luxembourg Franc	LEGACY		LU
+luna	Terra	CRYPTO		
+lunc	Terra Classic	CRYPTO		
+lvl	Latvian Lat	LEGACY		LV
+lyd	Libyan Dinar	FIAT	ل.د	LY
+mad	Moroccan Dirham	FIAT	DH	EH,MA
+mana	Mana Coin Decentraland	CRYPTO		
+mbx	MobieCoin	CRYPTO		
+mcf	Monégasque Franc	LEGACY	₣	MC
+mdl	Moldovan Leu	FIAT	L	MD
+mga	Malagasy Ariary	FIAT	Ar	MG
+mgf	Malagasy Franc	LEGACY		MG
+mina	Mina	CRYPTO		
+mkd	Macedonian Denar	FIAT	den	MK
+mkr	Maker	CRYPTO		
+mmk	Burmese Kyat	FIAT	Ks	MM
+mnt	Mongolian Tughrik	FIAT	₮	MN
+mop	Macau Pataca	FIAT	P	MO
+mro	Mauritanian Ouguiya (old)	LEGACY		MR
+mru	Mauritanian Ouguiya	FIAT	UM	EH,MR
+mtl	Maltese Lira	LEGACY		MT
+mur	Mauritian Rupee	FIAT	₨	MU
+mvr	Maldivian Rufiyaa	FIAT	.ރ	MV
+mwk	Malawian Kwacha	FIAT	MK	MW
+mxn	Mexican Peso	FIAT	$	MX
+mxv	Mexican Investment Unit (UDI)	LOCAL		MX
+myr	Malaysian Ringgit	FIAT	RM	MY
+mzm	Mozambican Metical (old)	LEGACY		MZ
+mzn	Mozambican Metical	FIAT	MT	MZ
+nad	Namibian Dollar	FIAT	$	NA
+near	NEAR Protocol	CRYPTO		
+neo	NEO	CRYPTO		
+nexo	NEXO	CRYPTO		
+nft	NFT	CRYPTO		
+ngn	Nigerian Naira	FIAT	₦	NG
+nio	Nicaraguan Cordoba	FIAT	C$	NI
+nlg	Dutch Guilder	LEGACY		NL
+nok	Norwegian Krone	FIAT	kr	NO,SJ
+npr	Nepalese Rupee	FIAT	₨	NP
+nzd	New Zealand Dollar	FIAT	$	CK,NU,NZ,PN,TK
+okb	Okex	CRYPTO		
+omr	Omani Rial	FIAT	ر.ع.	OM
+one	Menlo One	CRYPTO		
+op	Optimism	CRYPTO		
+ordi	ORDI	CRYPTO		
+pab	Panamanian Balboa	FIAT	B/.	PA
+paxg	PAX Gold	CRYPTO		
+pen	Peruvian Sol	FIAT	S/.	PE
+pepe	Pepe	CRYPTO		
+pgk	Papua New Guinean Kina	FIAT	K	PG
+php	Philippine Peso	FIAT	₱	PH
+pi	Plian	CRYPTO		
+pkr	Pakistani Rupee	FIAT	₨	PK
+pln	Polish Zloty	FIAT	zł	PL
+pol	Proof Of Liquidity	CRYPTO		
+pte	Portuguese Escudo	LEGACY		PT
+pyg	Paraguayan Guarani	FIAT	₲	PY
+qar	Qatari Riyal	FIAT	ر.ق	QA
+qnt	Quant	CRYPTO		
+qtum	QTUM	CRYPTO		
+rol	Romanian Leu (old)	LEGACY		RO
+ron	Romanian Leu	FIAT	lei	RO
+rpl	Rocket Pool	CRYPTO		
+rsd	Serbian Dinar	FIAT	дин.	RS
+rub	Russian Ruble	FIAT	₽	RU
+rune	THORChain (ERC20)	CRYPTO		
+rvn	Ravencoin	CRYPTO		
+rwf	Rwandan Franc	FIAT	Fr	RW
+sand	The Sandbox	CRYPTO		
+sar	Saudi Arabian Riyal	FIAT	ر.س	SA
+sbd	Solomon Islander Dollar	FIAT	$	SB
+scr	Seychellois Rupee	FIAT	₨	SC
+sdd	Sudanese Dinar	LEGACY		SD
+sdg	Sudanese Pound	FIAT	PT	SD
+sek	Swedish Krona	FIAT	kr	SE
+sgd	Singapore Dollar	FIAT	$	BN,SG
+shib	Shiba Inu	CRYPTO		
+shp	Saint Helenian Pound	FIAT	£	GS,SH
+sit	Slovenian Tolar	LEGACY		SI
+skk	Slovak Koruna	LEGACY		SK
+sle	Sierra Leonean Leone	CRYPTO		
+sll	Sierra Leonean Leone (old)	LEGACY	Le	SL
+sml	San Marino Lira	LEGACY	₤	SM
+snx	Synthetix Network	CRYPTO		
+sol	Solana	CRYPTO		
+sos	Somali Shilling	FIAT	Sh	SO
+spl	Seborga Luigino	LOCAL		IT
+srd	Surinamese Dollar	FIAT	$	SR
+srg	Surinamese Guilder	LEGACY		SR
+ssp	South Sudanese Pound	FIAT	£	SS
+std	São Tomé Dobra (old)	LEGACY		ST
+stn	Sao Tomean Dobra	FIAT	Db	ST
+stx	Stacks	CRYPTO		
+sui	Sui	CRYPTO		
+svc	Salvadoran Colon	FIAT		SV
+syp	Syrian Pound	FIAT	£	SY
+szl	Swazi Lilangeni	FIAT	L	SZ
+thb	Thai Baht	FIAT	฿	TH
+theta	Theta	CRYPTO		
+tjs	Tajikistani Somoni	FIAT	ЅМ	TJ
+tmm	Turkmenistani Manat (old)	LEGACY		TM
+tmt	Turkmenistani Manat	FIAT	m	TM
+tnd	Tunisian Dinar	FIAT	د.ت	TN
+top	Tongan Pa'anga	FIAT	T$	TO
+trl	Turkish Lira (old)	LEGACY		TR
+trx	TRON	CRYPTO		
+try	Turkish Lira	FIAT	₺	TR
+ttd	Trinidadian Dollar	FIAT	$	TT
+tusd	True USD	CRYPTO		
+tvd	Tuvaluan Dollar	LOCAL	$	TV
+twd	Taiwan New Dollar	FIAT	$	TW
+twt	Trust Wallet Token	CRYPTO		
+tzs	Tanzanian Shilling	FIAT	Sh	TZ
+uah	Ukrainian Hryvnia	FIAT	₴	UA
+ugx	Ugandan Shilling	FIAT	Sh	UG
+uni	Uniswap	CRYPTO		
+usd	US Dollar	FIAT	$	AS,BQ,BS,EC,GU,IO,KH,MH,MP,PA,PR,PW,SV,TC,TL,UM,US,VG,VI,ZW
+usdc	USDC	CRYPTO		
+usdd	USDD	CRYPTO		
+usdp	USDP Stablecoin	CRYPTO		
+usdt	Tether	CRYPTO		
+uyu	Uruguayan Peso	FIAT	$	UY
+uzs	Uzbekistani Som	FIAT	so'm	UZ
+val	Vatican City Lira	LEGACY		VA
+veb	Venezuelan Bolívar (1879)	LEGACY		VE
+ved	Venezuelan Digital Bolívar	FIAT		VE
+vef	Venezuelan Bolívar Fuerte	LEGACY		VE
+ves	Venezuelan Bolívar	FIAT	Bs.S.	VE
+vet	Vechain	CRYPTO		
+vnd	Vietnamese Dong	FIAT	₫	VN
+vuv	Ni-Vanuatu Vatu	FIAT	Vt	VU
+waves	Waves	CRYPTO		
+wemix	WEMIX	CRYPTO		
+woo	WOO Network	CRYPTO		
+wst	Samoan Tala	FIAT	T	WS
+xaf	Central African CFA Franc BEAC	FIAT	Fr	CF,CG,CM,GA,GQ,TD
+xag	Silver (troy ounce)	METAL		
+xagg	Silver (gram)	METAL	g	
+xau	Gold (troy ounce)	METAL		
+xaug	Gold (gram)	METAL	g	
+xaut	Tether Gold	CRYPTO		
+xcd	East Caribbean Dollar	FIAT	$	AG,AI,DM,GD,KN,LC,MS,VC
+xcg	Caribbean Guilder	FIAT		CW
+xch	Chia	CRYPTO		
+xdc	XDC Network	CRYPTO		
+xdr	IMF Special Drawing Rights	LOCAL		
+xec	Eternal Coin	CRYPTO		
+xem	NEM	CRYPTO		
+xlm	Stellar Lumen	CRYPTO		
+xmr	Monero	CRYPTO		
+xof	CFA Franc	FIAT	Fr	BF,BJ,CI,GW,ML,NE,SN,TG
+xpd	Palladium (troy ounce)	METAL		
+xpf	CFP Franc	FIAT	₣	NC,PF,WF
+xpt	Platinum (troy ounce)	METAL		
+xrp	Ripple	CRYPTO		
+xtz	Tezos	CRYPTO		
+yer	Yemeni Rial	FIAT	﷼	YE
+zar	South African Rand	FIAT	R	LS,NA,SZ,ZA,ZW
+zec	ZCash	CRYPTO		
+zil	Zilliqa	CRYPTO		
+zmk	Zambian Kwacha (old)	LEGACY		ZM
+zmw	Zambian Kwacha	FIAT	ZK	ZM
+zwd	Zimbabwean Dollar (old)	LEGACY		ZW
+zwg	Zimbabwe Gold	FIAT		ZW
+zwl	Zimbabwean Dollar (2019)	LEGACY		ZW

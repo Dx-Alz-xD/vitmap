@@ -7,6 +7,7 @@ import com.vitmap.app.feature.chess.ChessScreen
 import com.vitmap.app.feature.clock.ClockScreen
 import com.vitmap.app.feature.color.ColorPickerScreen
 import com.vitmap.app.feature.convert.ConvertScreen
+import com.vitmap.app.feature.forex.ForexScreen
 import com.vitmap.app.feature.scan.PdfToolsScreen
 import com.vitmap.app.feature.scan.ScannerScreen
 import com.vitmap.app.feature.measure.MeasureScreen
@@ -28,6 +29,7 @@ fun ToolHost(route: ToolRoute, onBack: () -> Unit, onOpenTool: (String, String?)
         "pdftools" -> PdfToolsScreen(onBack, onOpenTool)
         "sudoku" -> SudokuScreen(onBack)
         "clock" -> ClockScreen(onBack)
+        "forex" -> ForexScreen(onBack)
         else -> LaunchedEffect(route.id) { onBack() }
     }
 }
