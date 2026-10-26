@@ -2,6 +2,9 @@ package com.vitmap.app.nav
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Colorize
+import androidx.compose.material.icons.rounded.Description
+import androidx.compose.material.icons.rounded.DocumentScanner
+import androidx.compose.material.icons.rounded.PictureAsPdf
 import androidx.compose.material.icons.rounded.Extension
 import androidx.compose.material.icons.rounded.Grid3x3
 import androidx.compose.material.icons.rounded.Language
@@ -20,6 +23,7 @@ import com.vitmap.app.ui.theme.Accents
 enum class ToolCategory(val title: String, val icon: ImageVector) {
     GAMES("Games", Icons.Rounded.SportsEsports),
     CAMERA("Camera & vision", Icons.Rounded.Videocam),
+    DOCUMENTS("Documents & PDF", Icons.Rounded.Description),
     LANGUAGE("Language", Icons.Rounded.Translate),
     WEB("Internet", Icons.Rounded.Public),
     UTILITIES("Utilities", Icons.Rounded.Widgets),
@@ -77,6 +81,16 @@ object Tools {
             "measure", "Measure", "Measure real objects from photos using cards, coins and paper as references",
             ToolIcon.Vector(Icons.Rounded.Straighten), ToolCategory.CAMERA, Accents.Measure, Connectivity.OFFLINE,
             listOf("ruler", "length", "size", "distance", "area"),
+        ),
+        Tool(
+            "scanner", "PDF Scanner", "Auto edge detection, auto or manual capture, filters, then edit and save as PDF",
+            ToolIcon.Vector(Icons.Rounded.DocumentScanner), ToolCategory.DOCUMENTS, Accents.Scanner, Connectivity.OFFLINE,
+            listOf("scan", "camera", "document", "pdf", "receipt", "crop", "sign", "ocr"),
+        ),
+        Tool(
+            "pdftools", "PDF Tools", "Merge, split, edit, sign, protect, watermark and number pages",
+            ToolIcon.Vector(Icons.Rounded.PictureAsPdf), ToolCategory.DOCUMENTS, Accents.PdfTools, Connectivity.OFFLINE,
+            listOf("pdf", "merge", "combine", "split", "sign", "esign", "signature", "password", "annotate", "edit", "watermark"),
         ),
         Tool(
             "translate", "Translator", "Text, photo, voice and document translation across 59 languages",

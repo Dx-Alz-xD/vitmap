@@ -20,6 +20,16 @@ object Accents {
     val Translator = Accent(Color(0xFF06B6D4), Color(0xFF7C3AED))
     val Convert = Accent(Color(0xFFF59E0B), Color(0xFFDC2626))
     val Brand = Accent(Color(0xFF6D4CFF), Color(0xFF00C2A8))
+    val Scanner = Accent(Color(0xFF14B8A6), Color(0xFF3B82F6))
+    val PdfTools = Accent(Color(0xFFEF4444), Color(0xFFDB2777))
+    val Compress = Accent(Color(0xFF84CC16), Color(0xFF059669))
+    val FileConvert = Accent(Color(0xFFF97316), Color(0xFFEAB308))
+    val Downloader = Accent(Color(0xFFFF1744), Color(0xFFFF6D00))
+    val ForEx = Accent(Color(0xFF16A34A), Color(0xFFCA8A04))
+    val Clock = Accent(Color(0xFF6366F1), Color(0xFF0EA5E9))
+    val Sudoku = Accent(Color(0xFF3B82F6), Color(0xFF8B5CF6))
+    val Code = Accent(Color(0xFF22D3EE), Color(0xFF0F766E))
+    val PhotoEditor = Accent(Color(0xFFD946EF), Color(0xFF6366F1))
 }
 
 val LightColors = lightColorScheme(

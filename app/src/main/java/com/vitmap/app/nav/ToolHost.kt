@@ -6,6 +6,8 @@ import com.vitmap.app.feature.browser.BrowserScreen
 import com.vitmap.app.feature.chess.ChessScreen
 import com.vitmap.app.feature.color.ColorPickerScreen
 import com.vitmap.app.feature.convert.ConvertScreen
+import com.vitmap.app.feature.scan.PdfToolsScreen
+import com.vitmap.app.feature.scan.ScannerScreen
 import com.vitmap.app.feature.measure.MeasureScreen
 import com.vitmap.app.feature.tictactoe.TicTacToeScreen
 import com.vitmap.app.feature.translate.TranslatorScreen
@@ -20,6 +22,8 @@ fun ToolHost(route: ToolRoute, onBack: () -> Unit, onOpenTool: (String, String?)
         "translate" -> TranslatorScreen(onBack, initialText = route.arg)
         "browser" -> BrowserScreen(onBack, initialUrl = route.arg)
         "convert" -> ConvertScreen(onBack)
+        "scanner" -> ScannerScreen(onBack)
+        "pdftools" -> PdfToolsScreen(onBack, onOpenTool)
         else -> LaunchedEffect(route.id) { onBack() }
     }
 }

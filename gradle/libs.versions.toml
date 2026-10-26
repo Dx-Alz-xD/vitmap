@@ -19,6 +19,7 @@ playTextRecognition = "19.0.1"
 playTextRecognitionScripts = "16.0.1"
 playServicesBase = "18.11.1"
 junit = "4.13.2"
+pdfbox = "2.0.27.0"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
@@ -60,6 +61,7 @@ play-text-recognition-japanese = { module = "com.google.android.gms:play-service
 play-text-recognition-korean = { module = "com.google.android.gms:play-services-mlkit-text-recognition-korean", version.ref = "playTextRecognitionScripts" }
 play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "playServicesBase" }
 
+pdfbox-android = { module = "com.tom-roush:pdfbox-android", version.ref = "pdfbox" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 

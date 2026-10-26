@@ -126,4 +126,6 @@ dependencies {
     implementation(libs.play.text.recognition.japanese)
     implementation(libs.play.text.recognition.korean)
     implementation(libs.play.services.base)
+
+    implementation(libs.pdfbox.android)
 }
