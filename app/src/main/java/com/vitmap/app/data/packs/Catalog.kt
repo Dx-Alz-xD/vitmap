@@ -2,6 +2,7 @@ package com.vitmap.app.data.packs
 
 import android.content.Context
 import com.vitmap.app.feature.code.WebRuntimes
+import com.vitmap.app.feature.photo.Segmentation
 import com.vitmap.app.media.MediaEngine
 import com.vitmap.app.ml.Ocr
 import java.io.File
@@ -47,6 +48,7 @@ object PackCatalog {
         get() = buildList {
             add(dictionary)
             addAll(Ocr.packs)
+            add(Segmentation.pack)
             add(MediaEngine.ffmpeg)
             add(MediaEngine.python)
             add(MediaEngine.ytdlp)

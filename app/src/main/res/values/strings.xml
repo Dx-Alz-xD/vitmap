@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Vitmap</string>
+    <string name="edit_photo">Edit in Vitmap</string>
 </resources>

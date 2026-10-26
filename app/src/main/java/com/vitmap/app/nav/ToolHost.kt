@@ -11,6 +11,7 @@ import com.vitmap.app.feature.compress.CompressScreen
 import com.vitmap.app.feature.convert.ConvertScreen
 import com.vitmap.app.feature.fileconvert.FileConvertScreen
 import com.vitmap.app.feature.forex.ForexScreen
+import com.vitmap.app.feature.photo.PhotoScreen
 import com.vitmap.app.feature.scan.PdfToolsScreen
 import com.vitmap.app.feature.scan.ScannerScreen
 import com.vitmap.app.feature.measure.MeasureScreen
@@ -38,6 +39,7 @@ fun ToolHost(route: ToolRoute, onBack: () -> Unit, onOpenTool: (String, String?)
         "fileconvert" -> FileConvertScreen(onBack, initialUri = route.arg)
         "ytdl" -> YtdlScreen(onBack, initialText = route.arg)
         "code" -> CodeScreen(onBack)
+        "photo" -> PhotoScreen(onBack, initialUri = route.arg)
         else -> LaunchedEffect(route.id) { onBack() }
     }
 }

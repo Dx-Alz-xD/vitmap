@@ -41,13 +41,14 @@ class MainActivity : ComponentActivity() {
 
     /**
      * Links open in AllBrowser, shared video links in the downloader, shared files in the converter,
-     * and shared or selected text in the translator.
+     * photos sent to "Edit with" in the photo editor, and shared or selected text in the translator.
      */
     private fun routeFor(intent: Intent?): ToolRoute? {
         intent ?: return null
         intent.getStringExtra(EXTRA_TOOL)?.let { return ToolRoute(it) }
         return when (intent.action) {
             Intent.ACTION_VIEW -> intent.dataString?.let { ToolRoute("browser", it) }
+            Intent.ACTION_EDIT -> intent.data?.let { ToolRoute("photo", it.toString()) }
             Intent.ACTION_SEND -> {
                 val stream = IntentCompat.getParcelableExtra(intent, Intent.EXTRA_STREAM, Uri::class.java)
                 if (stream != null) return ToolRoute("fileconvert", stream.toString())

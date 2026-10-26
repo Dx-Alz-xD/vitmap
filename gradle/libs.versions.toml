@@ -18,6 +18,7 @@ mlkitLanguageId = "17.0.6"
 playTextRecognition = "19.0.1"
 playTextRecognitionScripts = "16.0.1"
 playServicesBase = "18.11.1"
+playSubjectSegmentation = "16.0.0-beta1"
 junit = "4.13.2"
 pdfbox = "2.0.27.0"
 xz = "1.12"
@@ -65,6 +66,7 @@ play-text-recognition-chinese = { module = "com.google.android.gms:play-services
 play-text-recognition-devanagari = { module = "com.google.android.gms:play-services-mlkit-text-recognition-devanagari", version.ref = "playTextRecognitionScripts" }
 play-text-recognition-japanese = { module = "com.google.android.gms:play-services-mlkit-text-recognition-japanese", version.ref = "playTextRecognitionScripts" }
 play-text-recognition-korean = { module = "com.google.android.gms:play-services-mlkit-text-recognition-korean", version.ref = "playTextRecognitionScripts" }
+play-subject-segmentation = { module = "com.google.android.gms:play-services-mlkit-subject-segmentation", version.ref = "playSubjectSegmentation" }
 play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "playServicesBase" }
 
 snakeyaml-engine = { module = "org.snakeyaml:snakeyaml-engine", version.ref = "snakeyaml" }

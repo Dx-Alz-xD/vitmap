@@ -10,6 +10,7 @@ import androidx.compose.material.icons.rounded.SmartDisplay
 import androidx.compose.material.icons.rounded.Terminal
 import androidx.compose.material.icons.rounded.Transform
 import androidx.compose.material.icons.rounded.PermMedia
+import androidx.compose.material.icons.rounded.PhotoFilter
 import androidx.compose.material.icons.rounded.CurrencyExchange
 import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.DocumentScanner
@@ -119,6 +120,11 @@ object Tools {
             "fileconvert", "File Converter", "Turn photos, videos, audio, documents, data, subtitles and archives into 100+ other formats",
             ToolIcon.Vector(Icons.Rounded.Transform), ToolCategory.MEDIA, Accents.FileConvert, Connectivity.OFFLINE_AFTER_SETUP,
             listOf("convert", "converter", "convertor", "format", "mp4", "mp3", "jpg", "png", "heic", "webp", "pdf", "docx", "word", "gif", "json", "csv", "srt", "zip", "7z", "extension"),
+        ),
+        Tool(
+            "photo", "Photo Editor", "Looks, curves, colour grading, masks, healing, background removal, text, layers and frames",
+            ToolIcon.Vector(Icons.Rounded.PhotoFilter), ToolCategory.CREATIVE, Accents.PhotoEditor, Connectivity.OFFLINE,
+            listOf("photo", "image", "edit", "editor", "filter", "preset", "lightroom", "snapseed", "crop", "retouch", "heal", "background", "remove bg", "cutout", "text", "sticker", "collage", "curves", "hsl"),
         ),
         Tool(
             "code", "Code Writer", "Write and run code in 70+ languages, on the phone or on free online compilers, with highlighting for 240+",
