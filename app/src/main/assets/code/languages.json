@@ -1,0 +1,830 @@
+[
+ {
+  "id": "javascript",
+  "name": "JavaScript",
+  "ext": "js",
+  "grammar": "javascript",
+  "comment": "//",
+  "category": "popular",
+  "template": "// Runs offline with QuickJS (or in a browser engine / Node.js in the cloud).\nconst greet = (name) => `Hello, ${name}!`;\nconsole.log(greet(\"World\"));\n\nconst squares = [1, 2, 3, 4, 5].map((n) => n * n);\nconsole.log(\"Squares:\", squares.join(\", \"));\n",
+  "local": "quickjs",
+  "web": "js",
+  "wandbox": "JavaScript",
+  "aliases": [
+   "node",
+   "es"
+  ]
+ },
+ {
+  "id": "python",
+  "name": "Python",
+  "ext": "py",
+  "grammar": "python",
+  "comment": "#",
+  "category": "popular",
+  "template": "import sys\n\nname = sys.stdin.readline().strip() or \"World\"\nprint(f\"Hello, {name}!\")\nprint(\"Squares:\", [n * n for n in range(1, 6)])\n",
+  "local": "python",
+  "wandbox": "Python",
+  "godbolt": "python",
+  "stdin": true,
+  "aliases": [
+   "py3"
+  ]
+ },
+ {
+  "id": "bash",
+  "name": "Shell script",
+  "ext": "sh",
+  "grammar": "shellscript",
+  "comment": "#",
+  "category": "scripting",
+  "template": "read -r name\necho \"Hello, ${name:-World}!\"\nfor i in 1 2 3 4 5; do\n  printf '%d squared is %d\\n' \"$i\" $((i * i))\ndone\n",
+  "local": "shell",
+  "wandbox": "Bash script",
+  "stdin": true,
+  "aliases": [
+   "sh",
+   "bash",
+   "zsh"
+  ]
+ },
+ {
+  "id": "sql",
+  "name": "SQL (SQLite)",
+  "ext": "sql",
+  "grammar": "sql",
+  "comment": "--",
+  "category": "data",
+  "template": "CREATE TABLE planets (name TEXT, moons INTEGER, gas_giant INTEGER);\nINSERT INTO planets VALUES ('Earth', 1, 0), ('Mars', 2, 0), ('Jupiter', 95, 1), ('Saturn', 146, 1);\n\nSELECT name, moons FROM planets WHERE gas_giant = 1 ORDER BY moons DESC;\nSELECT COUNT(*) AS planets, SUM(moons) AS total_moons FROM planets;\n",
+  "local": "sqlite",
+  "wandbox": "SQL"
+ },
+ {
+  "id": "lua",
+  "name": "Lua",
+  "ext": "lua",
+  "grammar": "lua",
+  "comment": "--",
+  "category": "scripting",
+  "template": "local name = io.read(\"*l\") or \"\"\nif name == \"\" then name = \"World\" end\nprint(\"Hello, \" .. name .. \"!\")\n\nlocal squares = {}\nfor i = 1, 5 do squares[#squares + 1] = i * i end\nprint(\"Squares: \" .. table.concat(squares, \", \"))\n",
+  "local": "lua",
+  "wandbox": "Lua",
+  "godbolt": "lua",
+  "stdin": true
+ },
+ {
+  "id": "brainfuck",
+  "name": "Brainfuck",
+  "ext": "bf",
+  "comment": "",
+  "category": "esoteric",
+  "template": "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.\n",
+  "local": "esolang:brainfuck",
+  "stdin": true
+ },
+ {
+  "id": "ook",
+  "name": "Ook!",
+  "ext": "ook",
+  "comment": "",
+  "category": "esoteric",
+  "template": "Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook.\nOok! Ook? Ook. Ook? Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook! Ook? Ook. Ook?\nOok. Ook. Ook. Ook. Ook. Ook? Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook? Ook. Ook.\nOok. Ook. Ook. Ook. Ook. Ook? Ook. Ook. Ook? Ook. Ook? Ook. Ook? Ook. Ook? Ook.\nOok! Ook! Ook? Ook! Ook. Ook? Ook. Ook. Ook. Ook? Ook. Ook. Ook. Ook? Ook! Ook!\nOok. Ook? Ook. Ook? Ook. Ook. Ook! Ook? Ook? Ook. Ook? Ook! Ook? Ook. Ook! Ook!\nOok? Ook! Ook. Ook? Ook. Ook? Ook! Ook. Ook. Ook? Ook! Ook! Ook! Ook! Ook! Ook!\nOok! Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook.\nOok! Ook. Ook! Ook. Ook. Ook. Ook. Ook. Ook. Ook. Ook! Ook. Ook. Ook? Ook. Ook?\nOok! Ook. Ook? Ook. Ook! Ook! Ook! Ook. Ook? Ook. Ook! Ook. Ook. Ook. Ook. Ook.\nOok. Ook. Ook! Ook. Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook!\nOok! Ook. Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook! Ook!\nOok! Ook! Ook! Ook. Ook. Ook? Ook. Ook? Ook. Ook. Ook! Ook. Ook. Ook? Ook. Ook.\nOok. Ook. Ook! Ook.\n",
+  "local": "esolang:ook"
+ },
+ {
+  "id": "befunge",
+  "name": "Befunge-93",
+  "ext": "bf93",
+  "comment": "",
+  "category": "esoteric",
+  "template": "\"!dlroW ,olleH\">:#,_@\n",
+  "local": "esolang:befunge",
+  "aliases": [
+   "b93"
+  ]
+ },
+ {
+  "id": "whitespace",
+  "name": "Whitespace",
+  "ext": "ws",
+  "comment": "",
+  "category": "esoteric",
+  "template": "push   \t  \t   \nprint\t\n  push   \t\t  \t \t\nprint\t\n  push   \t\t \t\t  \nprint\t\n  push   \t\t \t\t  \nprint\t\n  push   \t\t \t\t\t\t\nprint\t\n  push   \t \t\t  \nprint\t\n  push   \t     \nprint\t\n  push   \t \t \t\t\t\nprint\t\n  push   \t\t \t\t\t\t\nprint\t\n  push   \t\t\t  \t \nprint\t\n  push   \t\t \t\t  \nprint\t\n  push   \t\t  \t  \nprint\t\n  push   \t    \t\nprint\t\n  push   \t \t \nprint\t\n  end\n\n\n",
+  "local": "esolang:whitespace"
+ },
+ {
+  "id": "deadfish",
+  "name": "Deadfish",
+  "ext": "df",
+  "comment": "",
+  "category": "esoteric",
+  "template": "iisso\niiiiiiiiio\ndddddddddddddddo\n",
+  "local": "esolang:deadfish"
+ },
+ {
+  "id": "slashes",
+  "name": "/// (Slashes)",
+  "ext": "slashes",
+  "comment": "",
+  "category": "esoteric",
+  "template": "/World/Vitmap/Hello, World!\n",
+  "local": "esolang:slashes"
+ },
+ {
+  "id": "json",
+  "name": "JSON",
+  "ext": "json",
+  "grammar": "json",
+  "comment": "",
+  "category": "data",
+  "template": "{\n  \"name\": \"Vitmap\",\n  \"tools\": [\"chess\", \"scanner\", \"code\"],\n  \"offline\": true\n}\n",
+  "data": "json"
+ },
+ {
+  "id": "yaml",
+  "name": "YAML",
+  "ext": "yaml",
+  "grammar": "yaml",
+  "comment": "#",
+  "category": "data",
+  "template": "name: Vitmap\ntools:\n  - chess\n  - scanner\n  - code\noffline: true\n",
+  "data": "yaml",
+  "aliases": [
+   "yml"
+  ]
+ },
+ {
+  "id": "xml",
+  "name": "XML",
+  "ext": "xml",
+  "grammar": "xml",
+  "comment": "",
+  "category": "data",
+  "template": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<app name=\"Vitmap\">\n  <tool>chess</tool>\n  <tool>scanner</tool>\n</app>\n",
+  "data": "xml"
+ },
+ {
+  "id": "csv",
+  "name": "CSV",
+  "ext": "csv",
+  "grammar": "csv",
+  "comment": "",
+  "category": "data",
+  "template": "name,moons\nEarth,1\nMars,2\nJupiter,95\n",
+  "data": "csv"
+ },
+ {
+  "id": "toml",
+  "name": "TOML",
+  "ext": "toml",
+  "grammar": "toml",
+  "comment": "#",
+  "category": "data",
+  "template": "[app]\nname = \"Vitmap\"\ntools = [\"chess\", \"scanner\"]\n"
+ },
+ {
+  "id": "html",
+  "name": "HTML",
+  "ext": "html",
+  "grammar": "html",
+  "comment": "",
+  "category": "web",
+  "template": "<!doctype html>\n<html>\n<head>\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <style>\n    body { font-family: system-ui, sans-serif; display: grid; place-items: center; min-height: 90vh; background: linear-gradient(135deg, #6366f1, #ec4899); color: white; }\n    button { font-size: 1.2rem; padding: .6em 1.2em; border: 0; border-radius: 999px; }\n  </style>\n</head>\n<body>\n  <div>\n    <h1 id=\"title\">Hello, World!</h1>\n    <button onclick=\"count()\">Clicked 0 times</button>\n  </div>\n  <script>\n    let n = 0;\n    function count() { document.querySelector(\"button\").textContent = `Clicked ${++n} times`; }\n  </script>\n</body>\n</html>\n",
+  "preview": "html",
+  "aliases": [
+   "htm"
+  ]
+ },
+ {
+  "id": "markdown",
+  "name": "Markdown",
+  "ext": "md",
+  "grammar": "markdown",
+  "comment": "",
+  "category": "web",
+  "template": "# Hello, World!\n\nWrite **Markdown** here and press *Run* to preview it.\n\n- Lists\n- `code`\n- [Links](https://example.com)\n",
+  "preview": "markdown"
+ },
+ {
+  "id": "svg",
+  "name": "SVG",
+  "ext": "svg",
+  "grammar": "xml",
+  "comment": "",
+  "category": "web",
+  "template": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\">\n  <defs>\n    <linearGradient id=\"g\" x1=\"0\" x2=\"1\"><stop offset=\"0\" stop-color=\"#6366f1\"/><stop offset=\"1\" stop-color=\"#ec4899\"/></linearGradient>\n  </defs>\n  <circle cx=\"100\" cy=\"100\" r=\"80\" fill=\"url(#g)\"/>\n  <text x=\"100\" y=\"108\" text-anchor=\"middle\" font-size=\"22\" fill=\"white\" font-family=\"sans-serif\">Hello!</text>\n</svg>\n",
+  "preview": "svg"
+ },
+ {
+  "id": "css",
+  "name": "CSS",
+  "ext": "css",
+  "grammar": "css",
+  "comment": "",
+  "category": "web",
+  "template": "body {\n  font-family: system-ui, sans-serif;\n  color: #1f2937;\n}\n"
+ },
+ {
+  "id": "typescript",
+  "name": "TypeScript",
+  "ext": "ts",
+  "grammar": "typescript",
+  "comment": "//",
+  "category": "popular",
+  "template": "interface Planet {\n  name: string;\n  moons: number;\n}\n\nconst planets: Planet[] = [\n  { name: \"Earth\", moons: 1 },\n  { name: \"Mars\", moons: 2 },\n  { name: \"Jupiter\", moons: 95 },\n];\n\nconst total = planets.reduce((sum, p) => sum + p.moons, 0);\nfor (const p of planets) console.log(`${p.name} has ${p.moons} moon${p.moons === 1 ? \"\" : \"s\"}`);\nconsole.log(`Total: ${total}`);\n",
+  "web": "ts",
+  "wandbox": "TypeScript"
+ },
+ {
+  "id": "coffeescript",
+  "name": "CoffeeScript",
+  "ext": "coffee",
+  "grammar": "coffee",
+  "comment": "#",
+  "category": "web",
+  "template": "greet = (name = \"World\") -> \"Hello, #{name}!\"\nconsole.log greet()\nsquares = (n * n for n in [1..5])\nconsole.log \"Squares: #{squares.join ', '}\"\n",
+  "web": "coffee"
+ },
+ {
+  "id": "scheme",
+  "name": "Scheme",
+  "ext": "scm",
+  "grammar": "scheme",
+  "comment": ";",
+  "category": "functional",
+  "template": "(define (square x) (* x x))\n(display \"Hello, World!\")\n(newline)\n(display (map square '(1 2 3 4 5)))\n(newline)\n",
+  "web": "scheme"
+ },
+ {
+  "id": "prolog",
+  "name": "Prolog",
+  "ext": "pl",
+  "grammar": "prolog",
+  "comment": "%",
+  "category": "functional",
+  "template": "parent(tom, bob).\nparent(bob, ann).\nparent(bob, pat).\ngrandparent(X, Z) :- parent(X, Y), parent(Y, Z).\n\nmain :- write('Hello, World!'), nl,\n    forall(grandparent(tom, G), (write(G), nl)).\n\n:- initialization(main).\n",
+  "web": "prolog",
+  "aliases": [
+   "pro"
+  ]
+ },
+ {
+  "id": "ruby",
+  "name": "Ruby",
+  "ext": "rb",
+  "grammar": "ruby",
+  "comment": "#",
+  "category": "scripting",
+  "template": "name = ($stdin.gets || \"\").strip\nname = \"World\" if name.empty?\nputs \"Hello, #{name}!\"\nputs (1..5).map { |n| n * n }.inspect\n",
+  "web": "ruby",
+  "wandbox": "Ruby",
+  "godbolt": "ruby",
+  "stdin": true
+ },
+ {
+  "id": "clojure",
+  "name": "Clojure",
+  "ext": "clj",
+  "grammar": "clojure",
+  "comment": ";",
+  "category": "functional",
+  "template": "(ns example)\n\n(defn square [x] (* x x))\n\n(println \"Hello, World!\")\n(println \"Squares:\" (map square (range 1 6)))\n",
+  "web": "clojure",
+  "godbolt": "clojure",
+  "aliases": [
+   "cljs"
+  ]
+ },
+ {
+  "id": "c",
+  "name": "C",
+  "ext": "c",
+  "grammar": "c",
+  "comment": "//",
+  "category": "popular",
+  "template": "#include <stdio.h>\n\nint main(void) {\n    char name[64] = \"World\";\n    if (scanf(\"%63s\", name) != 1) name[0] = 'W';\n    printf(\"Hello, %s!\\n\", name);\n    for (int i = 1; i <= 5; i++) printf(\"%d squared is %d\\n\", i, i * i);\n    return 0;\n}\n",
+  "wandbox": "C",
+  "godbolt": "c",
+  "stdin": true,
+  "aliases": [
+   "h"
+  ]
+ },
+ {
+  "id": "cpp",
+  "name": "C++",
+  "ext": "cpp",
+  "grammar": "cpp",
+  "comment": "//",
+  "category": "popular",
+  "template": "#include <iostream>\n#include <numeric>\n#include <string>\n#include <vector>\n\nint main() {\n    std::string name;\n    if (!(std::cin >> name)) name = \"World\";\n    std::cout << \"Hello, \" << name << \"!\\n\";\n\n    std::vector<int> v{5, 3, 8, 1};\n    std::cout << \"Sum: \" << std::accumulate(v.begin(), v.end(), 0) << '\\n';\n}\n",
+  "wandbox": "C++",
+  "godbolt": "c++",
+  "stdin": true,
+  "aliases": [
+   "cc",
+   "cxx",
+   "hpp",
+   "hh"
+  ]
+ },
+ {
+  "id": "csharp",
+  "name": "C#",
+  "ext": "cs",
+  "grammar": "csharp",
+  "comment": "//",
+  "category": "popular",
+  "template": "using System;\nusing System.Linq;\n\nclass Program\n{\n    static void Main()\n    {\n        var name = Console.ReadLine();\n        if (string.IsNullOrWhiteSpace(name)) name = \"World\";\n        Console.WriteLine($\"Hello, {name}!\");\n        Console.WriteLine(\"Squares: \" + string.Join(\", \", Enumerable.Range(1, 5).Select(n => n * n)));\n    }\n}\n",
+  "wandbox": "C#",
+  "godbolt": "csharp",
+  "stdin": true
+ },
+ {
+  "id": "java",
+  "name": "Java",
+  "ext": "java",
+  "grammar": "java",
+  "comment": "//",
+  "category": "popular",
+  "template": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        String name = in.hasNextLine() ? in.nextLine().trim() : \"\";\n        if (name.isEmpty()) name = \"World\";\n        System.out.println(\"Hello, \" + name + \"!\");\n        for (int i = 1; i <= 5; i++) System.out.println(i + \" squared is \" + i * i);\n    }\n}\n",
+  "wandbox": "Java",
+  "godbolt": "java",
+  "stdin": true
+ },
+ {
+  "id": "kotlin",
+  "name": "Kotlin",
+  "ext": "kt",
+  "grammar": "kotlin",
+  "comment": "//",
+  "category": "popular",
+  "template": "fun main() {\n    val name = readlnOrNull()?.trim().orEmpty().ifEmpty { \"World\" }\n    println(\"Hello, $name!\")\n    println(\"Squares: ${(1..5).map { it * it }}\")\n}\n",
+  "godbolt": "kotlin",
+  "stdin": true,
+  "aliases": [
+   "kts"
+  ]
+ },
+ {
+  "id": "go",
+  "name": "Go",
+  "ext": "go",
+  "grammar": "go",
+  "comment": "//",
+  "category": "popular",
+  "template": "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strings\"\n)\n\nfunc main() {\n\tname, _ := bufio.NewReader(os.Stdin).ReadString('\\n')\n\tname = strings.TrimSpace(name)\n\tif name == \"\" {\n\t\tname = \"World\"\n\t}\n\tfmt.Printf(\"Hello, %s!\\n\", name)\n\tfor i := 1; i <= 5; i++ {\n\t\tfmt.Printf(\"%d squared is %d\\n\", i, i*i)\n\t}\n}\n",
+  "wandbox": "Go",
+  "godbolt": "go",
+  "stdin": true
+ },
+ {
+  "id": "rust",
+  "name": "Rust",
+  "ext": "rs",
+  "grammar": "rust",
+  "comment": "//",
+  "category": "popular",
+  "template": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).ok();\n    let name = match input.trim() {\n        \"\" => \"World\",\n        n => n,\n    };\n    println!(\"Hello, {}!\", name);\n    let squares: Vec<u32> = (1..=5).map(|n| n * n).collect();\n    println!(\"Squares: {:?}\", squares);\n}\n",
+  "wandbox": "Rust",
+  "godbolt": "rust",
+  "stdin": true
+ },
+ {
+  "id": "swift",
+  "name": "Swift",
+  "ext": "swift",
+  "grammar": "swift",
+  "comment": "//",
+  "category": "popular",
+  "template": "let line = readLine() ?? \"\"\nlet name = line.isEmpty ? \"World\" : line\nprint(\"Hello, \\(name)!\")\nprint(\"Squares:\", (1...5).map { $0 * $0 })\n",
+  "wandbox": "Swift",
+  "godbolt": "swift",
+  "stdin": true
+ },
+ {
+  "id": "php",
+  "name": "PHP",
+  "ext": "php",
+  "grammar": "php",
+  "comment": "//",
+  "category": "web",
+  "template": "<?php\n$name = trim(fgets(STDIN) ?: \"\");\nif ($name === \"\") $name = \"World\";\necho \"Hello, $name!\\n\";\necho \"Squares: \" . implode(\", \", array_map(fn($n) => $n * $n, range(1, 5))) . \"\\n\";\n",
+  "wandbox": "PHP",
+  "stdin": true
+ },
+ {
+  "id": "perl",
+  "name": "Perl",
+  "ext": "pl",
+  "grammar": "perl",
+  "comment": "#",
+  "category": "scripting",
+  "template": "use strict;\nuse warnings;\n\nmy $name = <STDIN> // \"\";\nchomp $name;\n$name = \"World\" if $name eq \"\";\nprint \"Hello, $name!\\n\";\nprint \"Squares: \", join(\", \", map { $_ * $_ } 1 .. 5), \"\\n\";\n",
+  "wandbox": "Perl",
+  "godbolt": "perl",
+  "stdin": true,
+  "aliases": [
+   "pm"
+  ]
+ },
+ {
+  "id": "raku",
+  "name": "Raku",
+  "ext": "raku",
+  "grammar": "raku",
+  "comment": "#",
+  "category": "scripting",
+  "template": "my $name = 'World';\nsay \"Hello, $name!\";\nsay 'Squares: ', (1..5).map(* ** 2).join(', ');\n",
+  "godbolt": "raku",
+  "aliases": [
+   "p6"
+  ]
+ },
+ {
+  "id": "r",
+  "name": "R",
+  "ext": "r",
+  "grammar": "r",
+  "comment": "#",
+  "category": "scientific",
+  "template": "values <- c(4, 8, 15, 16, 23, 42)\ncat(\"Hello, World!\\n\")\ncat(\"Mean:\", mean(values), \" Median:\", median(values), \"\\n\")\nprint(summary(values))\n",
+  "wandbox": "R"
+ },
+ {
+  "id": "julia",
+  "name": "Julia",
+  "ext": "jl",
+  "grammar": "julia",
+  "comment": "#",
+  "category": "scientific",
+  "template": "name = strip(readline())\nname = isempty(name) ? \"World\" : name\nprintln(\"Hello, $name!\")\nprintln(\"Squares: \", [n^2 for n in 1:5])\n",
+  "wandbox": "Julia",
+  "godbolt": "julia",
+  "stdin": true
+ },
+ {
+  "id": "dart",
+  "name": "Dart",
+  "ext": "dart",
+  "grammar": "dart",
+  "comment": "//",
+  "category": "general",
+  "template": "import 'dart:io';\n\nvoid main() {\n  final name = stdin.readLineSync()?.trim() ?? '';\n  print('Hello, ${name.isEmpty ? 'World' : name}!');\n  print('Squares: ${[for (var n = 1; n <= 5; n++) n * n]}');\n}\n",
+  "godbolt": "dart",
+  "stdin": true
+ },
+ {
+  "id": "scala",
+  "name": "Scala",
+  "ext": "scala",
+  "grammar": "scala",
+  "comment": "//",
+  "category": "jvm",
+  "template": "object Main {\n  def main(args: Array[String]): Unit = {\n    println(\"Hello, World!\")\n    println(\"Squares: \" + (1 to 5).map(n => n * n).mkString(\", \"))\n  }\n}\n",
+  "wandbox": "Scala",
+  "godbolt": "scala"
+ },
+ {
+  "id": "groovy",
+  "name": "Groovy",
+  "ext": "groovy",
+  "grammar": "groovy",
+  "comment": "//",
+  "category": "jvm",
+  "template": "def greet(name) { \"Hello, ${name}!\" }\nprintln greet(\"World\")\nprintln \"Squares: ${(1..5).collect { it * it }}\"\n",
+  "wandbox": "Groovy"
+ },
+ {
+  "id": "haskell",
+  "name": "Haskell",
+  "ext": "hs",
+  "grammar": "haskell",
+  "comment": "--",
+  "category": "functional",
+  "template": "main :: IO ()\nmain = do\n  input <- getContents\n  let name = case lines input of\n        (l : _) | not (null l) -> l\n        _ -> \"World\"\n  putStrLn (\"Hello, \" ++ name ++ \"!\")\n  print (map (^ 2) [1 .. 5 :: Int])\n",
+  "wandbox": "Haskell",
+  "godbolt": "haskell",
+  "stdin": true
+ },
+ {
+  "id": "elixir",
+  "name": "Elixir",
+  "ext": "ex",
+  "grammar": "elixir",
+  "comment": "#",
+  "category": "functional",
+  "template": "defmodule Hello do\n  def square(n), do: n * n\nend\n\nIO.puts(\"Hello, World!\")\nIO.inspect(Enum.map(1..5, &Hello.square/1), label: \"Squares\")\n",
+  "wandbox": "Elixir",
+  "aliases": [
+   "exs"
+  ]
+ },
+ {
+  "id": "erlang",
+  "name": "Erlang",
+  "ext": "erl",
+  "grammar": "erlang",
+  "comment": "%",
+  "category": "functional",
+  "template": "-module(prog).\n-export([main/1]).\n\nmain(_) ->\n    io:format(\"Hello, World!~n\"),\n    io:format(\"Squares: ~p~n\", [[N * N || N <- lists:seq(1, 5)]]).\n",
+  "wandbox": "Erlang"
+ },
+ {
+  "id": "fsharp",
+  "name": "F#",
+  "ext": "fs",
+  "grammar": "fsharp",
+  "comment": "//",
+  "category": "dotnet",
+  "template": "module Program\n\nlet square x = x * x\n\n[<EntryPoint>]\nlet main _ =\n    printfn \"Hello, World!\"\n    printfn \"Squares: %A\" (List.map square [1..5])\n    0\n",
+  "godbolt": "fsharp"
+ },
+ {
+  "id": "vbnet",
+  "name": "Visual Basic .NET",
+  "ext": "vb",
+  "grammar": "vb",
+  "comment": "'",
+  "category": "dotnet",
+  "template": "Imports System\n\nModule Program\n    Sub Main()\n        Console.WriteLine(\"Hello, World!\")\n        For i As Integer = 1 To 5\n            Console.WriteLine($\"{i} squared is {i * i}\")\n        Next\n    End Sub\nEnd Module\n",
+  "godbolt": "vb"
+ },
+ {
+  "id": "ocaml",
+  "name": "OCaml",
+  "ext": "ml",
+  "grammar": "ocaml",
+  "comment": "",
+  "category": "functional",
+  "template": "let square x = x * x\n\nlet () =\n  print_endline \"Hello, World!\";\n  List.iter (fun n -> Printf.printf \"%d \" (square n)) [1; 2; 3; 4; 5];\n  print_newline ()\n",
+  "wandbox": "OCaml",
+  "godbolt": "ocaml"
+ },
+ {
+  "id": "zig",
+  "name": "Zig",
+  "ext": "zig",
+  "grammar": "zig",
+  "comment": "//",
+  "category": "systems",
+  "template": "const std = @import(\"std\");\n\npub fn main() void {\n    std.debug.print(\"Hello, World!\\n\", .{});\n    var i: u32 = 1;\n    while (i <= 5) : (i += 1) {\n        std.debug.print(\"{d} squared is {d}\\n\", .{ i, i * i });\n    }\n}\n",
+  "wandbox": "Zig",
+  "godbolt": "zig"
+ },
+ {
+  "id": "nim",
+  "name": "Nim",
+  "ext": "nim",
+  "grammar": "nim",
+  "comment": "#",
+  "category": "systems",
+  "template": "proc square(x: int): int = x * x\n\necho \"Hello, World!\"\nfor i in 1..5:\n  echo i, \" squared is \", square(i)\n",
+  "wandbox": "Nim"
+ },
+ {
+  "id": "crystal",
+  "name": "Crystal",
+  "ext": "cr",
+  "grammar": "crystal",
+  "comment": "#",
+  "category": "systems",
+  "template": "def square(x)\n  x * x\nend\n\nputs \"Hello, World!\"\nputs \"Squares: #{(1..5).map { |n| square(n) }}\"\n",
+  "wandbox": "Crystal",
+  "godbolt": "crystal"
+ },
+ {
+  "id": "d",
+  "name": "D",
+  "ext": "d",
+  "grammar": "d",
+  "comment": "//",
+  "category": "systems",
+  "template": "import std.stdio;\nimport std.algorithm : map;\nimport std.range : iota;\n\nvoid main()\n{\n    writeln(\"Hello, World!\");\n    writeln(\"Squares: \", iota(1, 6).map!(n => n * n));\n}\n",
+  "wandbox": "D",
+  "godbolt": "d"
+ },
+ {
+  "id": "fortran",
+  "name": "Fortran",
+  "ext": "f90",
+  "grammar": "fortran-free-form",
+  "comment": "!",
+  "category": "scientific",
+  "template": "program hello\n  implicit none\n  integer :: i\n  print *, 'Hello, World!'\n  do i = 1, 5\n    print '(I0, A, I0)', i, ' squared is ', i * i\n  end do\nend program hello\n",
+  "godbolt": "fortran",
+  "aliases": [
+   "f95",
+   "f03",
+   "f08",
+   "f"
+  ]
+ },
+ {
+  "id": "cobol",
+  "name": "COBOL",
+  "ext": "cob",
+  "grammar": "cobol",
+  "comment": "*>",
+  "category": "legacy",
+  "template": "       IDENTIFICATION DIVISION.\n       PROGRAM-ID. HELLO.\n       DATA DIVISION.\n       WORKING-STORAGE SECTION.\n       01 I PIC 9 VALUE 1.\n       PROCEDURE DIVISION.\n           DISPLAY \"Hello, World!\".\n           PERFORM UNTIL I > 5\n               DISPLAY \"Line \" I\n               ADD 1 TO I\n           END-PERFORM.\n           STOP RUN.\n",
+  "godbolt": "cobol",
+  "aliases": [
+   "cbl"
+  ]
+ },
+ {
+  "id": "ada",
+  "name": "Ada",
+  "ext": "adb",
+  "grammar": "ada",
+  "comment": "--",
+  "category": "legacy",
+  "template": "with Ada.Text_IO; use Ada.Text_IO;\n\nprocedure Example is\nbegin\n   Put_Line (\"Hello, World!\");\n   for I in 1 .. 5 loop\n      Put_Line (Integer'Image (I) & \" squared is\" & Integer'Image (I * I));\n   end loop;\nend Example;\n",
+  "godbolt": "ada",
+  "aliases": [
+   "ads"
+  ]
+ },
+ {
+  "id": "pascal",
+  "name": "Pascal",
+  "ext": "pas",
+  "grammar": "pascal",
+  "comment": "//",
+  "category": "legacy",
+  "template": "program Hello;\nvar\n  i: Integer;\nbegin\n  WriteLn('Hello, World!');\n  for i := 1 to 5 do\n    WriteLn(i, ' squared is ', i * i);\nend.\n",
+  "wandbox": "Pascal",
+  "godbolt": "pascal",
+  "aliases": [
+   "pp",
+   "dpr"
+  ]
+ },
+ {
+  "id": "modula2",
+  "name": "Modula-2",
+  "ext": "mod",
+  "comment": "",
+  "category": "legacy",
+  "template": "MODULE Hello;\n\nFROM InOut IMPORT WriteString, WriteLn;\n\nBEGIN\n  WriteString('Hello, World!');\n  WriteLn;\nEND Hello.\n",
+  "godbolt": "modula2"
+ },
+ {
+  "id": "objc",
+  "name": "Objective-C",
+  "ext": "m",
+  "grammar": "objective-c",
+  "comment": "//",
+  "category": "systems",
+  "template": "#include <stdio.h>\n\nint main(void) {\n    @autoreleasepool {\n        printf(\"Hello, World!\\n\");\n    }\n    return 0;\n}\n",
+  "godbolt": "objc"
+ },
+ {
+  "id": "commonlisp",
+  "name": "Common Lisp",
+  "ext": "lisp",
+  "grammar": "common-lisp",
+  "comment": ";",
+  "category": "functional",
+  "template": "(defun square (x) (* x x))\n\n(format t \"Hello, World!~%\")\n(format t \"Squares: ~a~%\" (mapcar #'square '(1 2 3 4 5)))\n",
+  "wandbox": "Lisp",
+  "aliases": [
+   "cl",
+   "lsp"
+  ]
+ },
+ {
+  "id": "mojo",
+  "name": "Mojo",
+  "ext": "mojo",
+  "grammar": "mojo",
+  "comment": "#",
+  "category": "systems",
+  "template": "def main():\n    print(\"Hello, World!\")\n    for i in range(1, 6):\n        print(i, \"squared is\", i * i)\n",
+  "godbolt": "mojo"
+ },
+ {
+  "id": "odin",
+  "name": "Odin",
+  "ext": "odin",
+  "grammar": "odin",
+  "comment": "//",
+  "category": "systems",
+  "template": "package main\n\nimport \"core:fmt\"\n\nmain :: proc() {\n\tfmt.println(\"Hello, World!\")\n\tfor i in 1..=5 {\n\t\tfmt.printf(\"%d squared is %d\\n\", i, i * i)\n\t}\n}\n",
+  "godbolt": "odin"
+ },
+ {
+  "id": "vala",
+  "name": "Vala",
+  "ext": "vala",
+  "grammar": "vala",
+  "comment": "//",
+  "category": "systems",
+  "template": "int main () {\n    print (\"Hello, World!\\n\");\n    for (int i = 1; i <= 5; i++) {\n        print (\"%d squared is %d\\n\", i, i * i);\n    }\n    return 0;\n}\n",
+  "godbolt": "vala"
+ },
+ {
+  "id": "hylo",
+  "name": "Hylo",
+  "ext": "hylo",
+  "comment": "//",
+  "category": "systems",
+  "template": "public fun main() {\n  print(\"Hello, World!\")\n}\n",
+  "godbolt": "hylo"
+ },
+ {
+  "id": "pony",
+  "name": "Pony",
+  "ext": "pony",
+  "comment": "//",
+  "category": "systems",
+  "template": "actor Main\n  new create(env: Env) =>\n    env.out.print(\"Hello, World!\")\n",
+  "wandbox": "Pony"
+ },
+ {
+  "id": "viml",
+  "name": "Vim script",
+  "ext": "vim",
+  "grammar": "viml",
+  "comment": "\"",
+  "category": "scripting",
+  "template": "let s:names = ['World', 'Vim']\nfor s:n in s:names\n  echo 'Hello, ' . s:n . '!'\nendfor\n",
+  "wandbox": "Vim script"
+ },
+ {
+  "id": "cmake",
+  "name": "CMake script",
+  "ext": "cmake",
+  "grammar": "cmake",
+  "comment": "#",
+  "category": "scripting",
+  "template": "set(planets Mercury Venus Earth Mars)\nlist(LENGTH planets count)\nmessage(\"Hello, World!\")\nmessage(\"There are ${count} inner planets: ${planets}\")\n",
+  "godbolt": "cmakescript"
+ },
+ {
+  "id": "wat",
+  "name": "WebAssembly (WAT)",
+  "ext": "wat",
+  "grammar": "wasm",
+  "comment": ";;",
+  "category": "systems",
+  "template": "(module\n  (import \"wasi_snapshot_preview1\" \"fd_write\" (func $fd_write (param i32 i32 i32 i32) (result i32)))\n  (memory (export \"memory\") 1)\n  (data (i32.const 8) \"Hello, World!\\n\")\n  (func (export \"_start\")\n    (i32.store (i32.const 0) (i32.const 8))\n    (i32.store (i32.const 4) (i32.const 14))\n    (drop (call $fd_write (i32.const 1) (i32.const 0) (i32.const 1) (i32.const 32)))))\n",
+  "godbolt": "wasm",
+  "aliases": [
+   "wast"
+  ]
+ },
+ {
+  "id": "llvmir",
+  "name": "LLVM IR",
+  "ext": "ll",
+  "grammar": "llvm",
+  "comment": ";",
+  "category": "systems",
+  "template": "@msg = private constant [15 x i8] c\"Hello, World!\\0A\\00\"\n\ndeclare i32 @printf(ptr, ...)\n\ndefine i32 @main() {\n  call i32 (ptr, ...) @printf(ptr @msg)\n  ret i32 0\n}\n",
+  "godbolt": "llvm"
+ },
+ {
+  "id": "asm",
+  "name": "Assembly (x86-64)",
+  "ext": "asm",
+  "grammar": "asm",
+  "comment": ";",
+  "category": "systems",
+  "template": "; NASM, Linux x86-64\n        global  _start\n        section .text\n_start: mov     rax, 1          ; write\n        mov     rdi, 1          ; stdout\n        mov     rsi, msg\n        mov     rdx, len\n        syscall\n        mov     rax, 60         ; exit\n        xor     rdi, rdi\n        syscall\n\n        section .data\nmsg:    db      \"Hello, World!\", 10\nlen:    equ     $ - msg\n",
+  "godbolt": "assembly",
+  "aliases": [
+   "s",
+   "nasm"
+  ]
+ },
+ {
+  "id": "cuda",
+  "name": "CUDA C++",
+  "ext": "cu",
+  "grammar": "cpp",
+  "comment": "//",
+  "category": "scientific",
+  "template": "#include <cstdio>\n\n__global__ void hello() { printf(\"Hello from GPU thread %d!\\n\", threadIdx.x); }\n\nint main() {\n    hello<<<1, 4>>>();\n    cudaDeviceSynchronize();\n    printf(\"Hello, World!\\n\");\n}\n",
+  "godbolt": "cuda"
+ },
+ {
+  "id": "clean",
+  "name": "Clean",
+  "ext": "icl",
+  "comment": "//",
+  "category": "functional",
+  "template": "module example\n\nimport StdEnv\n\nStart = \"Hello, World!\"\n",
+  "godbolt": "clean"
+ },
+ {
+  "id": "lazyk",
+  "name": "Lazy K",
+  "ext": "lazy",
+  "comment": "#",
+  "category": "esoteric",
+  "template": "# Prints its input back (the identity combinator).\nI\n",
+  "wandbox": "Lazy K"
+ }
+]

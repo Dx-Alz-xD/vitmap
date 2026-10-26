@@ -1,0 +1,243 @@
+# name	scope	display	aliases	embedded	bytes	license
+abap	source.abap	ABAP			15483	
+actionscript-3	source.actionscript.3	ActionScript	actionscript,as3		15080	Apache-2.0
+ada	source.ada	Ada			46477	GPL-3.0
+ahk	source.ahk	AutoHotkey	ahk1		29779	MIT
+ahk2	source.ahk2	AutoHotkey2			43703	GNU
+angular-html	text.html.derivative.ng	Angular HTML		html,angular-expression,angular-let-declaration,angular-template,angular-template-blocks	701	MIT
+angular-ts	source.ts.ng	Angular TypeScript		angular-expression,angular-inline-style,angular-inline-template,angular-let-declaration,angular-template,angular-template-blocks	163882	MIT
+apache	source.apacheconf	Apache Conf			12116	NOASSERTION
+apex	source.apex	Apex			46373	NOASSERTION
+apl	source.apl	APL		html,xml,css,javascript,json	23233	
+applescript	source.applescript	AppleScript			28463	
+ara	source.ara	Ara			6053	Apache-2.0
+asciidoc	text.asciidoc	AsciiDoc	adoc	html,yaml,csv,css,ini,java,lua,make,perl,r,ruby,php,sql,vb,xml,xsl,bat,clojure,coffee,c,cpp,diff,docker,git-commit,git-rebase,go,groovy,pug,javascript,json,jsonc,less,objective-c,swift,scss,raku,powershell,python,julia,regexp,rust,scala,shellscript,typescript,tsx,csharp,fsharp,dart,handlebars,markdown,log,erlang,elixir,latex,bibtex,abap,rst,haskell,kotlin	127826	NOASSERTION
+asm	source.asm.x86_64	Assembly			39351	MIT
+astro	source.astro	Astro		json,javascript,typescript,stylus,sass,css,scss,less,postcss,tsx	23414	MIT
+awk	source.awk	AWK			5280	MIT
+ballerina	source.ballerina	Ballerina			56350	Apache-2.0
+bat	source.batchfile	Batch File	batch,cmd		12586	MIT
+beancount	text.beancount	Beancount			12556	MIT
+berry	source.berry	Berry	be		2688	MIT
+bibtex	text.bibtex	BibTeX			4621	MIT
+bicep	source.bicep	Bicep			5036	MIT
+bird2	source.bird2	BIRD2 Configuration	bird		36586	MPL-2.0
+blade	text.html.php.blade	Blade		html-derivative,html,xml,sql,javascript,json,css	102405	MIT
+bsl	source.bsl	1C (Enterprise)	1c	sdbl	33464	MIT
+c	source.c	C			69561	MIT
+c3	source.c3	C3			25696	MIT
+cadence	source.cadence	Cadence	cdc		22761	Apache-2.0
+cairo	source.cairo0	Cairo		python	2727	Apache-2.0
+chapel	source.chapel	Chapel	chpl	c	6236	Apache-2.0
+clarity	source.clar	Clarity			13874	MIT
+clojure	source.clojure	Clojure	clj		6160	MIT
+cmake	source.cmake	CMake			9603	MIT
+cobol	source.cobol	COBOL		html,java	38196	MIT
+codeowners	text.codeowners	CODEOWNERS			471	MIT
+codeql	source.ql	CodeQL	ql		26403	MIT
+coffee	source.coffee	CoffeeScript	coffeescript	javascript	26497	MIT
+common-lisp	source.commonlisp	Common Lisp	lisp		22067	MIT
+coq	source.rocq	Rocq			5704	MIT
+cpp	source.cpp	C++	c++	cpp-macro,regexp,glsl	476081	MIT
+crystal	source.crystal	Crystal		html,sql,css,c,javascript,shellscript	28049	MIT
+csharp	source.cs	C#	c#,cs		88007	MIT
+css	source.css	CSS			52259	MIT
+csv	text.csv	CSV			1017	MIT
+cue	source.cue	CUE			15455	NOASSERTION
+cypher	source.cypher	Cypher	cql		5662	MIT
+d	source.d	D			42093	MIT
+dart	source.dart	Dart			8203	MIT
+dax	source.dax	DAX			5245	
+desktop	source.desktop	Desktop			1731	MIT
+diff	source.diff	Diff			2437	MIT
+docker	source.dockerfile	Dockerfile	dockerfile		1618	MIT
+dotenv	source.dotenv	dotEnv			1645	MIT
+dream-maker	source.dm	Dream Maker			9940	
+edge	text.html.edge	Edge		typescript,html,html-derivative	2020	MIT
+elixir	source.elixir	Elixir		html	15558	NOASSERTION
+elm	source.elm	Elm		glsl	10519	MIT
+emacs-lisp	source.emacs.lisp	Emacs Lisp	elisp		788809	ISC
+erb	text.html.erb	ERB		html,ruby	1942	
+erlang	source.erlang	Erlang	erl	markdown	36492	Apache-2.0
+fennel	source.fnl	Fennel			4634	MIT
+fish	source.fish	Fish			12564	MIT
+fluent	source.ftl	Fluent	ftl		3466	MIT
+fortran-fixed-form	source.fortran.fixed	Fortran (Fixed Form)	f,for,f77	fortran-free-form	1455	MIT
+fortran-free-form	source.fortran.free	Fortran (Free Form)	f90,f95,f03,f08,f18		85906	MIT
+fsharp	source.fsharp	F#	f#,fs	markdown	24452	MIT
+gdresource	source.gdresource	GDResource	tscn,tres	gdshader,gdscript	4831	MIT
+gdscript	source.gdscript	GDScript	gd		18474	MIT
+gdshader	source.gdshader	GDShader			6048	MIT
+genie	source.genie	Genie			3180	MIT
+gherkin	text.gherkin.feature	Gherkin			11828	MIT
+git-commit	text.git-commit	Git Commit Message		diff	1088	MIT
+git-rebase	text.git-rebase	Git Rebase Message		shellscript	821	MIT
+gleam	source.gleam	Gleam			2427	Apache-2.0
+glimmer-js	source.gjs	Glimmer JS	gjs	javascript,typescript,css,html	19510	MIT
+glimmer-ts	source.gts	Glimmer TS	gts	typescript,css,javascript,html	19510	MIT
+glsl	source.glsl	GLSL		c	3468	
+gn	source.gn	GN			3876	Apache-2.0
+gnuplot	source.gnuplot	Gnuplot			14063	GPL-3.0
+go	source.go	Go			44514	MIT
+graphql	source.graphql	GraphQL	gql	javascript,typescript,jsx,tsx	17316	MIT
+groovy	source.groovy	Groovy			18601	MIT
+hack	source.hack	Hack		html,sql	79385	MIT
+haml	text.haml	Ruby Haml		ruby,javascript,sass,coffee,markdown,css	7719	MIT
+handlebars	text.html.handlebars	Handlebars	hbs	html,css,javascript,yaml	11962	MIT
+haskell	source.haskell	Haskell	hs		39448	BSD-3-Clause
+haxe	source.hx	Haxe			35086	MIT
+hcl	source.hcl	HashiCorp HCL			9714	MPL-2.0
+hjson	source.hjson	Hjson			11647	MIT
+hlsl	source.hlsl	HLSL			6998	MIT
+html	text.html.basic	HTML		javascript,css	56371	MIT
+html-derivative	text.html.derivative	HTML (Derivative)		html	707	MIT
+http	source.http	HTTP		shellscript,json,xml,graphql	3982	MIT
+hurl	source.hurl	Hurl		graphql,xml,csv	3205	
+hxml	source.hxml	HXML		haxe	1724	MIT
+hy	source.hy	Hy			2475	MIT
+imba	source.imba	Imba			48264	MIT
+ini	source.ini	INI	properties		1408	MIT
+java	source.java	Java			26339	MIT
+javascript	source.js	JavaScript	js,cjs,mjs		159323	MIT
+jinja	source.jinja	Jinja		jinja-html	4769	MIT
+jison	source.jison	Jison		javascript	9343	MIT
+json	source.json	JSON			2705	MIT
+json5	source.json5	JSON5			3118	MIT
+jsonc	source.json.comments	JSON with Comments			2990	MIT
+jsonl	source.json.lines	JSON Lines			2892	MIT
+jsonnet	source.jsonnet	Jsonnet			3372	Apache-2.0
+jssm	source.jssm	JSSM	fsl		2129	MIT
+jsx	source.js.jsx	JSX			162317	MIT
+julia	source.julia	Julia	jl	cpp,python,javascript,r,sql	29127	MIT
+just	source.just	Just	justfile	shellscript,javascript,typescript,perl,python,ruby	10174	MIT
+kdl	source.kdl	KDL			3424	Apache-2.0
+kotlin	source.kotlin	Kotlin	kt,kts		8386	MIT
+kusto	source.kusto	Kusto	kql		14627	
+latex	text.tex.latex	LaTeX		tex,shellscript,css,gnuplot,haskell,html,java,julia,javascript,lua,python,ruby,rust,typescript,xml,yaml,scala	70226	MIT
+lean	source.lean4	Lean 4	lean4		5494	Apache-2.0
+less	source.css.less	Less			94797	MIT
+liquid	text.html.liquid	Liquid		html,css,json,javascript	17349	MIT
+llvm	source.llvm	LLVM IR			4658	NOASSERTION
+log	text.log	Log file			2577	MIT
+logo	source.logo	Logo			3016	
+lua	source.lua	Lua		c	14819	MIT
+luau	source.luau	Luau			15652	NOASSERTION
+make	source.makefile	Makefile	makefile		8610	MIT
+markdown	text.html.markdown	Markdown	md	css,html,ini,java,lua,make,perl,r,ruby,php,sql,vb,xml,xsl,yaml,bat,clojure,coffee,c,cpp,diff,docker,git-commit,git-rebase,go,groovy,pug,javascript,json,jsonc,jsonl,less,objective-c,swift,scss,raku,powershell,python,julia,regexp,rust,scala,shellscript,typescript,tsx,csharp,fsharp,dart,handlebars,log,erlang,elixir,latex,bibtex,abap,rst,html-derivative	56350	MIT
+marko	text.marko	Marko		css,less,scss,typescript	24811	MIT
+matlab	source.matlab	MATLAB			15279	
+mdc	text.markdown.mdc.standalone	MDC		markdown,yaml,html-derivative	19634	MIT
+mdx	source.mdx	MDX		tsx,toml,yaml,c,clojure,coffee,cpp,csharp,css,diff,docker,elixir,elm,erlang,go,graphql,haskell,html,ini,java,javascript,json,julia,kotlin,less,lua,make,markdown,objective-c,perl,python,r,ruby,rust,scala,scss,shellscript,shellsession,sql,xml,swift,typescript	130777	MIT
+mermaid	markdown.mermaid.codeblock	Mermaid	mmd		51803	MIT
+mipsasm	source.mips	MIPS Assembly	mips		2965	
+mojo	source.mojo	Mojo			67736	Apache-2.0
+moonbit	source.moonbit	MoonBit	mbt,mbti		5761	Apache-2.0
+move	source.move	Move			17140	MIT
+narrat	source.narrat	Narrat Language	nar		3464	MIT
+nextflow	source.nextflow	Nextflow	nf	nextflow-groovy	4206	MIT
+nextflow-groovy	source.nextflow-groovy	Nextflow Groovy			10200	MIT
+nginx	source.nginx	Nginx		lua	34690	GPL-3.0
+nim	source.nim	Nim		c,html,xml,javascript,css,glsl,markdown	21277	NOASSERTION
+nix	source.nix	Nix		markdown-nix	14199	MIT
+nsis	source.nsis	NSIS			12700	NOASSERTION
+nushell	source.nushell	nushell	nu		21024	MIT
+objective-c	source.objc	Objective-C	objc		103064	MIT
+objective-cpp	source.objcpp	Objective-C++			167425	MIT
+ocaml	source.ocaml	OCaml			60396	Apache-2.0
+odin	source.odin	Odin			16000	MIT
+openscad	source.scad	OpenSCAD	scad		2637	MIT
+org	source.org	Org Markup		javascript,typescript,tsx,java,python,regexp,css,lua,ini,make,perl,r,ruby,php,sql,vb,clojure,coffee,c,cpp,objective-c,diff,docker,go,groovy,less,scss,raku,rust,scala,shellscript,csharp,dart,nim,elixir,erlang,ocaml,zig,yaml,json,xml,xsl,markdown,html,git-commit,git-rebase,latex	31987	GPL-3.0
+pascal	source.pascal	Pascal			3982	MIT
+perl	source.perl	Perl		html,xml,css,javascript,sql	41869	MIT
+php	source.php	PHP		html,xml,sql,javascript,json,css	109385	MIT
+pkl	source.pkl	Pkl			9546	Apache-2.0
+plsql	source.plsql.oracle	PL/SQL			8125	MIT
+po	source.po	Gettext PO	pot,potx		3030	
+polar	source.polar	Polar			4474	Apache-2.0
+postcss	source.css.postcss	PostCSS			6193	MIT
+powerquery	source.powerquery	PowerQuery			5631	MIT
+powershell	source.powershell	PowerShell	ps,ps1,pwsh		19620	MIT
+prisma	source.prisma	Prisma			7500	Apache-2.0
+prolog	source.prolog	Prolog			11206	MIT
+proto	source.proto	Protocol Buffer 3	protobuf		6255	MIT
+pug	text.pug	Pug	jade	javascript,css,sass,scss,stylus,coffee,html	13039	MIT
+puppet	source.puppet	Puppet			11065	Apache-2.0
+purescript	source.purescript	PureScript			22745	NOASSERTION
+python	source.python	Python	py		68139	MIT
+qml	source.qml	QML		javascript	5032	MIT
+qmldir	source.qmldir	QML Directory			902	MIT
+qss	source.qss	Qt Style Sheets			7288	MIT
+r	source.r	R			6400	MIT
+racket	source.racket	Racket			89526	GPL-3.0
+raku	source.perl.6	Raku	perl6		10193	MIT
+razor	text.aspnetcorerazor	ASP.NET Razor		html,csharp	26784	MIT
+rbs	source.rbs	RBS	ruby-signature		3068	MIT
+reg	source.reg	Windows Registry Script			2239	MIT
+regexp	source.regexp.python	RegExp	regex		7716	MIT
+rel	source.rel	Rel			3220	
+riscv	source.riscv	RISC-V			6482	MIT
+ron	source.ron	RON			3788	MIT
+rosmsg	source.rosmsg	ROS Interface			4345	MIT
+rst	source.rst	reStructuredText		html-derivative,cpp,python,javascript,shellscript,yaml,cmake,ruby	9291	MIT
+ruby	source.ruby	Ruby	rb	html,haml,xml,sql,graphql,css,cpp,c,javascript,shellscript,lua,yaml	44446	MIT
+rust	source.rust	Rust	rs		14784	MIT
+sas	source.sas	SAS		sql	8819	MIT
+sass	source.sass	Sass			8971	NOASSERTION
+scala	source.scala	Scala			26958	MIT
+scheme	source.scheme	Scheme			6924	MIT
+scss	source.css.scss	SCSS		css	26425	MIT
+sdbl	source.sdbl	1C (Query)	1c-query		4478	MIT
+shaderlab	source.shaderlab	ShaderLab	shader	hlsl	5626	MIT
+shellscript	source.shell	Shell	bash,sh,shell,zsh		39917	MIT
+shellsession	text.shell-session	Shell Session	console	shellscript	513	MIT
+smalltalk	source.smalltalk.gnu	GNU Smalltalk			13860	MIT
+smithy	source.smithy	Smithy			8912	Apache-2.0
+solidity	source.solidity	Solidity			15735	MIT
+soy	text.html.soy	Closure Templates	closure-templates	html	6555	MIT
+sparql	source.sparql	SPARQL		turtle	1330	
+splunk	source.splunk_search	Splunk Query Language	spl		3259	MIT
+sql	source.sql	SQL			23128	MIT
+ssh-config	source.ssh-config	SSH Config			3509	
+stata	source.stata	Stata		sql	55701	MIT
+stylus	source.stylus	Stylus	styl		30406	MIT
+surrealql	source.surrealql	SurrealQL	surql	javascript	11529	Apache-2.0
+svelte	source.svelte	Svelte		javascript,typescript,coffee,stylus,sass,css,scss,less,postcss,pug,markdown	17634	MIT
+swift	source.swift	Swift			84244	MIT
+system-verilog	source.systemverilog	SystemVerilog			25195	MIT
+systemd	source.systemd	Systemd Units			7571	MIT
+talonscript	source.talon	TalonScript	talon		6551	MIT
+tasl	source.tasl	Tasl			3178	MIT
+tcl	source.tcl	Tcl			4214	
+templ	source.templ	Templ		go,javascript,css	23588	MIT
+terraform	source.hcl.terraform	Terraform	tf,tfvars		11048	MPL-2.0
+tex	text.tex	TeX		r	9335	MIT
+toml	source.toml	TOML			6126	
+ts-tags	source.ts.tags	TypeScript with Tags	lit	typescript,es-tag-css,es-tag-glsl,es-tag-html,es-tag-sql,es-tag-xml	121	
+tsv	text.tsv	TSV			633	MIT
+tsx	source.tsx	TSX			160061	MIT
+turtle	source.turtle	Turtle			3578	
+twig	text.html.twig	Twig		javascript,css,scss,php,python,ruby	23963	MIT
+typescript	source.ts	TypeScript	ts,cts,mts		163871	MIT
+typespec	source.tsp	TypeSpec	tsp		25946	MIT
+typst	source.typst	Typst	typ	bat,bibtex,c,clojure,coffee,cpp,css,csharp,dart,diff,docker,elixir,erlang,fsharp,git-commit,git-rebase,go,groovy,handlebars,html,ini,java,javascript,jsonc,json,julia,latex,less,log,lua,make,markdown,objective-c,perl,raku,php,powershell,pug,r,regexp,ruby,scss,sql,swift,xml,xsl,yaml,python,rust,scala,shellscript,typescript,tsx,twig,verilog,system-verilog,vb	155283	Apache-2.0
+v	source.v	V			12858	MIT
+vala	source.vala	Vala			3194	MIT
+vb	source.asp.vb.net	Visual Basic			5835	MIT
+verilog	source.verilog	Verilog			6222	MIT
+vhdl	source.vhdl	VHDL			23535	MIT
+viml	source.viml	Vim Script	vim,vimscript		20049	MIT
+vue	text.html.vue	Vue		markdown,pug,stylus,sass,css,scss,less,javascript,typescript,jsx,tsx,coffee,json,jsonc,json5,yaml,toml,graphql,html,html-derivative,markdown-vue,vue-directives,vue-interpolations,vue-sfc-style-variable-injection	21184	MIT
+vue-html	text.html.vue-html	Vue HTML		javascript	8233	MIT
+vue-vine	source.vue-vine	Vue Vine		css,scss,less,stylus,postcss,javascript	173528	MIT
+vyper	source.vyper	Vyper	vy		72723	MIT
+wasm	source.wat	WebAssembly			11450	MIT
+wenyan	source.wenyan	Wenyan	文言		2054	MIT
+wgsl	source.wgsl	WGSL			4934	MIT
+wikitext	source.wikitext	Wikitext	mediawiki,wiki	html,css,ini,java,lua,make,perl,r,ruby,php,sql,vb,xml,xsl,yaml,bat,clojure,coffee,c,cpp,diff,docker,go,groovy,pug,javascript,jsonc,less,objective-c,swift,scss,raku,powershell,python,julia,rust,scala,shellscript,typescript,csharp,fsharp,dart,handlebars,markdown,erlang,elixir,latex,bibtex,json	54270	MIT
+wit	source.wit	WebAssembly Interface Types			20891	MIT
+wolfram	source.wolfram	Wolfram	wl		260649	NOASSERTION
+xml	text.xml	XML		java	5210	MIT
+xsl	text.xml.xsl	XSL		xml	1228	MIT
+yaml	source.yaml	YAML	yml		9979	
+zenscript	source.zenscript	ZenScript			3707	MIT
+zig	source.zig	Zig			5053	MIT
