@@ -1,6 +1,7 @@
 package com.vitmap.app.nav
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material.icons.rounded.Colorize
 import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.DocumentScanner
@@ -71,6 +72,11 @@ object Tools {
             "tictactoe", "Tic-Tac-Toe", "Classic 3×3 or any N×N board, against a friend or a bot",
             ToolIcon.Vector(Icons.Rounded.Grid3x3), ToolCategory.GAMES, Accents.TicTacToe, Connectivity.OFFLINE,
             listOf("noughts", "crosses", "gomoku", "xo"),
+        ),
+        Tool(
+            "sudoku", "Sudoku", "Generated puzzles from easy to master, 4×4 to 16×16, with explained hints",
+            ToolIcon.Vector(Icons.Rounded.Apps), ToolCategory.GAMES, Accents.Sudoku, Connectivity.OFFLINE,
+            listOf("puzzle", "numbers", "logic", "daily", "grid"),
         ),
         Tool(
             "color", "Color Picker", "Point your camera to identify colours live, compare and pick from photos",

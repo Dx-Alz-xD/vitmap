@@ -10,6 +10,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -233,7 +234,7 @@ fun PageEditScreen(vm: ScanViewModel, docId: String, pageId: String, fromCamera:
                                     .clip(RoundedCornerShape(12.dp))
                                     .border(if (selected) 3.dp else 1.dp, if (selected) Accents.Measure.start else MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(12.dp))
                                     .background(MaterialTheme.colorScheme.surfaceContainerHigh)
-                                    .pointerInput(f) { androidx.compose.foundation.gestures.detectTapGestures { work = work.copy(filter = f.name) } },
+                                    .clickable { work = work.copy(filter = f.name) },
                                 contentAlignment = Alignment.Center,
                             ) {
                                 val t = thumbs[f]

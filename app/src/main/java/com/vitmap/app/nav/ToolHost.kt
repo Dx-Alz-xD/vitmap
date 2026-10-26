@@ -9,6 +9,7 @@ import com.vitmap.app.feature.convert.ConvertScreen
 import com.vitmap.app.feature.scan.PdfToolsScreen
 import com.vitmap.app.feature.scan.ScannerScreen
 import com.vitmap.app.feature.measure.MeasureScreen
+import com.vitmap.app.feature.sudoku.SudokuScreen
 import com.vitmap.app.feature.tictactoe.TicTacToeScreen
 import com.vitmap.app.feature.translate.TranslatorScreen
 
@@ -24,6 +25,7 @@ fun ToolHost(route: ToolRoute, onBack: () -> Unit, onOpenTool: (String, String?)
         "convert" -> ConvertScreen(onBack)
         "scanner" -> ScannerScreen(onBack)
         "pdftools" -> PdfToolsScreen(onBack, onOpenTool)
+        "sudoku" -> SudokuScreen(onBack)
         else -> LaunchedEffect(route.id) { onBack() }
     }
 }
