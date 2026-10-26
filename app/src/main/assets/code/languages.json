@@ -216,6 +216,18 @@
   "preview": "svg"
  },
  {
+  "id": "text",
+  "name": "Plain text",
+  "ext": "txt",
+  "comment": "",
+  "category": "other",
+  "template": "",
+  "aliases": [
+   "text",
+   "log"
+  ]
+ },
+ {
   "id": "css",
   "name": "CSS",
   "ext": "css",
@@ -290,7 +302,6 @@
   "category": "functional",
   "template": "(ns example)\n\n(defn square [x] (* x x))\n\n(println \"Hello, World!\")\n(println \"Squares:\" (map square (range 1 6)))\n",
   "web": "clojure",
-  "godbolt": "clojure",
   "aliases": [
    "cljs"
   ]
@@ -347,7 +358,7 @@
   "grammar": "java",
   "comment": "//",
   "category": "popular",
-  "template": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        String name = in.hasNextLine() ? in.nextLine().trim() : \"\";\n        if (name.isEmpty()) name = \"World\";\n        System.out.println(\"Hello, \" + name + \"!\");\n        for (int i = 1; i <= 5; i++) System.out.println(i + \" squared is \" + i * i);\n    }\n}\n",
+  "template": "import java.util.Scanner;\n\n// Not \"public\": each service saves the file under its own name.\nclass Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        String name = in.hasNextLine() ? in.nextLine().trim() : \"\";\n        if (name.isEmpty()) name = \"World\";\n        System.out.println(\"Hello, \" + name + \"!\");\n        for (int i = 1; i <= 5; i++) System.out.println(i + \" squared is \" + i * i);\n    }\n}\n",
   "wandbox": "Java",
   "godbolt": "java",
   "stdin": true
@@ -359,9 +370,8 @@
   "grammar": "kotlin",
   "comment": "//",
   "category": "popular",
-  "template": "fun main() {\n    val name = readlnOrNull()?.trim().orEmpty().ifEmpty { \"World\" }\n    println(\"Hello, $name!\")\n    println(\"Squares: ${(1..5).map { it * it }}\")\n}\n",
+  "template": "fun square(n: Int) = n * n\n\nfun main() {\n    println(\"Hello, World!\")\n    for (i in 1..5) println(\"$i squared is ${square(i)}\")\n}\n",
   "godbolt": "kotlin",
-  "stdin": true,
   "aliases": [
    "kts"
   ]
@@ -398,7 +408,6 @@
   "comment": "//",
   "category": "popular",
   "template": "let line = readLine() ?? \"\"\nlet name = line.isEmpty ? \"World\" : line\nprint(\"Hello, \\(name)!\")\nprint(\"Squares:\", (1...5).map { $0 * $0 })\n",
-  "wandbox": "Swift",
   "godbolt": "swift",
   "stdin": true
  },
@@ -458,9 +467,8 @@
   "grammar": "julia",
   "comment": "#",
   "category": "scientific",
-  "template": "name = strip(readline())\nname = isempty(name) ? \"World\" : name\nprintln(\"Hello, $name!\")\nprintln(\"Squares: \", [n^2 for n in 1:5])\n",
+  "template": "name = strip(readline())\nname = isempty(name) ? \"World\" : name\nprintln(\"Hello, $(name)!\")\nprintln(\"Squares: \", [n^2 for n in 1:5])\n",
   "wandbox": "Julia",
-  "godbolt": "julia",
   "stdin": true
  },
  {
@@ -515,7 +523,6 @@
   "comment": "#",
   "category": "functional",
   "template": "defmodule Hello do\n  def square(n), do: n * n\nend\n\nIO.puts(\"Hello, World!\")\nIO.inspect(Enum.map(1..5, &Hello.square/1), label: \"Squares\")\n",
-  "wandbox": "Elixir",
   "aliases": [
    "exs"
   ]
@@ -527,8 +534,7 @@
   "grammar": "erlang",
   "comment": "%",
   "category": "functional",
-  "template": "-module(prog).\n-export([main/1]).\n\nmain(_) ->\n    io:format(\"Hello, World!~n\"),\n    io:format(\"Squares: ~p~n\", [[N * N || N <- lists:seq(1, 5)]]).\n",
-  "wandbox": "Erlang"
+  "template": "-module(prog).\n-export([main/1]).\n\nmain(_) ->\n    io:format(\"Hello, World!~n\"),\n    io:format(\"Squares: ~p~n\", [[N * N || N <- lists:seq(1, 5)]]).\n"
  },
  {
   "id": "fsharp",
@@ -558,7 +564,6 @@
   "comment": "",
   "category": "functional",
   "template": "let square x = x * x\n\nlet () =\n  print_endline \"Hello, World!\";\n  List.iter (fun n -> Printf.printf \"%d \" (square n)) [1; 2; 3; 4; 5];\n  print_newline ()\n",
-  "wandbox": "OCaml",
   "godbolt": "ocaml"
  },
  {
@@ -568,7 +573,7 @@
   "grammar": "zig",
   "comment": "//",
   "category": "systems",
-  "template": "const std = @import(\"std\");\n\npub fn main() void {\n    std.debug.print(\"Hello, World!\\n\", .{});\n    var i: u32 = 1;\n    while (i <= 5) : (i += 1) {\n        std.debug.print(\"{d} squared is {d}\\n\", .{ i, i * i });\n    }\n}\n",
+  "template": "const std = @import(\"std\");\n\npub fn main() !void {\n    const out = std.io.getStdOut().writer();\n    try out.print(\"Hello, World!\\n\", .{});\n    var i: u32 = 1;\n    while (i <= 5) : (i += 1) {\n        try out.print(\"{d} squared is {d}\\n\", .{ i, i * i });\n    }\n}\n",
   "wandbox": "Zig",
   "godbolt": "zig"
  },
@@ -590,7 +595,6 @@
   "comment": "#",
   "category": "systems",
   "template": "def square(x)\n  x * x\nend\n\nputs \"Hello, World!\"\nputs \"Squares: #{(1..5).map { |n| square(n) }}\"\n",
-  "wandbox": "Crystal",
   "godbolt": "crystal"
  },
  {
@@ -677,7 +681,7 @@
   "grammar": "objective-c",
   "comment": "//",
   "category": "systems",
-  "template": "#include <stdio.h>\n\nint main(void) {\n    @autoreleasepool {\n        printf(\"Hello, World!\\n\");\n    }\n    return 0;\n}\n",
+  "template": "#include <stdio.h>\n\n// Objective-C is a superset of C; GCC's runtime has no Foundation, so this sticks to C I/O.\nint main(void) {\n    printf(\"Hello, World!\\n\");\n    for (int i = 1; i <= 5; i++) printf(\"%d squared is %d\\n\", i, i * i);\n    return 0;\n}\n",
   "godbolt": "objc"
  },
  {
@@ -739,8 +743,7 @@
   "ext": "pony",
   "comment": "//",
   "category": "systems",
-  "template": "actor Main\n  new create(env: Env) =>\n    env.out.print(\"Hello, World!\")\n",
-  "wandbox": "Pony"
+  "template": "actor Main\n  new create(env: Env) =>\n    env.out.print(\"Hello, World!\")\n"
  },
  {
   "id": "viml",
@@ -749,8 +752,7 @@
   "grammar": "viml",
   "comment": "\"",
   "category": "scripting",
-  "template": "let s:names = ['World', 'Vim']\nfor s:n in s:names\n  echo 'Hello, ' . s:n . '!'\nendfor\n",
-  "wandbox": "Vim script"
+  "template": "let s:names = ['World', 'Vim']\nfor s:n in s:names\n  echo 'Hello, ' . s:n . '!'\nendfor\n"
  },
  {
   "id": "cmake",
@@ -815,16 +817,6 @@
   "ext": "icl",
   "comment": "//",
   "category": "functional",
-  "template": "module example\n\nimport StdEnv\n\nStart = \"Hello, World!\"\n",
-  "godbolt": "clean"
- },
- {
-  "id": "lazyk",
-  "name": "Lazy K",
-  "ext": "lazy",
-  "comment": "#",
-  "category": "esoteric",
-  "template": "# Prints its input back (the identity combinator).\nI\n",
-  "wandbox": "Lazy K"
+  "template": "module example\n\nimport StdEnv\n\nStart = \"Hello, World!\"\n"
  }
 ]

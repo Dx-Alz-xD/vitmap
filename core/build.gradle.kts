@@ -19,6 +19,7 @@ kotlin {
 dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.snakeyaml.engine)
+    implementation(libs.luaj.jse)
     testImplementation(libs.kotlin.test)
     testImplementation(libs.junit)
 }

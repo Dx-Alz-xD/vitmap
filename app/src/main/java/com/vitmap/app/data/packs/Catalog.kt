@@ -1,6 +1,7 @@
 package com.vitmap.app.data.packs
 
 import android.content.Context
+import com.vitmap.app.feature.code.WebRuntimes
 import com.vitmap.app.media.MediaEngine
 import com.vitmap.app.ml.Ocr
 import java.io.File
@@ -49,6 +50,7 @@ object PackCatalog {
             add(MediaEngine.ffmpeg)
             add(MediaEngine.python)
             add(MediaEngine.ytdlp)
+            addAll(WebRuntimes.packs)
             synchronized(extra) { extra.forEach { addAll(it()) } }
         }.distinctBy { it.id }
 }

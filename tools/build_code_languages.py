@@ -128,6 +128,7 @@ lang("html", "HTML", "html", "html", "", "web", preview="html", aliases=["htm"],
 """)
 lang("markdown", "Markdown", "md", "markdown", "", "web", preview="markdown", template="# Hello, World!\n\nWrite **Markdown** here and press *Run* to preview it.\n\n- Lists\n- `code`\n- [Links](https://example.com)\n")
 lang("svg", "SVG", "svg", "xml", "", "web", preview="svg", template='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">\n  <defs>\n    <linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#ec4899"/></linearGradient>\n  </defs>\n  <circle cx="100" cy="100" r="80" fill="url(#g)"/>\n  <text x="100" y="108" text-anchor="middle" font-size="22" fill="white" font-family="sans-serif">Hello!</text>\n</svg>\n')
+lang("text", "Plain text", "txt", None, "", "other", aliases=["text", "log"], template="")
 lang("css", "CSS", "css", "css", "", "web", template="body {\n  font-family: system-ui, sans-serif;\n  color: #1f2937;\n}\n")
 
 # Downloadable in-browser runtimes
@@ -177,7 +178,7 @@ name = "World" if name.empty?
 puts "Hello, #{name}!"
 puts (1..5).map { |n| n * n }.inspect
 """)
-lang("clojure", "Clojure", "clj", "clojure", ";", "functional", web="clojure", godbolt="clojure", aliases=["cljs"], template="""
+lang("clojure", "Clojure", "clj", "clojure", ";", "functional", web="clojure", aliases=["cljs"], template="""
 (ns example)
 
 (defn square [x] (* x x))
@@ -232,7 +233,8 @@ class Program
 lang("java", "Java", "java", "java", category="popular", godbolt="java", wandbox="Java", stdin=True, template="""
 import java.util.Scanner;
 
-public class Main {
+// Not "public": each service saves the file under its own name.
+class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         String name = in.hasNextLine() ? in.nextLine().trim() : "";
@@ -242,11 +244,12 @@ public class Main {
     }
 }
 """)
-lang("kotlin", "Kotlin", "kt", "kotlin", category="popular", godbolt="kotlin", stdin=True, aliases=["kts"], template="""
+lang("kotlin", "Kotlin", "kt", "kotlin", category="popular", godbolt="kotlin", aliases=["kts"], template="""
+fun square(n: Int) = n * n
+
 fun main() {
-    val name = readlnOrNull()?.trim().orEmpty().ifEmpty { "World" }
-    println("Hello, $name!")
-    println("Squares: ${(1..5).map { it * it }}")
+    println("Hello, World!")
+    for (i in 1..5) println("$i squared is ${square(i)}")
 }
 """)
 lang("go", "Go", "go", "go", category="popular", wandbox="Go", godbolt="go", stdin=True, template="""
@@ -286,7 +289,7 @@ fn main() {
     println!("Squares: {:?}", squares);
 }
 """)
-lang("swift", "Swift", "swift", "swift", category="popular", wandbox="Swift", godbolt="swift", stdin=True, template="""
+lang("swift", "Swift", "swift", "swift", category="popular", godbolt="swift", stdin=True, template="""
 let line = readLine() ?? ""
 let name = line.isEmpty ? "World" : line
 print("Hello, \\(name)!")
@@ -320,10 +323,10 @@ cat("Hello, World!\\n")
 cat("Mean:", mean(values), " Median:", median(values), "\\n")
 print(summary(values))
 """)
-lang("julia", "Julia", "jl", "julia", "#", "scientific", wandbox="Julia", godbolt="julia", stdin=True, template="""
+lang("julia", "Julia", "jl", "julia", "#", "scientific", wandbox="Julia", stdin=True, template="""
 name = strip(readline())
 name = isempty(name) ? "World" : name
-println("Hello, $name!")
+println("Hello, $(name)!")
 println("Squares: ", [n^2 for n in 1:5])
 """)
 lang("dart", "Dart", "dart", "dart", category="general", godbolt="dart", stdin=True, template="""
@@ -358,7 +361,7 @@ main = do
   putStrLn ("Hello, " ++ name ++ "!")
   print (map (^ 2) [1 .. 5 :: Int])
 """)
-lang("elixir", "Elixir", "ex", "elixir", "#", "functional", wandbox="Elixir", aliases=["exs"], template="""
+lang("elixir", "Elixir", "ex", "elixir", "#", "functional", aliases=["exs"], template="""
 defmodule Hello do
   def square(n), do: n * n
 end
@@ -366,7 +369,7 @@ end
 IO.puts("Hello, World!")
 IO.inspect(Enum.map(1..5, &Hello.square/1), label: "Squares")
 """)
-lang("erlang", "Erlang", "erl", "erlang", "%", "functional", wandbox="Erlang", template="""
+lang("erlang", "Erlang", "erl", "erlang", "%", "functional", template="""
 -module(prog).
 -export([main/1]).
 
@@ -397,7 +400,7 @@ Module Program
     End Sub
 End Module
 """)
-lang("ocaml", "OCaml", "ml", "ocaml", "", "functional", wandbox="OCaml", godbolt="ocaml", template="""
+lang("ocaml", "OCaml", "ml", "ocaml", "", "functional", godbolt="ocaml", template="""
 let square x = x * x
 
 let () =
@@ -405,14 +408,15 @@ let () =
   List.iter (fun n -> Printf.printf "%d " (square n)) [1; 2; 3; 4; 5];
   print_newline ()
 """)
-lang("zig", "Zig", "zig", "zig", category="systems", godbolt="zig", wandbox="Zig", template="""
+lang("zig", "Zig", "zig", "zig", category="systems", wandbox="Zig", godbolt="zig", template="""
 const std = @import("std");
 
-pub fn main() void {
-    std.debug.print("Hello, World!\\n", .{});
+pub fn main() !void {
+    const out = std.io.getStdOut().writer();
+    try out.print("Hello, World!\\n", .{});
     var i: u32 = 1;
     while (i <= 5) : (i += 1) {
-        std.debug.print("{d} squared is {d}\\n", .{ i, i * i });
+        try out.print("{d} squared is {d}\\n", .{ i, i * i });
     }
 }
 """)
@@ -423,7 +427,7 @@ echo "Hello, World!"
 for i in 1..5:
   echo i, " squared is ", square(i)
 """)
-lang("crystal", "Crystal", "cr", "crystal", "#", "systems", wandbox="Crystal", godbolt="crystal", template="""
+lang("crystal", "Crystal", "cr", "crystal", "#", "systems", godbolt="crystal", template="""
 def square(x)
   x * x
 end
@@ -500,10 +504,10 @@ END Hello.
 lang("objc", "Objective-C", "m", "objective-c", category="systems", godbolt="objc", template="""
 #include <stdio.h>
 
+// Objective-C is a superset of C; GCC's runtime has no Foundation, so this sticks to C I/O.
 int main(void) {
-    @autoreleasepool {
-        printf("Hello, World!\\n");
-    }
+    printf("Hello, World!\\n");
+    for (int i = 1; i <= 5; i++) printf("%d squared is %d\\n", i, i * i);
     return 0;
 }
 """)
@@ -545,12 +549,12 @@ public fun main() {
   print("Hello, World!")
 }
 """)
-lang("pony", "Pony", "pony", None, category="systems", wandbox="Pony", template="""
+lang("pony", "Pony", "pony", None, category="systems", template="""
 actor Main
   new create(env: Env) =>
     env.out.print("Hello, World!")
 """)
-lang("viml", "Vim script", "vim", "viml", '"', "scripting", wandbox="Vim script", template="""
+lang("viml", "Vim script", "vim", "viml", '"', "scripting", template="""
 let s:names = ['World', 'Vim']
 for s:n in s:names
   echo 'Hello, ' . s:n . '!'
@@ -610,16 +614,12 @@ int main() {
     printf("Hello, World!\\n");
 }
 """)
-lang("clean", "Clean", "icl", None, "//", "functional", godbolt="clean", template="""
+lang("clean", "Clean", "icl", None, "//", "functional", template="""
 module example
 
 import StdEnv
 
 Start = "Hello, World!"
-""")
-lang("lazyk", "Lazy K", "lazy", None, "#", "esoteric", wandbox="Lazy K", template="""
-# Prints its input back (the identity combinator).
-I
 """)
 
 OUT = os.path.join(os.path.dirname(__file__), "..", "app", "src", "main", "assets", "code", "languages.json")

@@ -24,6 +24,8 @@ xz = "1.12"
 heifwriter = "1.1.0"
 snakeyaml = "3.2"
 commonsCompress = "1.28.0"
+luaj = "3.0.1"
+sora = "0.24.7"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
@@ -69,6 +71,9 @@ snakeyaml-engine = { module = "org.snakeyaml:snakeyaml-engine", version.ref = "s
 androidx-heifwriter = { module = "androidx.heifwriter:heifwriter", version.ref = "heifwriter" }
 xz = { module = "org.tukaani:xz", version.ref = "xz" }
 commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commonsCompress" }
+luaj-jse = { module = "org.luaj:luaj-jse", version.ref = "luaj" }
+sora-editor = { module = "io.github.rosemoe:editor", version.ref = "sora" }
+sora-textmate = { module = "io.github.rosemoe:language-textmate", version.ref = "sora" }
 pdfbox-android = { module = "com.tom-roush:pdfbox-android", version.ref = "pdfbox" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
