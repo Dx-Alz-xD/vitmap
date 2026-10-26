@@ -127,7 +127,7 @@ object Tools {
             listOf("photo", "image", "edit", "editor", "filter", "preset", "lightroom", "snapseed", "crop", "retouch", "heal", "background", "remove bg", "cutout", "text", "sticker", "collage", "curves", "hsl"),
         ),
         Tool(
-            "code", "Code Writer", "Run code in 57 languages, on the phone or on free online compilers, with highlighting for 240+",
+            "code", "Code Writer", "Run code in 90+ languages, on the phone or on free online compilers, with highlighting for 240+",
             ToolIcon.Vector(Icons.Rounded.Terminal), ToolCategory.DEVELOPER, Accents.Code, Connectivity.OFFLINE_AFTER_SETUP,
             listOf("code", "programming", "python", "javascript", "c++", "java", "kotlin", "rust", "go", "compiler", "ide", "editor", "run", "script", "sql", "brainfuck", "esoteric"),
         ),

@@ -63,6 +63,9 @@ def check_alive(step):
     if PKG in crashes:
         failures.append(f"{step}: crashed")
         print(f"FAIL {step}: crashed\n{retrace(crashes)[:15000]}")
+        hints = [l for l in adb("logcat", "-d", check=False).splitlines() if re.search(r"ComponentDiscovery|ComponentRuntime|Registrar|MlKitContext", l)]
+        if hints:
+            print("     related log lines:\n     " + "\n     ".join(hints[-30:]))
         adb("logcat", "-b", "crash", "-c", check=False)
         return False
     if not shell(f"pidof {PKG}", check=False).strip():
@@ -173,6 +176,25 @@ def media_id(name):
     return m.group(1) if m else None
 
 
+def open_language_picker():
+    """Through the New file button, or the "All N languages" tile at the end of the start row."""
+    if tap("New file", timeout=5):
+        return True
+    anchor = find("JavaScript", timeout=10)
+    if anchor is None:
+        return False
+    width, _ = screen_size()
+    y = (anchor[1] + anchor[3]) // 2
+    for _ in range(5):
+        tile = next((b for t, _, b in nodes() if re.fullmatch(r"All \d+", t)), None)
+        if tile is not None:
+            tap_bounds(tile)
+            return True
+        shell(f"input swipe {int(width * 0.85)} {y} {int(width * 0.15)} {y} 300")
+        time.sleep(1)
+    return False
+
+
 def code_writer():
     """Creates a file from each language's template and runs it with the recommended runner."""
     languages = [
@@ -186,8 +208,8 @@ def code_writer():
     for lang, query, expect in languages:
         step = f"code {lang}"
         launch_tool("code")
-        if not tap("New file", timeout=15):
-            miss(f"{step}: 'New file' not found", f"code-{query}-no-new-file")
+        if not open_language_picker():
+            miss(f"{step}: couldn't open the language list", f"code-{query}-no-picker")
             return
         field = find("Search languages or extensions", timeout=10) or next((b for _, cls, b in nodes() if cls.endswith("EditText")), None)
         if field is None:

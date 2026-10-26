@@ -99,7 +99,7 @@ The APK stays small: large components (text-recognition models, the dictionary, 
 
 ### Code Writer
 - Projects with multiple files, a code editor (Sora) with TextMate highlighting for 240+ grammars, light and dark themes, and an output console with input.
-- **Runs 57 languages.** On the phone: JavaScript (QuickJS and the WebView engine), Python 3.12, Lua, SQL (SQLite), shell, TypeScript, CoffeeScript, Ruby 3.4 (WebAssembly), Scheme, Prolog, Clojure, and esoteric languages (Brainfuck, Ook!, Befunge-93, Whitespace, Deadfish, ///). Runtimes download the first time they're needed.
+- **Runs 90+ languages:** 57 with ready-made templates and tuned settings, plus the other languages Wandbox and Compiler Explorer offer, which are listed live from those services. On the phone: JavaScript (QuickJS and the WebView engine), Python 3.12, Lua, SQL (SQLite), shell, TypeScript, CoffeeScript, Ruby 3.4 (WebAssembly), Scheme, Prolog, Clojure, and esoteric languages (Brainfuck, Ook!, Befunge-93, Whitespace, Deadfish, ///). Runtimes download the first time they're needed.
 - **On free online compilers** (Wandbox and Compiler Explorer): C, C++, C#, Java, Kotlin, Scala, Go, Rust, Swift, Dart, Haskell, OCaml, F#, Zig, D, Nim, Fortran, COBOL, Ada, Pascal, Objective-C, assembly, LLVM IR and more.
 - HTML, Markdown and SVG preview; JSON, YAML, XML and CSV are checked and formatted. Elixir, Erlang, Pony, Vim script and Clean can be edited with highlighting but have no working runner yet.
 

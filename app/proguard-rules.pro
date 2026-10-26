@@ -27,3 +27,9 @@
 -keep class org.eclipse.tm4e.** { *; }
 -keep class io.github.rosemoe.sora.langs.textmate.** { *; }
 -dontwarn org.eclipse.jdt.annotation.**
+
+# ML Kit creates its components by reflection from registrar class names listed in the manifest.
+# R8's full mode drops constructors nothing calls directly, which left translation (and the other
+# ML Kit features) without their components in release builds.
+-keep class * implements com.google.firebase.components.ComponentRegistrar { <init>(); }
+-keep class com.google.mlkit.**.*Registrar { <init>(); }
