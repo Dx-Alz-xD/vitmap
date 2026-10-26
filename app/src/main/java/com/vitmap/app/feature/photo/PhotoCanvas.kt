@@ -40,6 +40,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
 import com.vitmap.core.photo.LocalAdjustment
 import com.vitmap.core.photo.MaskShape
 import com.vitmap.core.photo.MaskStroke
@@ -287,7 +288,8 @@ fun PhotoCanvas(ui: PhotoUi, vm: PhotoViewModel, state: EditorState, onEditText:
                                 val layer = currentEdit.overlays.lastOrNull { it.id == currentUi.selected } as? Overlay.DrawingLayer
                                 if (layer != null && layer.x == 0.5f && layer.y == 0.5f && layer.scale == 1f && layer.rotation == 0f) {
                                     vm.updateOverlay(layer.id) { (it as Overlay.DrawingLayer).copy(strokes = it.strokes + st) }
-                                } else {
+                                } else if (!st.erase) {
+                                    // The eraser only works on the drawing being added to; on its own it has nothing to erase.
                                     vm.addOverlay(Overlay.DrawingLayer(vm.newId(), listOf(st)))
                                 }
                             }
@@ -319,6 +321,7 @@ fun PhotoCanvas(ui: PhotoUi, vm: PhotoViewModel, state: EditorState, onEditText:
                 }
             },
         ) {
+            if (edit.background.mode == BackgroundMode.TRANSPARENT && !state.comparing) drawChecker(rect)
             drawImage(image, srcOffset = IntOffset.Zero, srcSize = IntSize(shown.width, shown.height), dstOffset = IntOffset(rect.left.roundToInt(), rect.top.roundToInt()), dstSize = IntSize(rect.width.roundToInt(), rect.height.roundToInt()))
             if (cropping) {
                 drawCrop(rect, edit.geometry)
@@ -344,7 +347,7 @@ fun PhotoCanvas(ui: PhotoUi, vm: PhotoViewModel, state: EditorState, onEditText:
             if (state.live.size >= 2) {
                 val s = min(rect.width, rect.height)
                 when (tool) {
-                    PhotoTool.DRAW -> drawIntoCanvas { c ->
+                    PhotoTool.DRAW -> if (state.eraser) drawRelStroke(state.live, rect, state.drawWidth * s, Color(0x88FFFFFF)) else drawIntoCanvas { c ->
                         val nc = c.nativeCanvas
                         nc.save()
                         nc.translate(rect.left, rect.top)
@@ -416,6 +419,28 @@ private fun DrawScope.drawCrop(rect: Rect, g: Geometry) {
     for ((p, sx, sy) in listOf(Triple(cr.topLeft, 1, 1), Triple(cr.topRight, -1, 1), Triple(cr.bottomRight, -1, -1), Triple(cr.bottomLeft, 1, -1))) {
         drawLine(Color.White, p, Offset(p.x + len * sx, p.y), 6f)
         drawLine(Color.White, p, Offset(p.x, p.y + len * sy), 6f)
+    }
+}
+
+/** The grey-and-white squares that show where a photo is transparent. */
+private fun DrawScope.drawChecker(rect: Rect) {
+    val cell = 12.dp.toPx()
+    // Only the part on screen: zoomed in, the photo can be many screens wide.
+    val visible = rect.intersect(Rect(Offset.Zero, size))
+    if (visible.isEmpty) return
+    drawRect(Color.White, visible.topLeft, visible.size)
+    clipRect(visible.left, visible.top, visible.right, visible.bottom) {
+        val firstRow = ((visible.top - rect.top) / cell).toInt()
+        val firstCol = ((visible.left - rect.left) / cell).toInt()
+        var row = firstRow
+        while (rect.top + row * cell < visible.bottom) {
+            var col = firstCol + (row + firstCol) % 2
+            while (rect.left + col * cell < visible.right) {
+                drawRect(Color(0xFFD4D4D8), Offset(rect.left + col * cell, rect.top + row * cell), Size(cell, cell))
+                col += 2
+            }
+            row++
+        }
     }
 }
 

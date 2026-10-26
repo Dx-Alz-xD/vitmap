@@ -1,0 +1,246 @@
+#!/usr/bin/env python3
+"""Emulator smoke test, run by CI inside android-emulator-runner.
+
+Installs the APK, opens the home screen and every tool, then edits and exports a photo in the
+Photo Editor. Fails if the app crashes or a step doesn't reach its expected screen. Screenshots of
+every step are written to smoke-shots/ and uploaded as a CI artifact.
+
+Usage: smoke.py <directory with APKs>
+"""
+import glob
+import os
+import re
+import struct
+import subprocess
+import sys
+import time
+import xml.etree.ElementTree as ET
+
+PKG = "com.vitmap.app"
+ACTIVITY = f"{PKG}/.MainActivity"
+EXTRA_TOOL = f"{PKG}.extra.TOOL"
+SHOTS = "smoke-shots"
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+failures = []
+
+
+def adb(*args, check=True, binary=False):
+    r = subprocess.run(["adb", *args], capture_output=True, timeout=180)
+    if check and r.returncode != 0:
+        raise RuntimeError(f"adb {' '.join(args)} failed: {r.stderr.decode(errors='replace')}")
+    return r.stdout if binary else r.stdout.decode(errors="replace")
+
+
+def shell(cmd, check=True):
+    return adb("shell", cmd, check=check)
+
+
+def shot(name):
+    with open(os.path.join(SHOTS, f"{name}.png"), "wb") as f:
+        f.write(adb("exec-out", "screencap", "-p", binary=True))
+
+
+def crash_log():
+    return adb("logcat", "-b", "crash", "-d", check=False)
+
+
+def check_alive(step):
+    crashes = crash_log()
+    if PKG in crashes:
+        failures.append(f"{step}: crashed")
+        print(f"FAIL {step}: crashed\n{crashes[-4000:]}")
+        adb("logcat", "-b", "crash", "-c", check=False)
+        return False
+    if not shell(f"pidof {PKG}", check=False).strip():
+        failures.append(f"{step}: app is not running")
+        print(f"FAIL {step}: app is not running")
+        return False
+    return True
+
+
+def nodes():
+    """The current UI as (label, class, (left, top, right, bottom)) tuples."""
+    for _ in range(3):
+        shell("uiautomator dump /sdcard/ui.xml", check=False)
+        raw = adb("exec-out", "cat", "/sdcard/ui.xml", check=False)
+        if "<hierarchy" in raw:
+            break
+        time.sleep(1)
+    else:
+        return []
+    out = []
+    for n in ET.fromstring(raw[raw.index("<hierarchy"):]).iter("node"):
+        b = [int(v) for v in re.findall(r"\d+", n.get("bounds", ""))]
+        if len(b) == 4:
+            out.append((n.get("text") or n.get("content-desc") or "", n.get("class", ""), tuple(b)))
+    return out
+
+
+def find(label, timeout=10.0):
+    end = time.time() + timeout
+    while True:
+        for text, _, b in nodes():
+            if text == label and b[2] > b[0] and b[3] > b[1]:
+                return b
+        if time.time() > end:
+            return None
+        time.sleep(1)
+
+
+def tap_bounds(b):
+    shell(f"input tap {(b[0] + b[2]) // 2} {(b[1] + b[3]) // 2}")
+
+
+def tap(label, timeout=10.0):
+    b = find(label, timeout)
+    if b is None:
+        return False
+    tap_bounds(b)
+    return True
+
+
+def screen_size():
+    m = re.search(r"(\d+)x(\d+)", shell("wm size"))
+    return int(m.group(1)), int(m.group(2))
+
+
+def write_test_photo(path, w=1200, h=900):
+    """A 24-bit BMP with a sky gradient, a sun and a ground band: enough structure to edit."""
+    row = (w * 3 + 3) & ~3
+    data = bytearray(row * h)
+    for y in range(h):
+        for x in range(w):
+            ty = y / h
+            if ty > 0.7:
+                r, g, b = 60 + int(40 * x / w), 120, 50
+            else:
+                r, g, b = int(90 + 120 * ty), int(150 + 60 * ty), 235
+            if (x - w * 0.7) ** 2 + (y - h * 0.3) ** 2 < (h * 0.12) ** 2:
+                r, g, b = 255, 210, 80
+            i = (h - 1 - y) * row + x * 3
+            data[i:i + 3] = bytes((b, g, r))
+    header = b"BM" + struct.pack("<IHHI", 54 + len(data), 0, 0, 54)
+    info = struct.pack("<IiiHHIIiiII", 40, w, h, 1, 24, 0, len(data), 2835, 2835, 0, 0)
+    with open(path, "wb") as f:
+        f.write(header + info + data)
+
+
+def launch_tool(tool):
+    shell(f"am force-stop {PKG}")
+    shell(f"am start -W -n {ACTIVITY} --es {EXTRA_TOOL} {tool}")
+    time.sleep(4)
+
+
+def media_id(name):
+    out = shell(f"content query --uri content://media/external/images/media --projection _id --where \"_display_name='{name}'\"", check=False)
+    m = re.search(r"_id=(\d+)", out)
+    return m.group(1) if m else None
+
+
+def photo_editor():
+    """Opens a photo through "Edit with", visits every tool, moves a slider and exports."""
+    write_test_photo("/tmp/smoke-photo.bmp")
+    adb("push", "/tmp/smoke-photo.bmp", "/sdcard/Pictures/smoke-photo.bmp")
+    mid = None
+    for _ in range(10):
+        mid = media_id("smoke-photo.bmp")
+        if mid:
+            break
+        shell("am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Pictures/smoke-photo.bmp", check=False)
+        time.sleep(2)
+    if not mid:
+        failures.append("photo: test image never reached MediaStore")
+        return
+    shell(f"am force-stop {PKG}")
+    shell(f"am start -W -a android.intent.action.EDIT -t image/bmp -d content://media/external/images/media/{mid} --grant-read-uri-permission -n {ACTIVITY}")
+    if find("Looks", timeout=40) is None:
+        shot("photo-0-open-failed")
+        failures.append("photo: editor didn't open the photo")
+        check_alive("photo open")
+        return
+    time.sleep(3)
+    shot("photo-0-open")
+    if not check_alive("photo open"):
+        return
+
+    width, _ = screen_size()
+    tabs = ["Looks", "Adjust", "Curves", "Colour mix", "Grading", "Detail", "Effects", "Crop", "Heal", "Masks",
+            "Background", "Text", "Draw", "Stickers", "Shapes", "Images", "Frame"]
+    for i, tab in enumerate(tabs, 1):
+        b = find(tab, timeout=3)
+        swipes = 0
+        while b is None and swipes < 6:
+            # The tab row scrolls sideways; drag it left using a tab that is visible.
+            row = next((nb for t, _, nb in nodes() if t in tabs), None)
+            if row is None:
+                break
+            y = (row[1] + row[3]) // 2
+            shell(f"input swipe {int(width * 0.8)} {y} {int(width * 0.2)} {y} 300")
+            swipes += 1
+            b = find(tab, timeout=2)
+        if b is None:
+            failures.append(f"photo: tool tab '{tab}' not found")
+            continue
+        tap_bounds(b)
+        time.sleep(2)
+        if tab == "Adjust":
+            sliders = [nb for _, cls, nb in nodes() if cls.endswith("SeekBar")]
+            if sliders:
+                s = sliders[0]
+                y = (s[1] + s[3]) // 2
+                shell(f"input swipe {s[0] + (s[2] - s[0]) // 2} {y} {s[0] + (s[2] - s[0]) * 3 // 4} {y} 500")
+                time.sleep(3)
+            else:
+                failures.append("photo: no slider found in Adjust")
+        shot(f"photo-{i:02d}-{tab.lower().replace(' ', '-')}")
+        if not check_alive(f"photo {tab}"):
+            return
+
+    if not tap("Save"):
+        failures.append("photo: Save button not found")
+        return
+    if not tap("Save to Pictures", timeout=10):
+        shot("photo-export-sheet-missing")
+        failures.append("photo: export sheet didn't open")
+        return
+    if find("Saved", timeout=120) is None:
+        shot("photo-export-failed")
+        failures.append("photo: export didn't finish")
+    else:
+        time.sleep(2)
+        shot("photo-99-saved")
+    check_alive("photo export")
+
+
+def main():
+    apk_dir = sys.argv[1]
+    apks = glob.glob(os.path.join(apk_dir, "*x86_64*.apk")) or glob.glob(os.path.join(apk_dir, "*universal*.apk"))
+    if not apks:
+        sys.exit(f"No x86_64 or universal APK in {apk_dir}")
+    os.makedirs(SHOTS, exist_ok=True)
+    print("Installing", apks[0])
+    adb("install", "-r", "-g", apks[0])
+    adb("logcat", "-b", "all", "-c", check=False)
+
+    shell(f"am start -W -n {ACTIVITY}")
+    time.sleep(5)
+    shot("00-home")
+    check_alive("home")
+
+    tools = re.findall(r'Tool\(\s*"([a-z0-9]+)"', open(os.path.join(ROOT, "app/src/main/java/com/vitmap/app/nav/Tools.kt")).read())
+    for i, tool in enumerate(tools, 1):
+        launch_tool(tool)
+        shot(f"{i:02d}-{tool}")
+        print(("ok   " if check_alive(tool) else "FAIL ") + tool)
+
+    photo_editor()
+
+    if failures:
+        print("\nSmoke test failures:\n  " + "\n  ".join(failures))
+        print(adb("logcat", "-d", "-t", "400", "*:E", check=False)[-8000:])
+        sys.exit(1)
+    print(f"\nSmoke test passed: home, {len(tools)} tools and the photo editor flow.")
+
+
+if __name__ == "__main__":
+    main()

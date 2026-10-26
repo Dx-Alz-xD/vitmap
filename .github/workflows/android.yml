@@ -2,9 +2,6 @@ name: Android build
 
 on:
   push:
-    paths-ignore:
-      - .github/probe/**
-      - .github/workflows/probe.yml
   pull_request:
   workflow_dispatch:
 
@@ -48,3 +45,40 @@ jobs:
           name: vitmap-release-apks
           path: app/build/outputs/apk/release/*.apk
           if-no-files-found: error
+
+  smoke:
+    name: Emulator smoke test
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/download-artifact@v5
+        with:
+          name: vitmap-release-apks
+          path: apks
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Open every tool and edit a photo on Android 14
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back emulated
+          script: python3 .github/smoke/smoke.py apks
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: smoke-screenshots
+          path: smoke-shots/
+          if-no-files-found: ignore
