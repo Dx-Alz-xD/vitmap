@@ -10,3 +10,10 @@
 
 # PdfBox-Android: optional JPEG 2000 decoder isn't bundled.
 -dontwarn com.gemalto.jp2.**
+
+# commons-compress: optional codecs that aren't bundled.
+-dontwarn com.github.luben.zstd.**
+-dontwarn org.brotli.dec.**
+-dontwarn org.objectweb.asm.**
+-dontwarn io.airlift.compress.**
+-dontwarn org.osgi.**

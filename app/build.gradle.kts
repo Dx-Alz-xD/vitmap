@@ -64,8 +64,11 @@ android {
         buildConfig = true
     }
 
-    packaging.resources {
-        excludes += "/META-INF/{AL2.0,LGPL2.1}"
+    packaging {
+        resources.excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        // The media engine's launchers (FFmpeg, Python, QuickJS) are executables shipped as native
+        // libraries; Android only lets apps run them from the extracted native library folder.
+        jniLibs.useLegacyPackaging = true
     }
 }
 
@@ -128,4 +131,6 @@ dependencies {
     implementation(libs.play.services.base)
 
     implementation(libs.pdfbox.android)
+    implementation(libs.xz)
+    implementation(libs.commons.compress)
 }

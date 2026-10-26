@@ -1,0 +1,11 @@
+Media engine (downloaded on demand, not bundled)
+
+FFmpeg — https://ffmpeg.org — LGPL 2.1+ / GPL 2+ (this build includes GPL components such as x264 and x265).
+Python 3.12 — https://python.org — Python Software Foundation License.
+QuickJS — https://bellard.org/quickjs — MIT License.
+yt-dlp — https://github.com/yt-dlp/yt-dlp — The Unlicense (public domain).
+
+The Android builds of FFmpeg, Python and QuickJS come from the youtubedl-android project
+(https://github.com/yausername/youtubedl-android, GPL-3.0), which packages binaries from Termux
+(https://termux.dev). They are fetched from the project's artifacts on Maven Central the first time
+a tool needs them.

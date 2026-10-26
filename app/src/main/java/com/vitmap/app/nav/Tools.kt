@@ -2,7 +2,11 @@ package com.vitmap.app.nav
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Apps
+import androidx.compose.material.icons.rounded.Brush
+import androidx.compose.material.icons.rounded.Code
 import androidx.compose.material.icons.rounded.Colorize
+import androidx.compose.material.icons.rounded.Compress
+import androidx.compose.material.icons.rounded.PermMedia
 import androidx.compose.material.icons.rounded.CurrencyExchange
 import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.DocumentScanner
@@ -27,6 +31,9 @@ enum class ToolCategory(val title: String, val icon: ImageVector) {
     GAMES("Games", Icons.Rounded.SportsEsports),
     CAMERA("Camera & vision", Icons.Rounded.Videocam),
     DOCUMENTS("Documents & PDF", Icons.Rounded.Description),
+    MEDIA("Media & files", Icons.Rounded.PermMedia),
+    CREATIVE("Creative", Icons.Rounded.Brush),
+    DEVELOPER("Developer", Icons.Rounded.Code),
     LANGUAGE("Language", Icons.Rounded.Translate),
     WEB("Internet", Icons.Rounded.Public),
     UTILITIES("Utilities", Icons.Rounded.Widgets),
@@ -99,6 +106,11 @@ object Tools {
             "pdftools", "PDF Tools", "Merge, split, edit, sign, protect, watermark and number pages",
             ToolIcon.Vector(Icons.Rounded.PictureAsPdf), ToolCategory.DOCUMENTS, Accents.PdfTools, Connectivity.OFFLINE,
             listOf("pdf", "merge", "combine", "split", "sign", "esign", "signature", "password", "annotate", "edit", "watermark"),
+        ),
+        Tool(
+            "compress", "Compress", "Shrink photos, videos, audio, PDFs and documents to the exact size you need",
+            ToolIcon.Vector(Icons.Rounded.Compress), ToolCategory.MEDIA, Accents.Compress, Connectivity.OFFLINE_AFTER_SETUP,
+            listOf("shrink", "reduce", "size", "mb", "kb", "zip", "smaller", "upload limit", "email"),
         ),
         Tool(
             "translate", "Translator", "Text, photo, voice and document translation across 59 languages",
