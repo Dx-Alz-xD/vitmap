@@ -118,5 +118,11 @@ class YtdlTest {
         assertEquals("https://youtu.be/abc", Ytdl.extractUrl("Watch this! https://youtu.be/abc."))
         assertTrue(Ytdl.hasPlaylist("https://www.youtube.com/watch?v=a&list=PLx_1"))
         assertFalse(Ytdl.hasPlaylist("https://www.youtube.com/watch?v=a"))
+        assertTrue(Ytdl.isMediaLink("https://music.youtube.com/watch?v=x"))
+        assertTrue(Ytdl.isMediaLink("https://youtu.be/abc"))
+        assertTrue(Ytdl.isMediaLink("https://x.com/someone/status/123"))
+        assertFalse(Ytdl.isMediaLink("https://x.com/someone"))
+        assertFalse(Ytdl.isMediaLink("https://example.com/youtube.com"))
+        assertFalse(Ytdl.isMediaLink("https://notyoutube.com/watch"))
     }
 }

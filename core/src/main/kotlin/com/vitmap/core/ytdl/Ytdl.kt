@@ -515,6 +515,18 @@ object Ytdl {
     /** Pulls the first link out of shared text like "Watch this! https://youtu.be/abc". */
     fun extractUrl(text: String): String? = Regex("https?://\\S+").find(text)?.value?.trimEnd('.', ',', ')', ']', '"', '\'')
 
+    private val mediaLink = Regex(
+        "^https?://([\\w-]+\\.)*(youtube\\.com|youtu\\.be|youtube-nocookie\\.com|vimeo\\.com|tiktok\\.com|soundcloud\\.com|dailymotion\\.com|dai\\.ly|twitch\\.tv|bilibili\\.com|bandcamp\\.com|rumble\\.com|odysee\\.com|streamable\\.com)(/|$)" +
+            "|^https?://(www\\.)?instagram\\.com/(reels?|p|tv)/" +
+            "|^https?://(www\\.|mobile\\.)?(twitter|x)\\.com/[^/]+/status/" +
+            "|^https?://(www\\.|m\\.)?facebook\\.com/(watch|reel|[^/]+/videos)" +
+            "|^https?://(www\\.)?reddit\\.com/r/[^/]+/comments/",
+        RegexOption.IGNORE_CASE,
+    )
+
+    /** True for links to sites that are mostly about video or music, which open in the downloader when shared. */
+    fun isMediaLink(url: String): Boolean = mediaLink.containsMatchIn(url.trim())
+
     fun hasPlaylist(url: String): Boolean = Regex("[?&]list=[\\w-]+").containsMatchIn(url) || "/playlist" in url
 
     fun formatSpeed(bytesPerSec: Double): String = when {

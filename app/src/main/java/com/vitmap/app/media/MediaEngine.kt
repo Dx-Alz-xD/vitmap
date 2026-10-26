@@ -261,9 +261,26 @@ object MediaEngine {
             pythonBin(context).absolutePath, ytdlpScript(context).absolutePath,
             "--ffmpeg-location", ffmpegBin(context).absolutePath,
             "--js-runtimes", "quickjs:${quickJsBin(context).absolutePath}",
+            // YouTube's player challenges are solved by small scripts; fetch them if they aren't bundled.
+            "--remote-components", "ejs:github",
             "--no-cache-dir",
         ) + args
         return run(context, full, workDir, onStdout = onStdout, onStderr = onStderr)
+    }
+
+    suspend fun ytdlpVersion(context: Context): String? {
+        requireReady(context, ytdlp)
+        val r = run(context, listOf(pythonBin(context).absolutePath, ytdlpScript(context).absolutePath, "--version"))
+        return r.stdout.trim().takeIf { r.ok && it.isNotEmpty() }
+    }
+
+    /** Self-updates the yt-dlp zipapp in place; returns its last line of output. */
+    suspend fun updateYtdlp(context: Context): String {
+        requireReady(context, ytdlp)
+        val r = run(context, listOf(pythonBin(context).absolutePath, ytdlpScript(context).absolutePath, "-U"))
+        val last = (r.stdout + "\n" + r.stderr).lines().lastOrNull { it.isNotBlank() }?.removePrefix("ERROR:")?.trim()
+        if (!r.ok) throw IOException(last ?: "Update failed")
+        return last ?: "yt-dlp is up to date"
     }
 
     private suspend fun requireReady(context: Context, pack: Pack) {

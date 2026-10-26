@@ -51,6 +51,7 @@ import androidx.compose.material.icons.rounded.OpenInBrowser
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Share
+import androidx.compose.material.icons.rounded.SmartDisplay
 import androidx.compose.material.icons.rounded.Tab
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.Button
@@ -95,6 +96,7 @@ import com.vitmap.app.ui.components.AuroraBackground
 import com.vitmap.app.ui.components.SectionTitle
 import com.vitmap.app.ui.components.bouncyClickable
 import com.vitmap.app.ui.theme.Accents
+import com.vitmap.core.ytdl.Ytdl
 import kotlinx.coroutines.launch
 import java.text.DateFormat
 import java.util.Date
@@ -284,6 +286,7 @@ fun BrowserMenu(
     onSettings: () -> Unit,
     onShare: () -> Unit,
     onOpenExternal: () -> Unit,
+    onDownloadVideo: (() -> Unit)? = null,
 ) {
     val sheet = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val context = LocalContext.current
@@ -296,6 +299,7 @@ fun BrowserMenu(
         add(MenuAction(Icons.Rounded.Bookmarks, "Bookmarks", act(onBookmarks)))
         add(MenuAction(Icons.Rounded.History, "History", act(onHistory)))
         add(MenuAction(Icons.Rounded.Download, "Downloads", act { runCatching { context.startActivity(Intent(android.app.DownloadManager.ACTION_VIEW_DOWNLOADS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) } }))
+        if (page && onDownloadVideo != null && Ytdl.isMediaLink(tab.url)) add(MenuAction(Icons.Rounded.SmartDisplay, "Download video", act(onDownloadVideo)))
         if (page) {
             add(MenuAction(if (bookmarked) Icons.Rounded.Bookmark else Icons.Rounded.BookmarkBorder, if (bookmarked) "Bookmarked" else "Bookmark", act { BrowserSession.toggleBookmark(tab.url, tab.title) }, bookmarked))
             add(MenuAction(Icons.Rounded.FindInPage, "Find in page", act(onFind)))

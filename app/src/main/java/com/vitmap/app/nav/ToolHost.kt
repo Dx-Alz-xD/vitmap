@@ -16,6 +16,7 @@ import com.vitmap.app.feature.measure.MeasureScreen
 import com.vitmap.app.feature.sudoku.SudokuScreen
 import com.vitmap.app.feature.tictactoe.TicTacToeScreen
 import com.vitmap.app.feature.translate.TranslatorScreen
+import com.vitmap.app.feature.ytdl.YtdlScreen
 
 @Composable
 fun ToolHost(route: ToolRoute, onBack: () -> Unit, onOpenTool: (String, String?) -> Unit) {
@@ -25,7 +26,7 @@ fun ToolHost(route: ToolRoute, onBack: () -> Unit, onOpenTool: (String, String?)
         "color" -> ColorPickerScreen(onBack)
         "measure" -> MeasureScreen(onBack)
         "translate" -> TranslatorScreen(onBack, initialText = route.arg)
-        "browser" -> BrowserScreen(onBack, initialUrl = route.arg)
+        "browser" -> BrowserScreen(onBack, initialUrl = route.arg, onOpenTool = onOpenTool)
         "convert" -> ConvertScreen(onBack)
         "scanner" -> ScannerScreen(onBack)
         "pdftools" -> PdfToolsScreen(onBack, onOpenTool)
@@ -34,6 +35,7 @@ fun ToolHost(route: ToolRoute, onBack: () -> Unit, onOpenTool: (String, String?)
         "forex" -> ForexScreen(onBack)
         "compress" -> CompressScreen(onBack, initialUri = route.arg)
         "fileconvert" -> FileConvertScreen(onBack, initialUri = route.arg)
+        "ytdl" -> YtdlScreen(onBack, initialText = route.arg)
         else -> LaunchedEffect(route.id) { onBack() }
     }
 }

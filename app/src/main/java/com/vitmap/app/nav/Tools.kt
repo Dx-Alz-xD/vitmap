@@ -6,6 +6,7 @@ import androidx.compose.material.icons.rounded.Brush
 import androidx.compose.material.icons.rounded.Code
 import androidx.compose.material.icons.rounded.Colorize
 import androidx.compose.material.icons.rounded.Compress
+import androidx.compose.material.icons.rounded.SmartDisplay
 import androidx.compose.material.icons.rounded.Transform
 import androidx.compose.material.icons.rounded.PermMedia
 import androidx.compose.material.icons.rounded.CurrencyExchange
@@ -117,6 +118,11 @@ object Tools {
             "fileconvert", "File Converter", "Turn photos, videos, audio, documents, data, subtitles and archives into 100+ other formats",
             ToolIcon.Vector(Icons.Rounded.Transform), ToolCategory.MEDIA, Accents.FileConvert, Connectivity.OFFLINE_AFTER_SETUP,
             listOf("convert", "converter", "convertor", "format", "mp4", "mp3", "jpg", "png", "heic", "webp", "pdf", "docx", "word", "gif", "json", "csv", "srt", "zip", "7z", "extension"),
+        ),
+        Tool(
+            "ytdl", "YT Downloader", "Save videos, Shorts, music and playlists from YouTube and 1,800+ sites in the quality and format you choose",
+            ToolIcon.Vector(Icons.Rounded.SmartDisplay), ToolCategory.MEDIA, Accents.Downloader, Connectivity.ONLINE,
+            listOf("youtube", "yt", "download", "video", "mp3", "mp4", "music", "playlist", "shorts", "yt-dlp", "tiktok", "instagram", "reels", "soundcloud", "vimeo"),
         ),
         Tool(
             "translate", "Translator", "Text, photo, voice and document translation across 59 languages",

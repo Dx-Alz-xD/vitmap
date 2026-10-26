@@ -104,7 +104,7 @@ import com.vitmap.app.ui.theme.Accents
 import com.vitmap.app.ui.theme.LocalDarkTheme
 
 @Composable
-fun BrowserScreen(onBack: () -> Unit, initialUrl: String? = null) {
+fun BrowserScreen(onBack: () -> Unit, initialUrl: String? = null, onOpenTool: (String, String?) -> Unit = { _, _ -> }) {
     val context = LocalContext.current
     val dark = LocalDarkTheme.current
     val session = BrowserSession
@@ -235,6 +235,7 @@ fun BrowserScreen(onBack: () -> Unit, initialUrl: String? = null) {
             onSettings = { showSettings = true },
             onShare = { shareText(context, tab.url, tab.title) },
             onOpenExternal = { runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(tab.url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) } },
+            onDownloadVideo = { onOpenTool("ytdl", tab.url) },
         )
     }
     library?.let { which ->
