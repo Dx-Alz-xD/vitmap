@@ -24,6 +24,7 @@ EXTRA_TOOL = f"{PKG}.extra.TOOL"
 SHOTS = "smoke-shots"
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 failures = []
+mapping = None
 
 
 def adb(*args, check=True, binary=False):
@@ -46,11 +47,22 @@ def crash_log():
     return adb("logcat", "-b", "crash", "-d", check=False)
 
 
+def retrace(log):
+    """Deobfuscates a release stack trace with the build's R8 mapping, when both are available."""
+    tool = os.path.join(os.environ.get("ANDROID_HOME", ""), "cmdline-tools", "latest", "bin", "retrace")
+    if not mapping or not os.path.exists(tool):
+        return log
+    with open("/tmp/smoke-crash.txt", "w") as f:
+        f.write(log)
+    r = subprocess.run([tool, mapping, "/tmp/smoke-crash.txt"], capture_output=True, text=True, timeout=300)
+    return r.stdout if r.returncode == 0 and r.stdout.strip() else log
+
+
 def check_alive(step):
     crashes = crash_log()
     if PKG in crashes:
         failures.append(f"{step}: crashed")
-        print(f"FAIL {step}: crashed\n{crashes[-4000:]}")
+        print(f"FAIL {step}: crashed\n{retrace(crashes)[:15000]}")
         adb("logcat", "-b", "crash", "-c", check=False)
         return False
     if not shell(f"pidof {PKG}", check=False).strip():
@@ -87,6 +99,18 @@ def find(label, timeout=10.0):
         if time.time() > end:
             return None
         time.sleep(1)
+
+
+def describe():
+    """The labels on screen, to explain a step that didn't find what it expected."""
+    labels = [t for t, _, _ in nodes() if t.strip()]
+    return " | ".join(labels[:60]) or "(nothing readable on screen)"
+
+
+def miss(message, shot_name):
+    shot(shot_name)
+    failures.append(message)
+    print(f"FAIL {message}\n     on screen: {describe()}")
 
 
 def find_containing(part, timeout=10.0):
@@ -163,23 +187,20 @@ def code_writer():
         step = f"code {lang}"
         launch_tool("code")
         if not tap("New file", timeout=15):
-            failures.append(f"{step}: 'New file' not found")
-            shot(f"code-{query}-no-new-file")
+            miss(f"{step}: 'New file' not found", f"code-{query}-no-new-file")
             return
         field = find("Search languages or extensions", timeout=10) or next((b for _, cls, b in nodes() if cls.endswith("EditText")), None)
         if field is None:
-            failures.append(f"{step}: language search not found")
+            miss(f"{step}: language search not found", f"code-{query}-no-search")
             return
         tap_bounds(field)
         shell(f"input text {query}")
         time.sleep(2)
         if not tap(lang, timeout=10):
-            failures.append(f"{step}: language not listed")
-            shot(f"code-{query}-not-listed")
+            miss(f"{step}: language not listed", f"code-{query}-not-listed")
             continue
         if not tap("Run", timeout=20):
-            failures.append(f"{step}: Run button not found")
-            shot(f"code-{query}-no-run")
+            miss(f"{step}: Run button not found", f"code-{query}-no-run")
             continue
         download = None
         for _ in range(4):
@@ -191,9 +212,10 @@ def code_writer():
             shot(f"code-{query}-download")
             tap_bounds(download)
         ok = find_containing(expect, timeout=240 if download else 40)
-        shot(f"code-{query}")
-        if not ok:
-            failures.append(f"{step}: output didn't contain {expect!r}")
+        if ok:
+            shot(f"code-{query}")
+        else:
+            miss(f"{step}: output didn't contain {expect!r}", f"code-{query}")
         if check_alive(step) and ok:
             print(f"ok   {step}")
 
@@ -215,8 +237,7 @@ def photo_editor():
     shell(f"am force-stop {PKG}")
     shell(f"am start -W -a android.intent.action.EDIT -t image/bmp -d content://media/external/images/media/{mid} --grant-read-uri-permission -n {ACTIVITY}")
     if find("Looks", timeout=40) is None:
-        shot("photo-0-open-failed")
-        failures.append("photo: editor didn't open the photo")
+        miss("photo: editor didn't open the photo", "photo-0-open-failed")
         check_alive("photo open")
         return
     time.sleep(3)
@@ -240,7 +261,7 @@ def photo_editor():
             swipes += 1
             b = find(tab, timeout=2)
         if b is None:
-            failures.append(f"photo: tool tab '{tab}' not found")
+            miss(f"photo: tool tab '{tab}' not found", f"photo-{i:02d}-missing")
             continue
         tap_bounds(b)
         time.sleep(2)
@@ -252,21 +273,19 @@ def photo_editor():
                 shell(f"input swipe {s[0] + (s[2] - s[0]) // 2} {y} {s[0] + (s[2] - s[0]) * 3 // 4} {y} 500")
                 time.sleep(3)
             else:
-                failures.append("photo: no slider found in Adjust")
+                miss("photo: no slider found in Adjust", "photo-adjust-no-slider")
         shot(f"photo-{i:02d}-{tab.lower().replace(' ', '-')}")
         if not check_alive(f"photo {tab}"):
             return
 
     if not tap("Save"):
-        failures.append("photo: Save button not found")
+        miss("photo: Save button not found", "photo-no-save")
         return
     if not tap("Save to Pictures", timeout=10):
-        shot("photo-export-sheet-missing")
-        failures.append("photo: export sheet didn't open")
+        miss("photo: export sheet didn't open", "photo-export-sheet-missing")
         return
     if find("Saved", timeout=120) is None:
-        shot("photo-export-failed")
-        failures.append("photo: export didn't finish")
+        miss("photo: export didn't finish", "photo-export-failed")
     else:
         time.sleep(2)
         shot("photo-99-saved")
@@ -278,7 +297,11 @@ def main():
     apks = glob.glob(os.path.join(apk_dir, "*x86_64*.apk")) or glob.glob(os.path.join(apk_dir, "*universal*.apk"))
     if not apks:
         sys.exit(f"No x86_64 or universal APK in {apk_dir}")
+    global mapping
+    mapping = next(iter(glob.glob(os.path.join(apk_dir, "**", "mapping.txt"), recursive=True)), None)
     os.makedirs(SHOTS, exist_ok=True)
+    # A crash dialog left on screen would cover every later step.
+    shell("settings put global hide_error_dialogs 1", check=False)
     print("Installing", apks[0])
     adb("install", "-r", "-g", apks[0])
     adb("logcat", "-b", "all", "-c", check=False)

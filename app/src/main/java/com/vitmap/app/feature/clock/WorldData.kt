@@ -8,7 +8,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.io.DataInputStream
-import java.util.zip.GZIPInputStream
 import kotlin.math.abs
 
 /** A country outline in Natural Earth map units (x right, y up). */
@@ -108,7 +107,7 @@ object WorldData {
                 val p = line.split('\t')
                 if (p.size < 4) null else ZoneInfo(p[0], p[1].toDouble(), p[2].toDouble(), p[3].split(',').filter { it.isNotEmpty() }, p.getOrElse(4) { "" })
             }
-            val cities = GZIPInputStream(context.assets.open("world/cities.tsv.gz")).bufferedReader().readLines().mapNotNull { line ->
+            val cities = context.assets.open("world/cities.tsv").bufferedReader().readLines().mapNotNull { line ->
                 val p = line.split('\t')
                 if (p.size < 8) null else City(p[0], p[1], p[2], p[3], p[4].toDouble(), p[5].toDouble(), p[6].toIntOrNull() ?: 0, p[7])
             }.sortedByDescending { it.population }
@@ -121,7 +120,7 @@ object WorldData {
     }
 
     private fun readShapes(context: Context): List<CountryShape> {
-        val input = DataInputStream(GZIPInputStream(context.assets.open("world/map.bin.gz")).buffered(64 * 1024))
+        val input = DataInputStream(context.assets.open("world/map.bin").buffered(64 * 1024))
         val magic = ByteArray(4).also { input.readFully(it) }
         require(String(magic) == "VMAP") { "Bad map data" }
         input.readUnsignedByte()

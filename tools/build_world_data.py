@@ -7,7 +7,7 @@ and city-timezones (cities with time zones, MIT; data from simplemaps, CC BY 4.0
 
 Usage: build_world_data.py <world-atlas dir> <world-countries dir> <moment-timezone dir> <city-timezones dir> <out dir>
 """
-import gzip, json, struct, sys, os
+import json, struct, sys, os
 
 atlas, wc, mtz, ctz, out = sys.argv[1:6]
 topo = json.load(open(os.path.join(atlas, 'countries-50m.json')))
@@ -81,7 +81,9 @@ for code, s in sorted(shapes.items()):
             px, py = x, y
         total += len(dedup)
 os.makedirs(out, exist_ok=True)
-with gzip.open(os.path.join(out, 'map.bin.gz'), 'wb', 9) as f:
+# Stored uncompressed: the APK compresses assets itself, and Android's packaging strips a .gz
+# suffix from asset names, so a .gz asset can't be opened by the name it has in the source tree.
+with open(os.path.join(out, 'map.bin'), 'wb') as f:
     f.write(bytes(buf))
 print('countries with shapes', len(shapes), 'points', total, 'bytes', len(buf), file=sys.stderr)
 
@@ -102,6 +104,6 @@ for c in cities:
     if not c.get('timezone'):
         continue
     rows.append('\t'.join([str(c['city']), str(c.get('country', '')), str(c.get('iso2', '')), str(c.get('province', '') or ''), f"{c['lat']:.3f}", f"{c['lng']:.3f}", str(int(c.get('pop') or 0)), c['timezone']]))
-with gzip.open(os.path.join(out, 'cities.tsv.gz'), 'wt', 9) as f:
+with open(os.path.join(out, 'cities.tsv'), 'w') as f:
     f.write('\n'.join(rows) + '\n')
 print('cities', len(rows), file=sys.stderr)

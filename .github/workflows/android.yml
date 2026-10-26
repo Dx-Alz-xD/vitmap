@@ -46,6 +46,13 @@ jobs:
           path: app/build/outputs/apk/release/*.apk
           if-no-files-found: error
 
+      - name: Upload R8 mapping (to read release stack traces)
+        uses: actions/upload-artifact@v5
+        with:
+          name: vitmap-release-mapping
+          path: app/build/outputs/mapping/release/mapping.txt
+          if-no-files-found: error
+
   smoke:
     name: Emulator smoke test
     needs: build
@@ -57,6 +64,11 @@ jobs:
       - uses: actions/download-artifact@v5
         with:
           name: vitmap-release-apks
+          path: apks
+
+      - uses: actions/download-artifact@v5
+        with:
+          name: vitmap-release-mapping
           path: apks
 
       - name: Enable KVM
