@@ -10,6 +10,7 @@ import androidx.compose.material.icons.rounded.Extension
 import androidx.compose.material.icons.rounded.Grid3x3
 import androidx.compose.material.icons.rounded.Language
 import androidx.compose.material.icons.rounded.Public
+import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material.icons.rounded.SportsEsports
 import androidx.compose.material.icons.rounded.Straighten
 import androidx.compose.material.icons.rounded.SwapHoriz
@@ -107,6 +108,11 @@ object Tools {
             "browser", "AllBrowser", "Tabs, incognito, downloads, bookmarks and a built-in element inspector",
             ToolIcon.Vector(Icons.Rounded.Language), ToolCategory.WEB, Accents.Browser, Connectivity.ONLINE,
             listOf("web", "internet", "inspect", "devtools", "html"),
+        ),
+        Tool(
+            "clock", "World Clock", "Live clocks on a world map with day and night, sunrise times and a meeting planner",
+            ToolIcon.Vector(Icons.Rounded.Schedule), ToolCategory.UTILITIES, Accents.Clock, Connectivity.OFFLINE,
+            listOf("time", "timezone", "zone", "city", "map", "utc", "meeting", "sunrise"),
         ),
         Tool(
             "convert", "Conversion", "Nearly 800 units in 49 categories, from metres to smoots, plus your own",

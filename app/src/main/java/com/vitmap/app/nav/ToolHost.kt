@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.vitmap.app.feature.browser.BrowserScreen
 import com.vitmap.app.feature.chess.ChessScreen
+import com.vitmap.app.feature.clock.ClockScreen
 import com.vitmap.app.feature.color.ColorPickerScreen
 import com.vitmap.app.feature.convert.ConvertScreen
 import com.vitmap.app.feature.scan.PdfToolsScreen
@@ -26,6 +27,7 @@ fun ToolHost(route: ToolRoute, onBack: () -> Unit, onOpenTool: (String, String?)
         "scanner" -> ScannerScreen(onBack)
         "pdftools" -> PdfToolsScreen(onBack, onOpenTool)
         "sudoku" -> SudokuScreen(onBack)
+        "clock" -> ClockScreen(onBack)
         else -> LaunchedEffect(route.id) { onBack() }
     }
 }
