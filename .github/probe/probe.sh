@@ -1,66 +1,42 @@
 #!/usr/bin/env bash
 set -u
-gmaven() {
-  local path="$1"
-  local v
-  v=$(curl -sS --max-time 20 "https://dl.google.com/android/maven2/$path/maven-metadata.xml" | grep -oE '<version>[^<]*</version>' | sed -E 's/<\/?version>//g' | tail -6 | tr '\n' ' ')
-  echo "GMAVEN $path: $v"
-}
-for a in \
-  com/google/android/gms/play-services-mlkit-text-recognition \
-  com/google/android/gms/play-services-mlkit-text-recognition-chinese \
-  com/google/android/gms/play-services-mlkit-text-recognition-devanagari \
-  com/google/android/gms/play-services-mlkit-text-recognition-japanese \
-  com/google/android/gms/play-services-mlkit-text-recognition-korean \
-  com/google/android/gms/play-services-mlkit-text-recognition-common \
-  com/google/android/gms/play-services-base \
-  com/google/android/gms/play-services-mlkit-subject-segmentation \
-  com/google/android/gms/play-services-mlkit-document-scanner \
-  com/google/mlkit/segmentation-selfie \
-  com/google/mlkit/translate \
-  androidx/media3/media3-transformer \
-  androidx/media3/media3-exoplayer \
-  androidx/media3/media3-ui-compose \
-  androidx/media3/media3-ui \
-  androidx/media3/media3-effect \
-  androidx/heifwriter/heifwriter \
-  androidx/javascriptengine/javascriptengine \
-  androidx/documentfile/documentfile \
-  androidx/work/work-runtime-ktx \
-  androidx/camera/camera-core \
-  androidx/graphics/graphics-core \
-  androidx/compose/compose-bom \
-  androidx/webkit/webkit \
-  androidx/test/ext/junit \
-  androidx/test/runner \
-  androidx/test/rules \
-  androidx/test/uiautomator/uiautomator \
-  androidx/compose/ui/ui-test-junit4 \
-  androidx/test/espresso/espresso-core \
-  com/android/tools/desugar_jdk_libs ; do gmaven "$a"; done
-
-show() { echo; echo "=== $1"; curl -sS -L --max-time 30 -A "Mozilla/5.0 (Linux; Android 14) Vitmap" "$1" -o /tmp/out 2>&1; echo "status/size: $(stat -c %s /tmp/out 2>/dev/null)"; head -c "${2:-1500}" /tmp/out; echo; }
-show https://emkc.org/api/v2/piston/runtimes 6000
-curl -sS --max-time 30 -X POST https://emkc.org/api/v2/piston/execute -H 'content-type: application/json' -d '{"language":"python","version":"*","files":[{"content":"print(1+1)"}]}'; echo
-show https://wandbox.org/api/list.json 400
-curl -sS --max-time 30 https://wandbox.org/api/list.json | python3 -c 'import json,sys; d=json.load(sys.stdin); print(len(d)); import collections; c=collections.OrderedDict();
-for x in d: c.setdefault(x["language"],[]).append(x["name"])
-for k,v in c.items(): print(k, "->", ", ".join(v[:4]), "(", len(v), ")")'
-curl -sS --max-time 30 -X POST https://wandbox.org/api/compile.json -H 'content-type: application/json' -d '{"compiler":"gcc-head","code":"#include <stdio.h>\nint main(){puts(\"hi\");}"}'; echo
-curl -sS --max-time 30 'https://godbolt.org/api/languages?fields=id,name' -H 'Accept: application/json' | head -c 3000; echo
-show https://open.er-api.com/v6/latest/USD 600
-show https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json 300
-curl -sS --max-time 30 https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json | python3 -c 'import json,sys; d=json.load(sys.stdin); print(len(d)); print(" ".join(sorted(d.keys())))'
-curl -sS --max-time 30 https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d["date"], len(d["usd"]))'
-show https://latest.currency-api.pages.dev/v1/currencies/eur.json 200
-show "https://api.frankfurter.dev/v1/2025-01-01..2025-01-10?base=USD&symbols=EUR,INR" 600
-show https://api.frankfurter.dev/v1/currencies 2000
-show https://cdn.jsdelivr.net/pyodide/v0.28.3/full/pyodide-lock.json 200
-show https://data.jsdelivr.com/v1/packages/npm/pyodide 600
-show https://data.jsdelivr.com/v1/packages/npm/@ruby/3.4-wasm-wasi 400
-show https://data.jsdelivr.com/v1/packages/npm/wasmoon 300
-show https://data.jsdelivr.com/v1/packages/npm/@php-wasm/web 300
-show https://data.jsdelivr.com/v1/packages/npm/tm-grammars 300
-show https://packages-cf.termux.dev/apt/termux-main/dists/stable/main/binary-aarch64/Packages 300
-show https://www.youtube.com/watch?v=jNQXAC9IVRw 300
-show https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest 300
+G=https://dl.google.com/android/maven2
+mkdir -p /tmp/p && cd /tmp/p
+aar() { # group/path artifact version
+  curl -sS -L --max-time 60 -o "$2.aar" "$G/$1/$2/$3/$2-$3.aar" && mkdir -p "$2" && (cd "$2" && unzip -oq "../$2.aar" && ls) ; }
+jp() { echo "=== javap $2"; javap -classpath "$1" "$2" 2>&1 | head -80; }
+aar com/google/android/gms play-services-mlkit-text-recognition-common 19.1.0
+aar com/google/android/gms play-services-mlkit-text-recognition 19.0.1
+aar com/google/android/gms play-services-base 18.11.1
+aar com/google/android/gms play-services-basement 18.9.0
+aar com/google/android/gms play-services-tasks 18.4.1
+aar com/google/android/gms play-services-mlkit-subject-segmentation 16.0.0-beta1
+aar com/google/mlkit vision-common 17.3.0
+for d in */; do echo "--- $d"; ls "$d"; done
+CP=$(ls -d /tmp/p/*/classes.jar | tr '\n' ':')
+unzip -l play-services-mlkit-text-recognition-common/classes.jar | grep -E 'mlkit/vision/text/[A-Za-z]+\.class' | head -40
+jp "$CP" com.google.mlkit.vision.text.TextRecognizer
+jp "$CP" com.google.mlkit.vision.text.TextRecognition
+unzip -l play-services-base/classes.jar | grep -i moduleinstall | head -40
+unzip -l play-services-basement/classes.jar | grep -i moduleinstall | head -40
+for c in com.google.android.gms.common.moduleinstall.ModuleInstall com.google.android.gms.common.moduleinstall.ModuleInstallClient com.google.android.gms.common.moduleinstall.ModuleInstallRequest com.google.android.gms.common.moduleinstall.ModuleInstallRequest\$Builder com.google.android.gms.common.moduleinstall.ModuleInstallStatusUpdate com.google.android.gms.common.moduleinstall.ModuleInstallStatusUpdate\$ProgressInfo com.google.android.gms.common.moduleinstall.InstallStatusListener com.google.android.gms.common.moduleinstall.ModuleAvailabilityResponse com.google.android.gms.common.moduleinstall.ModuleInstallResponse com.google.android.gms.common.api.OptionalModuleApi; do jp "$CP" "$c"; done
+unzip -l play-services-mlkit-subject-segmentation/classes.jar | grep -E '\.class' | grep -v internal | head -30
+for c in com.google.mlkit.vision.segmentation.subject.SubjectSegmentation com.google.mlkit.vision.segmentation.subject.SubjectSegmenter com.google.mlkit.vision.segmentation.subject.SubjectSegmenterOptions\$Builder com.google.mlkit.vision.segmentation.subject.SubjectSegmentationResult com.google.mlkit.vision.segmentation.subject.Subject; do jp "$CP" "$c"; done
+echo "=== godbolt executable compilers"
+curl -sS --max-time 60 'https://godbolt.org/api/compilers?fields=id,lang,name,supportsExecute,semver' -H 'Accept: application/json' -o /tmp/gb.json
+python3 - <<'PY'
+import json, collections
+d = json.load(open('/tmp/gb.json'))
+ex = [c for c in d if c.get('supportsExecute')]
+print(len(d), 'compilers,', len(ex), 'executable')
+by = collections.OrderedDict()
+for c in ex: by.setdefault(c['lang'], []).append((c['id'], c['name']))
+for k, v in by.items(): print(k, len(v), '|', ' ; '.join(f"{i}={n}" for i, n in v[-3:]))
+PY
+curl -sS --max-time 60 -X POST https://godbolt.org/api/compiler/g132/compile -H 'Content-Type: application/json' -H 'Accept: application/json' -d '{"source":"#include <cstdio>\nint main(){puts(\"hello godbolt\");}","options":{"userArguments":"-O1","executeParameters":{"args":[],"stdin":""},"compilerOptions":{"executorRequest":true},"filters":{"execute":true},"tools":[],"libraries":[]},"lang":"c++","allowStoreCodeDebug":true}' | head -c 1500; echo
+curl -sS --max-time 60 https://wandbox.org/api/list.json -o /tmp/wb.json
+python3 - <<'PY'
+import json
+d=json.load(open('/tmp/wb.json'))
+for x in d: print(x['language'], '|', x['name'], '|', x['version'])
+PY
