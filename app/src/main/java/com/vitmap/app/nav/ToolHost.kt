@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import com.vitmap.app.feature.browser.BrowserScreen
 import com.vitmap.app.feature.chess.ChessScreen
 import com.vitmap.app.feature.clock.ClockScreen
+import com.vitmap.app.feature.code.CodeScreen
 import com.vitmap.app.feature.color.ColorPickerScreen
 import com.vitmap.app.feature.compress.CompressScreen
 import com.vitmap.app.feature.convert.ConvertScreen
@@ -36,6 +37,7 @@ fun ToolHost(route: ToolRoute, onBack: () -> Unit, onOpenTool: (String, String?)
         "compress" -> CompressScreen(onBack, initialUri = route.arg)
         "fileconvert" -> FileConvertScreen(onBack, initialUri = route.arg)
         "ytdl" -> YtdlScreen(onBack, initialText = route.arg)
+        "code" -> CodeScreen(onBack)
         else -> LaunchedEffect(route.id) { onBack() }
     }
 }

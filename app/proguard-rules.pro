@@ -17,3 +17,13 @@
 -dontwarn org.objectweb.asm.**
 -dontwarn io.airlift.compress.**
 -dontwarn org.osgi.**
+
+# LuaJ: the javax.script engine and the bytecode compiler aren't used on Android.
+-dontwarn javax.script.**
+-dontwarn org.apache.bcel.**
+-dontwarn org.luaj.vm2.script.**
+
+# Sora editor's TextMate support reads grammars and themes reflectively (Gson) and uses joni.
+-keep class org.eclipse.tm4e.** { *; }
+-keep class io.github.rosemoe.sora.langs.textmate.** { *; }
+-dontwarn org.eclipse.jdt.annotation.**

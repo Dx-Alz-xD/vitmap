@@ -7,6 +7,7 @@ import androidx.compose.material.icons.rounded.Code
 import androidx.compose.material.icons.rounded.Colorize
 import androidx.compose.material.icons.rounded.Compress
 import androidx.compose.material.icons.rounded.SmartDisplay
+import androidx.compose.material.icons.rounded.Terminal
 import androidx.compose.material.icons.rounded.Transform
 import androidx.compose.material.icons.rounded.PermMedia
 import androidx.compose.material.icons.rounded.CurrencyExchange
@@ -118,6 +119,11 @@ object Tools {
             "fileconvert", "File Converter", "Turn photos, videos, audio, documents, data, subtitles and archives into 100+ other formats",
             ToolIcon.Vector(Icons.Rounded.Transform), ToolCategory.MEDIA, Accents.FileConvert, Connectivity.OFFLINE_AFTER_SETUP,
             listOf("convert", "converter", "convertor", "format", "mp4", "mp3", "jpg", "png", "heic", "webp", "pdf", "docx", "word", "gif", "json", "csv", "srt", "zip", "7z", "extension"),
+        ),
+        Tool(
+            "code", "Code Writer", "Write and run code in 70+ languages, on the phone or on free online compilers, with highlighting for 240+",
+            ToolIcon.Vector(Icons.Rounded.Terminal), ToolCategory.DEVELOPER, Accents.Code, Connectivity.OFFLINE_AFTER_SETUP,
+            listOf("code", "programming", "python", "javascript", "c++", "java", "kotlin", "rust", "go", "compiler", "ide", "editor", "run", "script", "sql", "brainfuck", "esoteric"),
         ),
         Tool(
             "ytdl", "YT Downloader", "Save videos, Shorts, music and playlists from YouTube and 1,800+ sites in the quality and format you choose",

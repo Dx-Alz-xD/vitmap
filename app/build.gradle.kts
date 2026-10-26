@@ -134,4 +134,6 @@ dependencies {
     implementation(libs.xz)
     implementation(libs.androidx.heifwriter)
     implementation(libs.commons.compress)
+    implementation(libs.sora.editor)
+    implementation(libs.sora.textmate)
 }
