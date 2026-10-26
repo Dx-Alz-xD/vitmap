@@ -63,7 +63,7 @@ def check_alive(step):
     if PKG in crashes:
         failures.append(f"{step}: crashed")
         print(f"FAIL {step}: crashed\n{retrace(crashes)[:15000]}")
-        hints = [l for l in adb("logcat", "-d", check=False).splitlines() if re.search(r"ComponentDiscovery|ComponentRuntime|Registrar|MlKitContext", l)]
+        hints = [l for l in adb("logcat", "-d", check=False).splitlines() if re.search(r"ComponentDiscovery|MlKitContext", l)]
         if hints:
             print("     related log lines:\n     " + "\n     ".join(hints[-30:]))
         adb("logcat", "-b", "crash", "-c", check=False)
@@ -311,7 +311,8 @@ def photo_editor():
     else:
         time.sleep(2)
         shot("photo-99-saved")
-    check_alive("photo export")
+    if check_alive("photo export") and not any(f.startswith("photo") for f in failures):
+        print("ok   photo editor: opened, visited every tool, adjusted and exported")
 
 
 def main():

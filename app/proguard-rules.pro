@@ -18,7 +18,9 @@
 -dontwarn io.airlift.compress.**
 -dontwarn org.osgi.**
 
-# LuaJ: the javax.script engine and the bytecode compiler aren't used on Android.
+# LuaJ: the javax.script engine and the bytecode compiler aren't used on Android. Its standard
+# libraries look up their function classes by name (Class.forName), so R8 must keep them as is.
+-keep class org.luaj.vm2.** { *; }
 -dontwarn javax.script.**
 -dontwarn org.apache.bcel.**
 -dontwarn org.luaj.vm2.script.**
