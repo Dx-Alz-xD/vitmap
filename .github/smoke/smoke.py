@@ -180,16 +180,20 @@ def open_language_picker():
     """Through the New file button, or the "All N languages" tile at the end of the start row."""
     if tap("New file", timeout=5):
         return True
-    anchor = find("JavaScript", timeout=10)
-    if anchor is None:
-        return False
     width, _ = screen_size()
-    y = (anchor[1] + anchor[3]) // 2
-    for _ in range(5):
-        tile = next((b for t, _, b in nodes() if re.fullmatch(r"All \d+", t)), None)
+    # The row starts with recently used languages, so drag it by whichever tile is showing.
+    starters = {"JavaScript", "Python", "C++", "Java", "C#", "Ruby", "Brainfuck", "Lua", "SQL (SQLite)", "TypeScript"}
+    for _ in range(6):
+        shown = nodes()
+        tile = next((b for t, _, b in shown if re.fullmatch(r"All \d+", t)), None)
         if tile is not None:
             tap_bounds(tile)
             return True
+        anchor = next((b for t, _, b in shown if t in starters), None)
+        if anchor is None:
+            time.sleep(1)
+            continue
+        y = (anchor[1] + anchor[3]) // 2
         shell(f"input swipe {int(width * 0.85)} {y} {int(width * 0.15)} {y} 300")
         time.sleep(1)
     return False
