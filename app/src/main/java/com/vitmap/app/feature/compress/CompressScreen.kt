@@ -2,7 +2,6 @@ package com.vitmap.app.feature.compress
 
 import android.app.Application
 import android.graphics.Bitmap
-import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -52,7 +51,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -82,20 +80,20 @@ import com.vitmap.app.data.packs.PackState
 import com.vitmap.app.media.EngineMissingException
 import com.vitmap.app.media.MediaEngine
 import com.vitmap.app.ui.components.EmptyState
+import com.vitmap.app.ui.components.OptionChips
+import com.vitmap.app.ui.components.OptionSwitch
+import com.vitmap.app.ui.components.fileThumbnail
 import com.vitmap.app.ui.components.PackPrompt
 import com.vitmap.app.ui.components.SectionTitle
 import com.vitmap.app.ui.components.ToolScaffold
 import com.vitmap.app.ui.components.formatBytes
-import com.vitmap.app.ui.components.loadBitmap
 import com.vitmap.app.ui.components.rememberPackState
 import com.vitmap.app.ui.theme.Accents
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 import kotlin.math.roundToLong
 
@@ -127,7 +125,7 @@ class CompressViewModel(app: Application) : AndroidViewModel(app) {
                 val mime = FileSaver.mime(ctx, uri)
                 val file = FileSaver.copyToCache(ctx, uri, name, "compress-in")
                 val kind = Compressor.kindOf(name, mime)
-                val preview = withContext(Dispatchers.IO) { thumbnail(file, kind) }
+                val preview = fileThumbnail(ctx, file, previewMime(kind))
                 val size = file.length()
                 val target = suggestTarget(size)
                 _state.value = CompressState(input = InputFile(uri, file, name, mime, size, kind, preview), targetBytes = target, options = CompressOptions(target))
@@ -144,29 +142,6 @@ class CompressViewModel(app: Application) : AndroidViewModel(app) {
         size > 500L shl 10 -> 200L shl 10
         else -> (size * 0.5).roundToLong()
     }
-
-    private suspend fun thumbnail(file: File, kind: FileKind): Bitmap? = runCatching {
-        when (kind) {
-            FileKind.IMAGE -> loadBitmap(getApplication(), Uri.fromFile(file), 640)
-            FileKind.VIDEO -> MediaMetadataRetriever().run {
-                setDataSource(file.absolutePath)
-                val f = if (Build.VERSION.SDK_INT >= 27) getScaledFrameAtTime(1_000_000, MediaMetadataRetriever.OPTION_CLOSEST_SYNC, 640, 640) else frameAtTime
-                release()
-                f
-            }
-            FileKind.PDF -> android.os.ParcelFileDescriptor.open(file, android.os.ParcelFileDescriptor.MODE_READ_ONLY).use { pfd ->
-                android.graphics.pdf.PdfRenderer(pfd).use { r ->
-                    r.openPage(0).use { p ->
-                        Bitmap.createBitmap(p.width, p.height, Bitmap.Config.ARGB_8888).also {
-                            it.eraseColor(android.graphics.Color.WHITE)
-                            p.render(it, null, null, android.graphics.pdf.PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
-                        }
-                    }
-                }
-            }
-            else -> null
-        }
-    }.getOrNull()
 
     fun setTarget(bytes: Long) = _state.update { it.copy(targetBytes = bytes.coerceAtLeast(1024), options = it.options.copy(targetBytes = bytes.coerceAtLeast(1024)), result = null) }
 
@@ -198,6 +173,13 @@ class CompressViewModel(app: Application) : AndroidViewModel(app) {
         job?.cancel()
         _state.update { it.copy(running = false) }
     }
+}
+
+private fun previewMime(kind: FileKind) = when (kind) {
+    FileKind.IMAGE -> "image/*"
+    FileKind.VIDEO -> "video/*"
+    FileKind.PDF -> "application/pdf"
+    else -> ""
 }
 
 private fun kindIcon(kind: FileKind): ImageVector = when (kind) {
@@ -328,50 +310,31 @@ private fun OptionsFor(kind: FileKind, o: CompressOptions, set: ((CompressOption
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             when (kind) {
                 FileKind.IMAGE -> {
-                    ChipRow("Output", ImageOut.entries, o.imageOut, { it.label }) { v -> set { it.copy(imageOut = v) } }
-                    ToggleLine("Keep camera details (EXIF)", "Date, camera and location; off removes them for privacy", o.keepMetadata) { v -> set { it.copy(keepMetadata = v) } }
+                    OptionChips("Output", ImageOut.entries, o.imageOut, { it.label }) { v -> set { it.copy(imageOut = v) } }
+                    OptionSwitch("Keep camera details (EXIF)", "Date, camera and location; off removes them for privacy", o.keepMetadata) { v -> set { it.copy(keepMetadata = v) } }
                 }
                 FileKind.VIDEO -> {
-                    ChipRow("Codec", VideoCodec.entries, o.videoCodec, { it.label }) { v -> set { it.copy(videoCodec = v) } }
-                    ChipRow("Max resolution", listOf(0, 1080, 720, 480, 360), o.maxHeight, { if (it == 0) "Auto" else "${it}p" }) { v -> set { it.copy(maxHeight = v) } }
-                    ChipRow("Audio", listOf(0, 128, 96, 64, 32), o.audioKbps, { if (it == 0) "Auto" else "$it kb/s" }) { v -> set { it.copy(audioKbps = v) } }
-                    ToggleLine("Mono audio", "Halves the audio size; fine for speech", o.mono) { v -> set { it.copy(mono = v) } }
+                    OptionChips("Codec", VideoCodec.entries, o.videoCodec, { it.label }) { v -> set { it.copy(videoCodec = v) } }
+                    OptionChips("Max resolution", listOf(0, 1080, 720, 480, 360), o.maxHeight, { if (it == 0) "Auto" else "${it}p" }) { v -> set { it.copy(maxHeight = v) } }
+                    OptionChips("Audio", listOf(0, 128, 96, 64, 32), o.audioKbps, { if (it == 0) "Auto" else "$it kb/s" }) { v -> set { it.copy(audioKbps = v) } }
+                    OptionSwitch("Mono audio", "Halves the audio size; fine for speech", o.mono) { v -> set { it.copy(mono = v) } }
                     Text("Two-pass encoding hits the target precisely; H.265 is smaller but slower.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 FileKind.AUDIO -> {
-                    ChipRow("Output", AudioOut.entries, o.audioOut, { it.label }) { v -> set { it.copy(audioOut = v) } }
-                    ToggleLine("Mono", "Good for voice memos and podcasts", o.mono) { v -> set { it.copy(mono = v) } }
+                    OptionChips("Output", AudioOut.entries, o.audioOut, { it.label }) { v -> set { it.copy(audioOut = v) } }
+                    OptionSwitch("Mono", "Good for voice memos and podcasts", o.mono) { v -> set { it.copy(mono = v) } }
                 }
                 FileKind.PDF -> {
-                    ToggleLine("Grayscale images", "Removes colour from pictures for extra savings", o.grayscale) { v -> set { it.copy(grayscale = v) } }
-                    ToggleLine("Allow rasterising", "If needed, turn pages into images to reach the target (text stops being selectable)", o.rasterizePdf) { v -> set { it.copy(rasterizePdf = v) } }
+                    OptionSwitch("Grayscale images", "Removes colour from pictures for extra savings", o.grayscale) { v -> set { it.copy(grayscale = v) } }
+                    OptionSwitch("Allow rasterising", "If needed, turn pages into images to reach the target (text stops being selectable)", o.rasterizePdf) { v -> set { it.copy(rasterizePdf = v) } }
                 }
                 FileKind.OFFICE -> Text("Pictures inside the document are re-encoded and resized; text and formatting stay as they are.", style = MaterialTheme.typography.bodyMedium)
                 FileKind.OTHER -> {
-                    ChipRow("Archive", ArchiveOut.entries, o.archive, { it.label }) { v -> set { it.copy(archive = v) } }
+                    OptionChips("Archive", ArchiveOut.entries, o.archive, { it.label }) { v -> set { it.copy(archive = v) } }
                     Text("Lossless: the file comes back exactly the same when extracted.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun <T> ChipRow(label: String, options: List<T>, selected: T, text: (T) -> String, onSelect: (T) -> Unit) {
-    Text(label, style = MaterialTheme.typography.labelLarge)
-    Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-        for (o in options) FilterChip(selected = o == selected, onClick = { onSelect(o) }, label = { Text(text(o)) })
-    }
-}
-
-@Composable
-private fun ToggleLine(title: String, subtitle: String, value: Boolean, onChange: (Boolean) -> Unit) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Column(Modifier.weight(1f)) {
-            Text(title, style = MaterialTheme.typography.titleSmall)
-            Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-        Switch(value, onChange)
     }
 }
 

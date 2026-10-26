@@ -6,6 +6,7 @@ import androidx.compose.material.icons.rounded.Brush
 import androidx.compose.material.icons.rounded.Code
 import androidx.compose.material.icons.rounded.Colorize
 import androidx.compose.material.icons.rounded.Compress
+import androidx.compose.material.icons.rounded.Transform
 import androidx.compose.material.icons.rounded.PermMedia
 import androidx.compose.material.icons.rounded.CurrencyExchange
 import androidx.compose.material.icons.rounded.Description
@@ -111,6 +112,11 @@ object Tools {
             "compress", "Compress", "Shrink photos, videos, audio, PDFs and documents to the exact size you need",
             ToolIcon.Vector(Icons.Rounded.Compress), ToolCategory.MEDIA, Accents.Compress, Connectivity.OFFLINE_AFTER_SETUP,
             listOf("shrink", "reduce", "size", "mb", "kb", "zip", "smaller", "upload limit", "email"),
+        ),
+        Tool(
+            "fileconvert", "File Converter", "Turn photos, videos, audio, documents, data, subtitles and archives into 100+ other formats",
+            ToolIcon.Vector(Icons.Rounded.Transform), ToolCategory.MEDIA, Accents.FileConvert, Connectivity.OFFLINE_AFTER_SETUP,
+            listOf("convert", "converter", "convertor", "format", "mp4", "mp3", "jpg", "png", "heic", "webp", "pdf", "docx", "word", "gif", "json", "csv", "srt", "zip", "7z", "extension"),
         ),
         Tool(
             "translate", "Translator", "Text, photo, voice and document translation across 59 languages",

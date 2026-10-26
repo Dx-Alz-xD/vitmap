@@ -132,5 +132,6 @@ dependencies {
 
     implementation(libs.pdfbox.android)
     implementation(libs.xz)
+    implementation(libs.androidx.heifwriter)
     implementation(libs.commons.compress)
 }

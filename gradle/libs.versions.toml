@@ -21,6 +21,8 @@ playServicesBase = "18.11.1"
 junit = "4.13.2"
 pdfbox = "2.0.27.0"
 xz = "1.12"
+heifwriter = "1.1.0"
+snakeyaml = "3.2"
 commonsCompress = "1.28.0"
 
 [libraries]
@@ -63,6 +65,8 @@ play-text-recognition-japanese = { module = "com.google.android.gms:play-service
 play-text-recognition-korean = { module = "com.google.android.gms:play-services-mlkit-text-recognition-korean", version.ref = "playTextRecognitionScripts" }
 play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "playServicesBase" }
 
+snakeyaml-engine = { module = "org.snakeyaml:snakeyaml-engine", version.ref = "snakeyaml" }
+androidx-heifwriter = { module = "androidx.heifwriter:heifwriter", version.ref = "heifwriter" }
 xz = { module = "org.tukaani:xz", version.ref = "xz" }
 commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commonsCompress" }
 pdfbox-android = { module = "com.tom-roush:pdfbox-android", version.ref = "pdfbox" }

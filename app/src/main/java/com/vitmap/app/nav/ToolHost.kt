@@ -8,6 +8,7 @@ import com.vitmap.app.feature.clock.ClockScreen
 import com.vitmap.app.feature.color.ColorPickerScreen
 import com.vitmap.app.feature.compress.CompressScreen
 import com.vitmap.app.feature.convert.ConvertScreen
+import com.vitmap.app.feature.fileconvert.FileConvertScreen
 import com.vitmap.app.feature.forex.ForexScreen
 import com.vitmap.app.feature.scan.PdfToolsScreen
 import com.vitmap.app.feature.scan.ScannerScreen
@@ -32,6 +33,7 @@ fun ToolHost(route: ToolRoute, onBack: () -> Unit, onOpenTool: (String, String?)
         "clock" -> ClockScreen(onBack)
         "forex" -> ForexScreen(onBack)
         "compress" -> CompressScreen(onBack, initialUri = route.arg)
+        "fileconvert" -> FileConvertScreen(onBack, initialUri = route.arg)
         else -> LaunchedEffect(route.id) { onBack() }
     }
 }
