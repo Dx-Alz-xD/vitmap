@@ -1,0 +1,17 @@
+name: Probe
+
+# Temporary research job: prints dependency versions and API responses that the
+# development container cannot reach. Runs only when the probe script changes.
+on:
+  push:
+    paths:
+      - .github/probe/**
+      - .github/workflows/probe.yml
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - run: bash .github/probe/probe.sh
