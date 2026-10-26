@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.AutoAwesome
+import androidx.compose.material.icons.rounded.CloudDownload
 import androidx.compose.material.icons.rounded.DarkMode
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.LightMode
@@ -45,7 +46,7 @@ import com.vitmap.app.vitmap
 import kotlinx.coroutines.launch
 
 @Composable
-fun SettingsScreen(onBack: () -> Unit, onAbout: () -> Unit) {
+fun SettingsScreen(onBack: () -> Unit, onAbout: () -> Unit, onDownloads: () -> Unit) {
     val app = LocalContext.current.vitmap
     val settings by app.settings.settings.collectAsStateWithLifecycle(initialValue = AppSettings())
     val scope = rememberCoroutineScope()
@@ -87,6 +88,18 @@ fun SettingsScreen(onBack: () -> Unit, onAbout: () -> Unit) {
             SectionTitle("Feel")
             ToggleRow(Icons.Rounded.Vibration, "Haptic feedback", "Subtle vibrations on taps and moves", settings.haptics) {
                 scope.launch { app.settings.setHaptics(it) }
+            }
+            SectionTitle("Storage")
+            Panel(Modifier.fillMaxWidth().bouncyClickable(pressedScale = 0.98f, onClick = onDownloads)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Rounded.CloudDownload, null)
+                    Spacer(Modifier.width(14.dp))
+                    Column(Modifier.weight(1f)) {
+                        Text("Downloads", style = MaterialTheme.typography.titleMedium)
+                        Text("Models, dictionaries and runtimes the tools fetch on demand", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                    Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null)
+                }
             }
             SectionTitle("About")
             Panel(Modifier.fillMaxWidth().bouncyClickable(pressedScale = 0.98f, onClick = onAbout)) {

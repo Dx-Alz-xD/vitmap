@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.vitmap.app.data.JsonFileStore
 import com.vitmap.app.data.SettingsRepository
+import com.vitmap.app.data.packs.PackManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -15,6 +16,9 @@ class VitmapApp : Application() {
     val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     val settings: SettingsRepository by lazy { SettingsRepository(this) }
+
+    /** Optional downloads (models, dictionaries, runtimes) shared by every tool. */
+    val packs: PackManager by lazy { PackManager(this, appScope) }
 
     val json: Json = Json {
         ignoreUnknownKeys = true

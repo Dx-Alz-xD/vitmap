@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Builds app/src/main/assets/wordnet.db.gz from the WordNet 3.1 dict files.
+"""Builds packs/wordnet-v1.db.gz (the downloadable dictionary pack) from the WordNet 3.1 dict files.
 
 Usage: build_wordnet_db.py <path-to-wordnet-dict-dir> <output.db.gz>
 The dict dir is e.g. the `dict/` folder of the `wordnet-db` npm package.

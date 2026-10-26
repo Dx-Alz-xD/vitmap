@@ -2,12 +2,12 @@ package com.vitmap.app.feature.translate
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import com.vitmap.app.data.packs.PackCatalog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import java.io.File
-import java.util.zip.GZIPInputStream
+import java.io.IOException
 
 data class Sense(
     val pos: String,
@@ -25,31 +25,26 @@ data class Entry(val word: String, val lemma: String, val senses: List<Sense>) {
     val allAntonyms: List<String> get() = senses.flatMap { it.antonyms }.distinct()
 }
 
-/** Offline English dictionary backed by a bundled WordNet 3.1 database. */
+/**
+ * Offline English dictionary backed by WordNet 3.1. The database is a downloadable pack
+ * ([PackCatalog.dictionary]); callers gate on it before looking words up.
+ */
 class Dictionary(private val context: Context) {
     private val mutex = Mutex()
     private var db: SQLiteDatabase? = null
 
-    val isInstalled: Boolean get() = dbFile().exists()
-
-    private fun dbFile() = File(context.filesDir, "wordnet-v1.db")
-
     private suspend fun open(): SQLiteDatabase = mutex.withLock {
-        db?.let { return it }
+        db?.takeIf { it.isOpen }?.let { return it }
         withContext(Dispatchers.IO) {
-            val f = dbFile()
-            if (!f.exists()) {
-                val tmp = File(f.parentFile, f.name + ".tmp")
-                GZIPInputStream(context.assets.open("wordnet.db.gz")).use { input -> tmp.outputStream().use { input.copyTo(it, 64 * 1024) } }
-                tmp.renameTo(f)
-            }
+            val f = PackCatalog.dictionaryFile(context)
+            if (!f.exists()) throw IOException("The dictionary isn't downloaded yet")
             SQLiteDatabase.openDatabase(f.absolutePath, null, SQLiteDatabase.OPEN_READONLY).also { db = it }
         }
     }
 
-    /** Prepares the database (first run unpacks ~19 MB). */
-    suspend fun warmUp() {
-        open()
+    fun close() {
+        db?.close()
+        db = null
     }
 
     suspend fun lookup(word: String): Entry? = withContext(Dispatchers.IO) {

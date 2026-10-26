@@ -119,9 +119,11 @@ dependencies {
 
     implementation(libs.mlkit.translate)
     implementation(libs.mlkit.language.id)
-    implementation(libs.mlkit.text.recognition)
-    implementation(libs.mlkit.text.recognition.chinese)
-    implementation(libs.mlkit.text.recognition.devanagari)
-    implementation(libs.mlkit.text.recognition.japanese)
-    implementation(libs.mlkit.text.recognition.korean)
+    // Text recognition models are delivered on demand by Google Play services (see ml/Ocr.kt).
+    implementation(libs.play.text.recognition)
+    implementation(libs.play.text.recognition.chinese)
+    implementation(libs.play.text.recognition.devanagari)
+    implementation(libs.play.text.recognition.japanese)
+    implementation(libs.play.text.recognition.korean)
+    implementation(libs.play.services.base)
 }

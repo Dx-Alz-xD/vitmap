@@ -15,7 +15,9 @@ webkit = "1.12.1"
 exifinterface = "1.4.1"
 mlkitTranslate = "17.0.3"
 mlkitLanguageId = "17.0.6"
-mlkitTextRecognition = "16.0.1"
+playTextRecognition = "19.0.1"
+playTextRecognitionScripts = "16.0.1"
+playServicesBase = "18.11.1"
 junit = "4.13.2"
 
 [libraries]
@@ -51,11 +53,12 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 
 mlkit-translate = { module = "com.google.mlkit:translate", version.ref = "mlkitTranslate" }
 mlkit-language-id = { module = "com.google.mlkit:language-id", version.ref = "mlkitLanguageId" }
-mlkit-text-recognition = { module = "com.google.mlkit:text-recognition", version.ref = "mlkitTextRecognition" }
-mlkit-text-recognition-chinese = { module = "com.google.mlkit:text-recognition-chinese", version.ref = "mlkitTextRecognition" }
-mlkit-text-recognition-devanagari = { module = "com.google.mlkit:text-recognition-devanagari", version.ref = "mlkitTextRecognition" }
-mlkit-text-recognition-japanese = { module = "com.google.mlkit:text-recognition-japanese", version.ref = "mlkitTextRecognition" }
-mlkit-text-recognition-korean = { module = "com.google.mlkit:text-recognition-korean", version.ref = "mlkitTextRecognition" }
+play-text-recognition = { module = "com.google.android.gms:play-services-mlkit-text-recognition", version.ref = "playTextRecognition" }
+play-text-recognition-chinese = { module = "com.google.android.gms:play-services-mlkit-text-recognition-chinese", version.ref = "playTextRecognitionScripts" }
+play-text-recognition-devanagari = { module = "com.google.android.gms:play-services-mlkit-text-recognition-devanagari", version.ref = "playTextRecognitionScripts" }
+play-text-recognition-japanese = { module = "com.google.android.gms:play-services-mlkit-text-recognition-japanese", version.ref = "playTextRecognitionScripts" }
+play-text-recognition-korean = { module = "com.google.android.gms:play-services-mlkit-text-recognition-korean", version.ref = "playTextRecognitionScripts" }
+play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "playServicesBase" }
 
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }

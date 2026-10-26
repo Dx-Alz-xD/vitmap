@@ -1,5 +1,13 @@
 package com.vitmap.app.feature.translate
 
+import com.vitmap.app.ui.components.PackDialog
+import com.vitmap.app.data.packs.Pack
+import androidx.compose.material.icons.rounded.DocumentScanner
+import com.vitmap.app.ui.theme.Accents
+import com.vitmap.app.ui.components.PackGate
+import com.vitmap.app.ml.OcrScript
+import com.vitmap.app.ml.OcrMissingException
+import com.vitmap.app.ml.Ocr
 import android.Manifest
 import android.graphics.Bitmap
 import android.graphics.Rect
@@ -105,22 +113,6 @@ import kotlinx.coroutines.launch
 
 private data class OverlayBlock(val rect: Rect, val original: String, val translated: String, val lines: Int)
 
-private val SCRIPTS = listOf(
-    "Latin" to TranslateLanguage.ENGLISH,
-    "中文" to TranslateLanguage.CHINESE,
-    "日本語" to TranslateLanguage.JAPANESE,
-    "한국어" to TranslateLanguage.KOREAN,
-    "देवनागरी" to TranslateLanguage.HINDI,
-)
-
-private fun scriptFor(code: String?): String = when (code) {
-    TranslateLanguage.CHINESE -> TranslateLanguage.CHINESE
-    TranslateLanguage.JAPANESE -> TranslateLanguage.JAPANESE
-    TranslateLanguage.KOREAN -> TranslateLanguage.KOREAN
-    TranslateLanguage.HINDI, TranslateLanguage.MARATHI -> TranslateLanguage.HINDI
-    else -> TranslateLanguage.ENGLISH
-}
-
 @Composable
 fun PhotoTranslateTab(vm: TranslatorViewModel, s: TranslatorState, onUseText: (String) -> Unit) {
     val context = LocalContext.current
@@ -129,7 +121,7 @@ fun PhotoTranslateTab(vm: TranslatorViewModel, s: TranslatorState, onUseText: (S
     var blocks by remember { mutableStateOf<List<OverlayBlock>>(emptyList()) }
     var status by remember { mutableStateOf<String?>(null) }
     var showOriginal by remember { mutableStateOf(false) }
-    var script by remember { mutableStateOf(scriptFor(s.effectiveSource)) }
+    var script by remember { mutableStateOf(Ocr.scriptFor(s.effectiveSource)) }
     val handle = remember { CameraHandle() }
 
     fun process(b: Bitmap) {
@@ -137,7 +129,14 @@ fun PhotoTranslateTab(vm: TranslatorViewModel, s: TranslatorState, onUseText: (S
         blocks = emptyList()
         scope.launch {
             status = "Reading text…"
-            val text = runCatching { vm.recognize(b, script) }.getOrNull()
+            val text = try {
+                vm.recognize(b, script)
+            } catch (e: OcrMissingException) {
+                status = "Download the ${e.script.label} text recognition model first"
+                return@launch
+            } catch (e: Exception) {
+                null
+            }
             if (text == null || text.textBlocks.isEmpty()) {
                 status = "No text found — try getting closer or another script"
                 return@launch
@@ -169,17 +168,18 @@ fun PhotoTranslateTab(vm: TranslatorViewModel, s: TranslatorState, onUseText: (S
 
     val bmp = bitmap
     if (bmp == null) {
+        val scriptChips: @Composable (Modifier) -> Unit = { m ->
+            Row(m.padding(10.dp).horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                for (sc in OcrScript.entries) {
+                    FilterChip(selected = script == sc, onClick = { script = sc }, label = { Text(sc.native) })
+                }
+            }
+        }
+        PackGate(Ocr.pack(script), accent = Accents.Translator, icon = Icons.Rounded.DocumentScanner, header = { scriptChips(Modifier) }) {
         PermissionGate(Manifest.permission.CAMERA, Icons.Rounded.PhotoCamera, "Camera access", "Point the camera at signs, menus or documents to translate them. Text is read on your device.") {
             Box(Modifier.fillMaxSize()) {
                 CameraView(Modifier.fillMaxSize(), handle = handle)
-                Row(
-                    Modifier.align(Alignment.TopCenter).padding(10.dp).horizontalScroll(rememberScrollState()),
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                ) {
-                    for ((label, code) in SCRIPTS) {
-                        FilterChip(selected = script == code, onClick = { script = code }, label = { Text(label) })
-                    }
-                }
+                scriptChips(Modifier.align(Alignment.TopCenter))
                 Row(
                     Modifier.align(Alignment.BottomCenter).fillMaxWidth().padding(24.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly,
@@ -194,6 +194,7 @@ fun PhotoTranslateTab(vm: TranslatorViewModel, s: TranslatorState, onUseText: (S
                     Spacer(Modifier.size(56.dp))
                 }
             }
+        }
         }
         return
     }
@@ -364,6 +365,8 @@ fun DocsTab(vm: TranslatorViewModel, s: TranslatorState) {
     var status by remember { mutableStateOf<String?>(null) }
     var progress by remember { mutableFloatStateOf(0f) }
     var showOriginal by remember { mutableStateOf(false) }
+    var needPack by remember { mutableStateOf<Pack?>(null) }
+    needPack?.let { PackDialog(it, onDismiss = { needPack = null }, accent = Accents.Translator) }
 
     val saver = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) { uri ->
         if (uri != null) scope.launch {
@@ -378,9 +381,17 @@ fun DocsTab(vm: TranslatorViewModel, s: TranslatorState) {
             translated = emptyList()
             doc = null
             status = "Opening…"
-            val d = runCatching { DocumentText.load(context, uri, ocr = vm::ocrText, onProgress = { status = it }) }.getOrNull()
+            val d = try {
+                DocumentText.load(context, uri, ocr = vm::ocrText, onProgress = { status = it })
+            } catch (e: OcrMissingException) {
+                needPack = Ocr.pack(e.script)
+                null
+            } catch (e: Exception) {
+                null
+            }
             doc = d
             status = when {
+                needPack != null && d == null -> "This PDF needs text recognition. Download it, then choose the file again."
                 d == null -> "Couldn't read that file"
                 d.paragraphs.isEmpty() -> "No text found in the document"
                 else -> d.note

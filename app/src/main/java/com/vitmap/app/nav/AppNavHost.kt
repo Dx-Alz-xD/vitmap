@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.vitmap.app.home.AboutScreen
+import com.vitmap.app.home.DownloadsScreen
 import com.vitmap.app.home.HomeScreen
 import com.vitmap.app.home.SettingsScreen
 import com.vitmap.app.vitmap
@@ -33,6 +34,9 @@ object SettingsRoute
 
 @Serializable
 object AboutRoute
+
+@Serializable
+object DownloadsRoute
 
 @Serializable
 data class ToolRoute(val id: String, val arg: String? = null)
@@ -73,12 +77,21 @@ fun AppNavHost(deepLink: ToolRoute?, onDeepLinkHandled: () -> Unit) {
                 }
                 composable<SettingsRoute> {
                     CompositionLocalProvider(LocalNavAnimatedScope provides this) {
-                        SettingsScreen(onBack = { nav.popBackStack() }, onAbout = { nav.navigate(AboutRoute) })
+                        SettingsScreen(
+                            onBack = { nav.popBackStack() },
+                            onAbout = { nav.navigate(AboutRoute) },
+                            onDownloads = { nav.navigate(DownloadsRoute) { launchSingleTop = true } },
+                        )
                     }
                 }
                 composable<AboutRoute> {
                     CompositionLocalProvider(LocalNavAnimatedScope provides this) {
                         AboutScreen(onBack = { nav.popBackStack() })
+                    }
+                }
+                composable<DownloadsRoute> {
+                    CompositionLocalProvider(LocalNavAnimatedScope provides this) {
+                        DownloadsScreen(onBack = { nav.popBackStack() })
                     }
                 }
                 composable<ToolRoute> { entry ->

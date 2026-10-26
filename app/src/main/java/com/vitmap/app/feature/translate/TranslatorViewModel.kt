@@ -21,15 +21,9 @@ import com.google.mlkit.nl.translate.TranslateRemoteModel
 import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.Translator
 import com.google.mlkit.nl.translate.TranslatorOptions
-import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.Text
-import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.TextRecognizer
-import com.google.mlkit.vision.text.chinese.ChineseTextRecognizerOptions
-import com.google.mlkit.vision.text.devanagari.DevanagariTextRecognizerOptions
-import com.google.mlkit.vision.text.japanese.JapaneseTextRecognizerOptions
-import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions
-import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.vitmap.app.ml.Ocr
+import com.vitmap.app.ml.OcrScript
 import com.vitmap.app.vitmap
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -111,7 +105,6 @@ class TranslatorViewModel(app: Application) : AndroidViewModel(app) {
     private val modelManager = RemoteModelManager.getInstance()
     private val translators = HashMap<String, Translator>()
     private val identifier = LanguageIdentification.getClient(LanguageIdentificationOptions.Builder().setConfidenceThreshold(0.35f).build())
-    private val recognizers = HashMap<String, TextRecognizer>()
 
     private var translateJob: Job? = null
     private var historyJob: Job? = null
@@ -408,27 +401,9 @@ class TranslatorViewModel(app: Application) : AndroidViewModel(app) {
 
     // ------------------------------------------------------------------ OCR
 
-    private fun recognizerFor(lang: String?): TextRecognizer {
-        val key = when (lang) {
-            TranslateLanguage.CHINESE -> "zh"
-            TranslateLanguage.JAPANESE -> "ja"
-            TranslateLanguage.KOREAN -> "ko"
-            TranslateLanguage.HINDI, TranslateLanguage.MARATHI -> "dev"
-            else -> "latin"
-        }
-        return recognizers.getOrPut(key) {
-            when (key) {
-                "zh" -> TextRecognition.getClient(ChineseTextRecognizerOptions.Builder().build())
-                "ja" -> TextRecognition.getClient(JapaneseTextRecognizerOptions.Builder().build())
-                "ko" -> TextRecognition.getClient(KoreanTextRecognizerOptions.Builder().build())
-                "dev" -> TextRecognition.getClient(DevanagariTextRecognizerOptions.Builder().build())
-                else -> TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-            }
-        }
-    }
-
-    suspend fun recognize(bitmap: Bitmap, lang: String? = _state.value.effectiveSource): Text =
-        recognizerFor(lang).process(InputImage.fromBitmap(bitmap, 0)).await()
+    /** Throws [com.vitmap.app.ml.OcrMissingException] when the script's model isn't downloaded. */
+    suspend fun recognize(bitmap: Bitmap, script: OcrScript = Ocr.scriptFor(_state.value.effectiveSource)): Text =
+        Ocr.recognize(getApplication<Application>(), bitmap, script)
 
     suspend fun ocrText(bitmap: Bitmap): String = recognize(bitmap).text
 
@@ -439,7 +414,7 @@ class TranslatorViewModel(app: Application) : AndroidViewModel(app) {
         tts?.stop()
         tts?.shutdown()
         translators.values.forEach { it.close() }
-        recognizers.values.forEach { it.close() }
+        dictionary.close()
         identifier.close()
         super.onCleared()
     }

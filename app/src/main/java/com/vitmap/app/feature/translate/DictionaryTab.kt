@@ -60,13 +60,23 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.google.mlkit.nl.translate.TranslateLanguage
+import com.vitmap.app.data.packs.PackCatalog
 import com.vitmap.app.ui.components.EmptyState
+import com.vitmap.app.ui.components.PackGate
+import com.vitmap.app.ui.theme.Accents
 import com.vitmap.app.ui.components.SectionTitle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun DictionaryTab(vm: TranslatorViewModel, s: TranslatorState) {
+    PackGate(PackCatalog.dictionary, accent = Accents.Translator, icon = Icons.AutoMirrored.Rounded.MenuBook) {
+        DictionaryContent(vm, s)
+    }
+}
+
+@Composable
+private fun DictionaryContent(vm: TranslatorViewModel, s: TranslatorState) {
     val scope = rememberCoroutineScope()
     val initial = s.input.trim().takeIf { it.isNotEmpty() && !it.contains(' ') } ?: ""
     var query by rememberSaveable { mutableStateOf(initial) }
@@ -75,7 +85,6 @@ fun DictionaryTab(vm: TranslatorViewModel, s: TranslatorState) {
     var notFound by remember { mutableStateOf<String?>(null) }
     var via by remember { mutableStateOf<String?>(null) }
     var suggestions by remember { mutableStateOf<List<String>>(emptyList()) }
-    var preparing by remember { mutableStateOf(!vm.dictionary.isInstalled) }
     var translateDefs by rememberSaveable { mutableStateOf(false) }
     var translatedDefs by remember { mutableStateOf<Map<String, String>>(emptyMap()) }
 
@@ -86,13 +95,13 @@ fun DictionaryTab(vm: TranslatorViewModel, s: TranslatorState) {
             loading = true
             notFound = null
             via = null
-            var e = vm.dictionary.lookup(word)
+            var e = runCatching { vm.dictionary.lookup(word) }.getOrNull()
             // Words in other languages are looked up through their English translation.
             val src = s.effectiveSource ?: vm.detect(word)
             if (e == null && src != null && src != TranslateLanguage.ENGLISH) {
                 val english = runCatching { vm.translate(word, src, TranslateLanguage.ENGLISH) }.getOrNull()
                 if (english != null && !english.equals(word, true)) {
-                    e = vm.dictionary.lookup(english)
+                    e = runCatching { vm.dictionary.lookup(english) }.getOrNull()
                     if (e != null) via = english
                 }
             }
@@ -103,10 +112,6 @@ fun DictionaryTab(vm: TranslatorViewModel, s: TranslatorState) {
     }
 
     LaunchedEffect(Unit) {
-        if (preparing) {
-            vm.dictionary.warmUp()
-            preparing = false
-        }
         if (initial.isNotEmpty()) lookup(initial)
     }
     LaunchedEffect(query) {
@@ -153,11 +158,6 @@ fun DictionaryTab(vm: TranslatorViewModel, s: TranslatorState) {
             )
         }
         when {
-            preparing -> Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(16.dp)) {
-                CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
-                Spacer(Modifier.width(12.dp))
-                Text("Preparing the offline dictionary (first time only)…")
-            }
             loading -> CircularProgressIndicator(Modifier.align(Alignment.CenterHorizontally).padding(24.dp))
             entry != null -> EntryView(entry!!, via, translatedDefs, vm, speaking = s.speaking == "dict", onWord = { lookup(it) })
             notFound != null -> EmptyState(Icons.AutoMirrored.Rounded.MenuBook, "No entry for \"$notFound\"", "The offline dictionary covers about 150,000 English words and phrases. Other languages are looked up via English.")
