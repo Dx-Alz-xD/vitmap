@@ -14,6 +14,9 @@
         android:maxSdkVersion="28"
         tools:ignore="ScopedStorage" />
 
+    <!-- HeifWriter is only used behind an API 28 check. -->
+    <uses-sdk tools:overrideLibrary="androidx.heifwriter" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />

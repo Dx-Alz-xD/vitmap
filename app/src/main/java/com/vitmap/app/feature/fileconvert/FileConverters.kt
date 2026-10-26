@@ -152,6 +152,7 @@ object FileConverters {
             "webp" -> target.outputStream().use { bmp.compress(if (Build.VERSION.SDK_INT >= 30) Bitmap.CompressFormat.WEBP_LOSSY else @Suppress("DEPRECATION") Bitmap.CompressFormat.WEBP, o.quality, it) }
             "webp-lossless" -> target.outputStream().use { bmp.compress(if (Build.VERSION.SDK_INT >= 30) Bitmap.CompressFormat.WEBP_LOSSLESS else @Suppress("DEPRECATION") Bitmap.CompressFormat.WEBP, 100, it) }
             "heic" -> {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) throw IOException("Saving HEIC needs Android 9 or newer")
                 val w = HeifWriter.Builder(target.absolutePath, bmp.width, bmp.height, HeifWriter.INPUT_MODE_BITMAP).setQuality(o.quality).build()
                 w.start()
                 w.addBitmap(bmp)

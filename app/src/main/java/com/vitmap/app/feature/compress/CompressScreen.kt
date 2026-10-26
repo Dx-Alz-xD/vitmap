@@ -37,7 +37,7 @@ import androidx.compose.material.icons.rounded.Compress
 import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material.icons.rounded.Image
-import androidx.compose.material.icons.rounded.InsertDriveFile
+import androidx.compose.material.icons.automirrored.rounded.InsertDriveFile
 import androidx.compose.material.icons.rounded.Movie
 import androidx.compose.material.icons.rounded.PictureAsPdf
 import androidx.compose.material.icons.rounded.Share
@@ -188,7 +188,7 @@ private fun kindIcon(kind: FileKind): ImageVector = when (kind) {
     FileKind.AUDIO -> Icons.Rounded.AudioFile
     FileKind.PDF -> Icons.Rounded.PictureAsPdf
     FileKind.OFFICE -> Icons.Rounded.Description
-    FileKind.OTHER -> Icons.Rounded.InsertDriveFile
+    FileKind.OTHER -> Icons.AutoMirrored.Rounded.InsertDriveFile
 }
 
 @Composable

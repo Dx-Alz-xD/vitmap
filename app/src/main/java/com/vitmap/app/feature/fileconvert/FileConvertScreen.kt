@@ -42,7 +42,7 @@ import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.FolderZip
 import androidx.compose.material.icons.rounded.Image
-import androidx.compose.material.icons.rounded.InsertDriveFile
+import androidx.compose.material.icons.automirrored.rounded.InsertDriveFile
 import androidx.compose.material.icons.rounded.Movie
 import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material.icons.rounded.Search
@@ -302,7 +302,7 @@ private fun familyIcon(f: Family?): ImageVector = when (f) {
     Family.DATA -> Icons.Rounded.DataObject
     Family.SUBTITLE -> Icons.Rounded.Subtitles
     Family.ARCHIVE -> Icons.Rounded.FolderZip
-    null -> Icons.Rounded.InsertDriveFile
+    null -> Icons.AutoMirrored.Rounded.InsertDriveFile
 }
 
 @Composable
